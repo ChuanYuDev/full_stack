@@ -1,25 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "/Users/chuanyu/Library/CloudStorage/Dropbox/Code/ChuanYuDev/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/ConsoleApp1.csproj": {}
+    "/home/yuchuan/projects/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/ConsoleApp1.csproj": {}
   },
   "projects": {
-    "/Users/chuanyu/Library/CloudStorage/Dropbox/Code/ChuanYuDev/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/ConsoleApp1.csproj": {
+    "/home/yuchuan/projects/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/chuanyu/Library/CloudStorage/Dropbox/Code/ChuanYuDev/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/ConsoleApp1.csproj",
+        "projectUniqueName": "/home/yuchuan/projects/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/ConsoleApp1.csproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "/Users/chuanyu/Library/CloudStorage/Dropbox/Code/ChuanYuDev/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/ConsoleApp1.csproj",
-        "packagesPath": "/Users/chuanyu/.nuget/packages/",
-        "outputPath": "/Users/chuanyu/Library/CloudStorage/Dropbox/Code/ChuanYuDev/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/obj/",
+        "projectPath": "/home/yuchuan/projects/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/ConsoleApp1.csproj",
+        "packagesPath": "/home/yuchuan/.nuget/packages/",
+        "outputPath": "/home/yuchuan/projects/microsoft_full_stack_developer/2_introduction_to_programming_with_c#/course_examples/consoleApp1/ConsoleApp1/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/chuanyu/.nuget/NuGet/NuGet.Config"
+          "/home/yuchuan/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "/usr/lib/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,11 +39,17 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Pastel": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -59,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.108/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
