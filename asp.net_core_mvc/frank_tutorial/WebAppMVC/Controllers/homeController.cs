@@ -6,17 +6,19 @@ namespace WebAppMVC.Controllers
     public class HomeController : Controller
     {
         // Public method in the controller is called action method
-        // Every action method is used to handle request 
+        // 2. Every action method is used to handle request 
         //
         // Index: Name of the action method
-        public string Index()
+        public IActionResult Index()
         {
-            return "Hello world from action method Index.";
-        }
+            // Return Index.cshtml view by convention
+            // Or we can specify view name to Index.cshtml 
+            //      return View("Index");
 
-        public string Error()
-        {
-            return "I have an error here.";
+            // public class ViewResult : ActionResult, IStatusCodeActionResult
+            // public abstract class ActionResult : IActionResult
+            // IActionResult: all possible return types of action method
+            return View();
         }
     }
 }

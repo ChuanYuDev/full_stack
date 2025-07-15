@@ -8,7 +8,7 @@ var app = builder.Build();
 
 app.UseRouting();
 
-// Map `pattern`
+// 1. Mapping
 app.MapControllerRoute(
     name: "default",
     // Pattern of the request ->
