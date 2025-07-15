@@ -6,7 +6,7 @@ namespace WebAppMVC.Controllers
     public class HomeController : Controller
     {
         // Public method in the controller is called action method
-        // 2. Every action method is used to handle request 
+        // Every action method is used to handle request 
         //
         // Index: Name of the action method
         public IActionResult Index()

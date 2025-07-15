@@ -1,16 +1,15 @@
 @*
 Razor View page
-Home subfolder <-> homeController.cs
+Home subfolder <-> HomeController.cs
 Index filename <-> Index action method
 *@
 
-<html>
-    <body>
-        <h1>Welcome to Home page!</h1>
-        <br>
-        <p>
-            This is our new home!
-        </p>
+@* Replace title section placeholder *@
+@section title {
+    <h1>Welcome to Home page!</h1>
+}
 
-    </body>
-</html>
+@* Replace body placeholder *@
+<p>
+    This is our new home!
+</p>

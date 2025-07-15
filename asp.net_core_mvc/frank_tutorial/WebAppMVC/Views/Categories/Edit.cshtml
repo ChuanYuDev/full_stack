@@ -1,10 +1,8 @@
-@* Type Category will combine with the below html file *@
+@* Type Category will combine with the below HTML file *@
 @using WebAppMVC.Models
 @model Category
 
-<html>
-    <body>
-        @* @Model is the instance of Category class*@
-        <h3>Category: @Model.CategoryId</h3>
-    </body>
-</html>
+@section title {
+    @* @Model is the instance of Category class*@
+    <h3>Category: @Model.CategoryId</h3>
+}
