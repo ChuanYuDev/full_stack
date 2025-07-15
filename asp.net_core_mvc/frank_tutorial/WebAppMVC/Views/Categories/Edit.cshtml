@@ -1,8 +1,15 @@
 @* Type Category will combine with the below HTML file *@
 @using WebAppMVC.Models
+@* Category is the type of the model that the view is working with *@
 @model Category
 
 @section title {
-    @* @Model is the instance of Category class*@
+    @*
+    Razor syntax
+        If want to use any C# expression, start with @
+
+    Model
+        Represent the instance of Category class
+    *@
     <h3>Category: @Model.CategoryId</h3>
 }

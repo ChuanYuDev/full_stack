@@ -10,7 +10,9 @@ namespace WebAppMVC.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            // Load static repository data
+            var categories = CategoriesRepository.GetCategories();
+            return View(categories);
         }
 
         // When mapping /categories/edit/abc
@@ -28,8 +30,8 @@ namespace WebAppMVC.Controllers
             // // When type conversion failed, id will use default value
             // //      int? default value is null, id.HasValue is false
             // if (id.HasValue)
-            //     // Initialize with object parameterless constructor
 
+            //     // Initialize ContentResult class with object parameterless constructor
             //     // public class ContentResult : ActionResult, IStatusCodeActionResult
             //     return new ContentResult { Content = id.ToString() };
             // else

@@ -1,13 +1,81 @@
+@using WebAppMVC.Models 
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model List<Category>
+
 @section title{
     <h3>Categories</h3>
 }
 
-<ul>
-    <li>
+@* <ul> *@
+    @* Hard coded data *@
+    @* <li>
         <a href="/categories/edit/1">Beverage</a>
     </li>
 
     <li>
         <a href="/categories/edit/2">Meat</a>
-    </li>
-</ul>
+    </li> *@
+
+
+
+    @* Unordered list to show data from static repository *@
+
+    @*
+    @category.Name
+        Have to use @ again
+        Because HTML is used in the C# expression
+        The flow of C# has been broken
+    *@
+    @* @foreach (var category in Model)
+    {
+        <li>
+            @category.Name
+        </li>
+    } *@
+@* </ul> *@
+
+@*
+Defensive programming to make sure we don't create any exception
+
+Display HTML table to list our categories
+*@
+@if (Model != null && Model.Count() > 0)
+{
+    @* Bootstrap classes *@
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@category.Name</td>
+                    <td>@category.Description</td>
+                    <td>
+                        @*
+                        Edit button to redirect to categories edit page
+
+                        @(): explicit Razor expression and can add C# expression in it
+                        @: implicit Razor expression
+                        *@
+                        @* <a class="btn btn-link" href="@($"/categories/edit/{category.CategoryId}")">Edit</a> *@
+
+                        @*
+                        Better way to generate links is called tag helpers
+                        Use tag helpers to generate a URL that can be processed by a controller's action method
+                        asp-route-id: refer to the parameter `id` that asp-action uses
+                        *@
+                        <a class="btn btn-link" asp-controller="categories" asp-action="edit" asp-route-id="@category.CategoryId">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
