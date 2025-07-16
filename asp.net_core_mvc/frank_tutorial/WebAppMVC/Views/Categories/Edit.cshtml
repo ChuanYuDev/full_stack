@@ -33,6 +33,15 @@ Category is the type of the model that the view is working with
     *@
     <input type="hidden" asp-for="CategoryId">
 
+    @*
+    .text-danger: Bootstrap class
+
+    ValidationSummary.All will display both property and model level validations messages
+    ValidationSummary.ModelOnly will display only validation messages that apply to the model level
+    ValidationSummary.None is specified, the tag helper will do nothing
+    *@
+    <div class="text-danger" asp-validation-summary="All"></div>
+
     <div class="row mb-3">
         <div class="col-2">
             @*
@@ -51,6 +60,12 @@ Category is the type of the model that the view is working with
                 When form submit button is pressed, the model binding process will recognize which property in the class this input field needs to be bound to
             *@
             <input type="text" asp-for="Name" class="form-control">
+        </div>
+
+        @* .col: choose column size automatically *@
+        <div class="col">
+            @* Only show validation messages for specific field *@
+            <span class="text-danger" asp-validation-for="Name"></span>
         </div>
     </div>
 

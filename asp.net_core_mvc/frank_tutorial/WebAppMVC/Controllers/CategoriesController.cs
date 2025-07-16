@@ -76,12 +76,39 @@ namespace WebAppMVC.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
-            CategoriesRepository.UpdateCategory(category.CategoryId, category);
+            // Only when ModelState indicates valid, the category will be updated
+            if (ModelState.IsValid)
+            {
+                CategoriesRepository.UpdateCategory(category.CategoryId, category);
 
-            // Redirect user to the categories/index page
-            //      If don't specify the Controller which indicates redirecting to the same controller
-            //      Redirect to same controller and action method which name is Index
-            return RedirectToAction(nameof(Index));
+                // Redirect user to the categories/index page
+                //      If don't specify the Controller which indicates redirecting to the same controller
+                //      Redirect to same controller and action method which name is Index
+                return RedirectToAction(nameof(Index));
+            }
+
+            // If ModelState is invalid, we need user to see the same category page 
+            // On that category page, we need user to see error message so that the user has the opportunity to correct his or her mistake 
+            return View(category);
+        }
+
+        public IActionResult Add()
+        {
+            var category = new Category();
+
+            return View(category);
+        }
+
+        [HttpPost]
+        public IActionResult Add(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                CategoriesRepository.AddCategory(category);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(category);
         }
     }
 }
