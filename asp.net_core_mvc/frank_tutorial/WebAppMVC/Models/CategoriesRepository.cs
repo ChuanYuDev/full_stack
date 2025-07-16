@@ -7,9 +7,9 @@ namespace WebAppMVC.Models
     {
         private static List<Category> _categories = new List<Category>()
         {
-            new Category { CategoryId = 1, Name = "Beverage", Description = "Beverage" },
-            new Category { CategoryId = 2, Name = "Bakery", Description = "Bakery" },
-            new Category { CategoryId = 3, Name = "Meat", Description = "Meat" }
+            new Category { CategoryId = 1, Name = "Beverage", Description = "BeverageDesc" },
+            new Category { CategoryId = 2, Name = "Bakery", Description = "BakeryDesc" },
+            new Category { CategoryId = 3, Name = "Meat", Description = "MeatDesc" }
         };
 
         // Create
@@ -62,7 +62,13 @@ namespace WebAppMVC.Models
         {
             if (categoryId != category.CategoryId) return;
 
-            var categoryToUpdate = GetCategoryById(categoryId);
+            // GetCategoryById return a copied instance
+            //      Therefore the category object in the list will not be updated
+            //      Use LINQ FirstOrDefault instead
+
+            // var categoryToUpdate = GetCategoryById(categoryId);
+
+            var categoryToUpdate = _categories.FirstOrDefault(x => x.CategoryId == categoryId);
 
             if (categoryToUpdate != null)
             {

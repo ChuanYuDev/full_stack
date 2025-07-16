@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Add static file middleware
-// Enable to access the static file in `wwwroot` folder
+//      Enable to access the static file in `wwwroot` folder
 //      http://localhost:5398/lib/bootstrap/css/bootstrap.css
 //      No `wwwroot` in the URL
 app.UseStaticFiles();
@@ -18,6 +18,7 @@ app.UseRouting();
 // Mapping
 app.MapControllerRoute(
     name: "default",
+
     // Pattern of the request ->
     //      First part to the controller
     //      Second part to the action method
