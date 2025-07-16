@@ -15,6 +15,12 @@ namespace WebAppMVC.Models
         //      If the controller received data to set `Name` to null, ModelState.IsValid will be false
         [Required]
         public string Name { get; set; } = string.Empty;
+
+        // If we use string as type, it means Description is non-nullable
+        //      This will trigger validation to show
+        //      The Description field is required
+        //      In Views/Categories/Add.cshtml
+        //      If we don't input the description field
         // public string Description { get; set; } = string.Empty;
         public string? Description { get; set; }
     }

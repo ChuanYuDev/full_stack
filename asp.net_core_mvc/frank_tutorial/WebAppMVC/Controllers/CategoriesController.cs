@@ -28,17 +28,26 @@ namespace WebAppMVC.Controllers
         //
         // The way to transfer data to the action method using `id` is called model binding
         // 
-        // If we don't specify what the action method is, it corresponds to the HttpGet action method
-        //      HttpGet: default of action method
+        // HttpGet
+        //      If we don't specify what attrobute the action method has, it has to the HttpGet attribute
+        //      So by default, an action method without the attribute is the one that handles Http get
         // 
-        // We can specify where the data come from
+        // Model binding
+        //      We can specify where the data come from
         //      There are five data source
-        //      FromRoute attribute: the data come from the route
-        //          Syntax: public IActionResult Edit([FromRoute] int? id)
-        //          Then /categories/edit?id=555, passing the data from query string no long works
-        //
+        //          [FromQuery] - Gets values from the query string.
+        //          [FromRoute] - Gets values from route data.
+        //          [FromForm] - Gets values from posted form fields.
+        //          [FromBody] - Gets values from the request body.
+        //          [FromHeader] - Gets values from HTTP headers
         //      If we don't specify the data source, asp.net core is going to go through all of five different places to locate the data  
         //          If it can't locate the data, it will report error or provide default value for the parameter
+        //
+        //      FromRoute attribute: the data come from the route
+        //          Syntax: public IActionResult Edit([FromRoute] int? id)
+        //              Such as /categories/edit/1
+        //          Then /categories/edit?id=555, passing the data from query string no long works
+        //
         //
         // Model binding can bind complex data structure such as Category
         //      public IActionResult Edit(Category? category)
@@ -73,6 +82,10 @@ namespace WebAppMVC.Controllers
         }
 
         // Http form sends post request, use another HttpPost attribute decorated Edit action method to handle it
+
+        // We can add [FromForm] attribute to specify category data from posted form fields
+        //      [HttpPost]
+        //      public IActionResult Edit([FromForm] Category category)
         [HttpPost]
         public IActionResult Edit(Category category)
         {
@@ -94,9 +107,14 @@ namespace WebAppMVC.Controllers
 
         public IActionResult Add()
         {
-            var category = new Category();
+            // Wrong
+            // Because even we don't pass category into the View, in the Razor view, we still have the @model Category
+            // So the model binding still works when we submit the form
 
-            return View(category);
+            // var category = new Category();
+            // return View(category);
+
+            return View();
         }
 
         [HttpPost]

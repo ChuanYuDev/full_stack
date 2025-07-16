@@ -33,9 +33,9 @@
 @* </ul> *@
 
 @*
-Defensive programming to make sure we don't create any exception
-
 Display HTML table to list our categories
+
+Defensive programming to make sure we don't create any exception
 *@
 @if (Model != null && Model.Count() > 0)
 {
@@ -77,4 +77,8 @@ Display HTML table to list our categories
     </table>
 }
 
+@*
+The answer put this <a> element into above curly brace which is wrong?
+Even the list is empty, we shoud be able to add category
+*@
 <a class="btn btn-primary" asp-controller="categories" asp-action="add">Add</a>
