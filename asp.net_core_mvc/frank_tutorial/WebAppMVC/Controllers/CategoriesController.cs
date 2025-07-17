@@ -73,7 +73,6 @@ namespace WebAppMVC.Controllers
             ViewBag.Action = "edit";
 
             // var category = new Category { CategoryId = id.HasValue ? id.Value : 0 };
-
             // Load the category from the data store
             var category = CategoriesRepository.GetCategoryById(id.HasValue ? id.Value : 0);
 

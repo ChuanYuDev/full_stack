@@ -27,5 +27,7 @@ namespace WebAppMVC.Models
         [Range(0, int.MaxValue)]
         public double? Price { get; set; }
         
+        // Map CategoryId to Category object
+        public Category? Category { get; set; }
     }
 }
