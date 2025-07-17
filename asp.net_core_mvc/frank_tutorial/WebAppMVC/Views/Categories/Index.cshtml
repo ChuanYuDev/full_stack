@@ -67,15 +67,15 @@ Defensive programming to make sure we don't create any exception
 
                         @*
                         Better way to generate links is called tag helpers
-                        Use tag helpers to generate a URL that can be processed by a controller's action method
-                        asp-route-id: refer to the parameter `id` that asp-action uses
+                            Use tag helpers to generate a URL that can be processed by a controller's action method
+                            asp-route-id: refer to the parameter `id` that asp-action uses
                         *@
                         <a class="btn btn-link" asp-controller="categories" asp-action="edit" asp-route-id="@category.CategoryId">Edit</a>
                     </td>
 
                     <td>
                         @*
-                        elete action paramater is called categoryId, so we use asp-route-categoryid to pass categoryId
+                        Delete action paramater is called categoryId, so we use asp-route-categoryid to pass categoryId
 
                         `return` keyword in onclick value
                             When an onclick method returns false it causes the event's default action to be prevented
