@@ -50,8 +50,11 @@ _ of _Category.cshtml
     <div class="row mb-3">
         <div class="col-2">
             @*
-            asp-for will look at Category.Name property and genearte the string for us when it renders the HTML
-            the edit action method has to handle the value of the Name and Description field
+            `asp-for` will look at Category.Name property and genearte the string for us when it renders the HTML
+                <label> element is rendered as 
+                <label class="col-form-label" for="Name">Name</label>
+            
+            The edit action method has to handle the value of the Name and Description field
             *@
             <label asp-for="Name" class="col-form-label"></label>
         </div>

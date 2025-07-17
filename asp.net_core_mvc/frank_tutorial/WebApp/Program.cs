@@ -20,9 +20,12 @@ var app = builder.Build();
 app.MapGet("/", (HttpContext context) =>
 {
     // @: Verbatim string literals
-    //      @"""" -> "
+    //      Use "" to denote "
+    //      Leftmost and right most " is for verbatim string
+    //      So @"""" -> "
 
-    // html form: https://www.w3schools.com/html/html_forms.asp
+    // html form
+    //      https://www.w3schools.com/html/html_forms.asp
     //      <form> method=""post"": HTTP post transaction
     //      <label> `for` attribute <-> <input> `id` attribute
     WriteHtml(context, @$"
