@@ -22,73 +22,10 @@ Category is the type of the model that the view is working with
 
 @if (Model != null)
 {
-    @* Use tag helper to specify if the submit button is pressed, where do the data go to be processed *@
-    <form method="post" asp-controller="categories" asp-action="edit">
-
-        @* 
-        Hidden field is not visible to the users but sill can be sent to controller when user submits the form
-            Hidden field will send CategoryId to controller
-
-        Tag help asp-for makes <input> element render into
-            <input type="hidden" data-val="true" data-val-required="The CategoryId field is required." id="CategoryId" name="CategoryId" value="1">
-            Therefore, value which is CategoryId will be sent back to controller
-        *@
-        <input type="hidden" asp-for="CategoryId">
-
-        @*
-        .text-danger: Bootstrap class
-
-        ValidationSummary.All will display both property and model level validations messages
-        ValidationSummary.ModelOnly will display only validation messages that apply to the model level
-        ValidationSummary.None is specified, the tag helper will do nothing
-        *@
-        <div class="text-danger" asp-validation-summary="All"></div>
-
-        <div class="row mb-3">
-            <div class="col-2">
-                @*
-                asp-for will look at Category.Name property and genearte the string for us when it renders the HTML
-                the edit action method has to handle the value of the Name and Description field
-                *@
-                <label asp-for="Name" class="col-form-label"></label>
-            </div>
-
-            <div class="col-6">
-                @* 
-                <input> element will be rendered in HTML as
-                    <input type="text" class="form-control" data-val="true" data-val-required="The Name field is required." id="Name" name="Name" value="Beverage">
-                    Tag helper asp-for generates id and name
-
-                    When form submit button is pressed, the model binding process will recognize which property in the class this input field needs to be bound to
-                *@
-                <input type="text" asp-for="Name" class="form-control">
-            </div>
-
-            @* .col: choose column size automatically *@
-            <div class="col">
-                @* Only show validation messages for specific field *@
-                <span class="text-danger" asp-validation-for="Name"></span>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-2">
-                <label asp-for="Description" class="col-form-label"></label>
-            </div>
-
-            <div class="col-6">
-                <input type="text" asp-for="Description" class="form-control">
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-2">
-                <input type="submit" class="btn btn-primary" value="Save">
-            </div>
-
-            <div class="col-6">
-            </div>
-        </div>
-
-    </form>
+    @*
+    Add partial view into Edit view
+        Use `partial` tag helper
+        <partial> is not working, use <partial/> instead
+    *@
+    <partial name="_Category" model="@Model"/>
 }

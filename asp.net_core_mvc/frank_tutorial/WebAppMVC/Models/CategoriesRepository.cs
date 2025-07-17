@@ -15,8 +15,18 @@ namespace WebAppMVC.Models
         // Create
         public static void AddCategory(Category category)
         {
-            // =>: Lambda expression
-            var maxId = _categories.Max(x => x.CategoryId);
+            int maxId;
+
+            if (_categories.Count() == 0)
+            {
+                maxId = 0;
+            }
+            else
+            {
+                // =>: Lambda expression
+                maxId = _categories.Max(x => x.CategoryId);
+            }
+
             category.CategoryId = maxId + 1;
             _categories.Add(category);
         }

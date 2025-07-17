@@ -69,6 +69,9 @@ namespace WebAppMVC.Controllers
             // else
             //     return new ContentResult { Content = "null content" };
 
+            // We can provide information and pass the information to the partial view
+            ViewBag.Action = "edit";
+
             // var category = new Category { CategoryId = id.HasValue ? id.Value : 0 };
 
             // Load the category from the data store
@@ -114,6 +117,8 @@ namespace WebAppMVC.Controllers
             // var category = new Category();
             // return View(category);
 
+            ViewBag.Action = "add";
+
             return View();
         }
 
@@ -127,6 +132,13 @@ namespace WebAppMVC.Controllers
             }
 
             return View(category);
+        }
+
+        public IActionResult Delete(int categoryId)
+        {
+            CategoriesRepository.DeleteCategory(categoryId);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

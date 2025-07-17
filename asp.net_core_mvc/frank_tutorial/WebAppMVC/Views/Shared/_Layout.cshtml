@@ -1,5 +1,6 @@
 @* 
-`_` in `_Layout`: layout file instead of normal view file
+`_` of `_Layout`: layout file instead of normal view file
+
 Shared layout among other views
 *@
 
@@ -45,20 +46,39 @@ Shared layout among other views
         <div class="pb-3">
             @* 
             Specify part of view to this placeholder
-            Must pass a name parameter
+                Must pass a name parameter
 
-            Second parameter:
-                true or default: this is a required section, all of the view will have to use the title section
-                false: optional
+                Second parameter:
+                    true or default: this is a required section, all of the view will have to use the title section
+                    false: this is a optional section
+
+                Syntax:
+                    @RenderSection("title", false)
+                    Or
+                    @RenderSection("title", required: false)
             *@
             @RenderSection("title")
             <hr>
         </div>
 
         <div>
-            @* Placeholder for each view *@
+            @*
+            Placeholder for each view
+
+            If we put any Javascript in the Categories/Index.cshtml, it is actually put in this <div> element 
+                Which is not best practice
+
+            Best practice is to render Javascript file right before </body> closing tag
+                We can create an other section
+            *@
             @RenderBody()
         </div>
     </div>
+
+    @* 
+    I want to use the async version here because we may have a lot of script to render
+        So use async version to improve the performance
+    *@
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -46,6 +46,7 @@ Defensive programming to make sure we don't create any exception
                 <th>Name</th>
                 <th>Description</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
 
@@ -71,6 +72,19 @@ Defensive programming to make sure we don't create any exception
                         *@
                         <a class="btn btn-link" asp-controller="categories" asp-action="edit" asp-route-id="@category.CategoryId">Edit</a>
                     </td>
+
+                    <td>
+                        @*
+                        elete action paramater is called categoryId, so we use asp-route-categoryid to pass categoryId
+
+                        `return` keyword in onclick value
+                            When an onclick method returns false it causes the event's default action to be prevented
+                            The default action of clicking on a submit button is to submit the form.
+
+                            If you don't use `return`, the method doesn't return a value, so the submit action will be executed regardless of how the user answers the confirmation dialog
+                        *@
+                        <a class="btn btn-link" asp-controller="categories" asp-action="delete" asp-route-categoryid="@category.CategoryId" onclick="return confirmDelete();">Delete</a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -82,3 +96,11 @@ The answer put this <a> element into above curly brace which is wrong?
 Even the list is empty, we shoud be able to add category
 *@
 <a class="btn btn-primary" asp-controller="categories" asp-action="add">Add</a>
+
+@section Scripts{
+    <script>
+        function confirmDelete(){
+            return confirm("Are you sure you want to delete this category?");
+        }
+    </script>
+}
