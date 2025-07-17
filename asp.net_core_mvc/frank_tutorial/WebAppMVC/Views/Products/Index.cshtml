@@ -1,7 +1,7 @@
 @model List<Product>
 
 @section title{
-    <h3>Manage Products</h3>
+    <h3>Products</h3>
 }
 
 @if (Model != null && Model.Count() > 0)
@@ -16,8 +16,9 @@
                 <th></th>
                 <th></th>
             </tr>
-
         </thead>
+
+        <tbody>
             @foreach (var product in Model)
             {
                 <tr>
@@ -25,10 +26,20 @@
                     <td>@product.Name</td>
                     <td>@($"${product.Price}")</td>
                     <td>@product.Quantity</td>
+                    <td>
+                        <a class="btn btn-link" asp-controller="products" asp-action="edit" asp-route-productid="@product.ProductId">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-link" asp-controller="products" asp-action="delete" asp-route-productid="@product.ProductId" onclick="return confirmDelete('product');">Delete</a>
+                    </td>
                 </tr>
             }
-        <tbody>
-
         </tbody>
     </table>
+}
+
+<a class="btn btn-primary" asp-controller="products" asp-action="add">Add</a>
+
+@section Scripts{
+    <partial name="_Script" />
 }

@@ -103,6 +103,10 @@ namespace WebAppMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            // Set ViewBag again
+            //      Otherwise if we don't pass the validation, input the form again, the form will not be passed to Edit action method
+            ViewBag.Action = "Edit";
+
             // If ModelState is invalid, we need user to see the same category page 
             // On that category page, we need user to see error message so that the user has the opportunity to correct his or her mistake 
             return View(category);
@@ -111,8 +115,9 @@ namespace WebAppMVC.Controllers
         public IActionResult Add()
         {
             // Wrong
-            // Because even we don't pass category into the View, in the Razor view, we still have the @model Category
-            // So the model binding still works when we submit the form
+            //      Because even we don't pass category into the View, in the Razor view, we still have the @model Category
+            //      The empty @Model and tag helper will render HTML label and leave input blank
+            //      The model binding still works when we submit the form
 
             // var category = new Category();
             // return View(category);
@@ -131,9 +136,19 @@ namespace WebAppMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            ViewBag.Action = "Add";
+
             return View(category);
         }
 
+        // In Index.cshtml, tag helper generated URL is `/categories/delete?categoryid=1`
+        //      So if we use FromRoute attribute
+        //      public IActionResult Delete([FromRoute] int categoryId)
+        //      Model binding failed
+        //
+        //      If we use FromQuery
+        //      public IActionResult Delete([FromQuery] int categoryId)
+        //      Model binding succeeded
         public IActionResult Delete(int categoryId)
         {
             CategoriesRepository.DeleteCategory(categoryId);

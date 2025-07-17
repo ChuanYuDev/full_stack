@@ -68,7 +68,10 @@ Defensive programming to make sure we don't create any exception
                         @*
                         Better way to generate links is called tag helpers
                             Use tag helpers to generate a URL that can be processed by a controller's action method
-                            asp-route-id: refer to the parameter `id` that asp-action uses
+
+                        asp-route-id
+                            Refer to the parameter `id` that asp-action uses
+                            The generated URL is `/categories/edit/1`
                         *@
                         <a class="btn btn-link" asp-controller="categories" asp-action="edit" asp-route-id="@category.CategoryId">Edit</a>
                     </td>
@@ -76,6 +79,7 @@ Defensive programming to make sure we don't create any exception
                     <td>
                         @*
                         Delete action paramater is called categoryId, so we use asp-route-categoryid to pass categoryId
+                            The generated URL is `/categories/delete?categoryid=1`
 
                         `return` keyword in onclick value
                             When an onclick method returns false it causes the event's default action to be prevented
@@ -83,7 +87,7 @@ Defensive programming to make sure we don't create any exception
 
                             If you don't use `return`, the method doesn't return a value, so the submit action will be executed regardless of how the user answers the confirmation dialog
                         *@
-                        <a class="btn btn-link" asp-controller="categories" asp-action="delete" asp-route-categoryid="@category.CategoryId" onclick="return confirmDelete();">Delete</a>
+                        <a class="btn btn-link" asp-controller="categories" asp-action="delete" asp-route-categoryid="@category.CategoryId" onclick="return confirmDelete('category');">Delete</a>
                     </td>
                 </tr>
             }
@@ -98,9 +102,11 @@ Even the list is empty, we shoud be able to add category
 <a class="btn btn-primary" asp-controller="categories" asp-action="add">Add</a>
 
 @section Scripts{
-    <script>
+    @* <script>
         function confirmDelete(){
             return confirm("Are you sure you want to delete this category?");
         }
-    </script>
+    </script> *@
+
+    <partial name="_Script" />
 }
