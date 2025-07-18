@@ -29,12 +29,14 @@
         {
             if (loadCategory)
             {
-                // Count() is an extension method introduced by LINQ
+                // Count vs Count()
+                //      Count() is an extension method introduced by LINQ
                 //      While the Count property is part of the List itself (derived from ICollection)
                 //      Internally though, LINQ checks if your IEnumerable implements ICollection and if it does it uses the Count property
                 //      So at the end of the day, there's no difference which one you use for a List
                 if (_products != null && _products.Count > 0)
                 {
+                    // ForEach: perform specific action on each element of List<>
                     _products.ForEach(x =>
                     {
                         if (x.CategoryId.HasValue)
@@ -47,6 +49,17 @@
 
             // If _products is null, return an empty list of product
             return _products ?? new List<Product>();
+        }
+        public static List<Product> GetProductsByCategoryId(int categoryId)
+        {
+            // Where: filters a sequence of values based on a predicate
+            var products = _products.Where(x => x.CategoryId == categoryId);
+
+            if (products != null)
+                return products.ToList();
+
+            else
+                return new List<Product>();
         }
 
         public static Product? GetProductById(int productId, bool loadCategory = false)
