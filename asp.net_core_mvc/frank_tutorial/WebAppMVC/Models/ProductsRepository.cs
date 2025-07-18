@@ -12,7 +12,13 @@
 
         public static void AddProduct(Product product)
         {
-            var maxId = _products.Max(x => x.ProductId);
+            int maxId = 0;
+
+            if (_products.Count > 0)
+            {
+                maxId = _products.Max(x => x.ProductId);
+            }
+
             product.ProductId = maxId + 1;
             _products.Add(product);
         }
