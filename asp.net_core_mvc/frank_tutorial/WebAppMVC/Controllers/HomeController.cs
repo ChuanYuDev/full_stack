@@ -12,12 +12,13 @@ namespace WebAppMVC.Controllers
         public IActionResult Index()
         {
             // Return Index.cshtml view by convention
-            // Or we can specify view name to Index.cshtml 
+            //      Or we can specify view name to Index.cshtml 
             //      return View("Index");
 
-            // public class ViewResult : ActionResult, IStatusCodeActionResult
-            // public abstract class ActionResult : IActionResult
-            // IActionResult: all possible return types of action method
+            // IActionResult
+            //      All possible return types of action method
+            //      public class ViewResult : ActionResult, IStatusCodeActionResult
+            //      public abstract class ActionResult : IActionResult
             return View();
         }
     }

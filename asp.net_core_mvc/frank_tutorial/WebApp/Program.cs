@@ -24,10 +24,14 @@ app.MapGet("/", (HttpContext context) =>
     //      Leftmost and right most " is for verbatim string
     //      So @"""" -> "
 
-    // html form
+    // HTML form
     //      https://www.w3schools.com/html/html_forms.asp
-    //      <form> method=""post"": HTTP post transaction
-    //      <label> `for` attribute <-> <input> `id` attribute
+    //      <form> method=""post""
+    //          HTTP post transaction
+    //
+    //      <input>
+    //          `id` attribute: needed to associate the element with a label (<label> `for` attribute)
+    //          `name` attribute: needed to reference the form data after the form is submitted
     WriteHtml(context, @$"
         <!doctype html>
         <html>
@@ -36,8 +40,10 @@ app.MapGet("/", (HttpContext context) =>
                 <h1>Simple Framework</h1>
                 <br>
                 <form action=""/login"" method=""post"">
+
                     <label for=""username"">User name: </label>
                     <input type=""text"" id=""username"" name=""username1"" required>
+
                     <label for=""password"">Password:</label>
                     <input type=""password"" id=""password"" name=""password"" required>
                     <button type=""submit"">Login</button>
@@ -49,7 +55,7 @@ app.MapGet("/", (HttpContext context) =>
 
 app.MapPost("/login", (HttpContext context) =>
 {
-    // Form index <-> <input> name
+    // Form index <-> <input> name attribute
     var username = context.Request.Form["username1"];
     Console.WriteLine($"username: {username}");
     var password = context.Request.Form["password"];

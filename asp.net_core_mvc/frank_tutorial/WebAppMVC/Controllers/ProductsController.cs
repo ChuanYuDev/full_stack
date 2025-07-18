@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WebAppMVC.Models;
+using WebAppMVC.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
@@ -38,21 +39,28 @@ namespace WebAppMVC.Controllers
         {
             ViewBag.Action = "add";
 
-            return View();
+            // In order to create dropdown categories selection
+            var productViewModel = new ProductViewModel
+            {
+                Categories = CategoriesRepository.GetCategories()
+            };
+
+            return View(productViewModel);
         }
 
         [HttpPost]
-        public IActionResult Add(Product product)
+        public IActionResult Add(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                ProductsRepository.AddProduct(product);
+                ProductsRepository.AddProduct(productViewModel.Product);
                 return RedirectToAction(nameof(Index));
             }
 
             ViewBag.Action = "Add";
+            productViewModel.Categories = CategoriesRepository.GetCategories();
 
-            return View(product);
+            return View(productViewModel);
         }
 
         public IActionResult Delete(int? productId)
