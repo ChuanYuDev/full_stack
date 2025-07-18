@@ -16,23 +16,33 @@ namespace WebAppMVC.Controllers
         {
             ViewBag.Action = "edit";
 
-            var product = ProductsRepository.GetProductById(productId.HasValue ? productId.Value : 0);
-            return View(product);
+            var productViewModel = new ProductViewModel
+            {
+                Categories = CategoriesRepository.GetCategories(),
+                Product = ProductsRepository.GetProductById(productId.HasValue ? productId.Value : 0) ?? new Product()
+            };
+
+            return View(productViewModel);
         }
 
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public IActionResult Edit(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
-                ProductsRepository.UpdateProduct(product.ProductId, product);
+                ProductsRepository.UpdateProduct(productViewModel.Product.ProductId, productViewModel.Product);
 
                 return RedirectToAction(nameof(Index));
             }
 
             ViewBag.Action = "edit";
 
-            return View(product);
+            // We need to repopulate categories
+            //      Because the Edit form didn't send the categories back to the controller
+            //      When ModelState is not valid, the Category dropdown menu will be empty except for Please Select option
+            productViewModel.Categories = CategoriesRepository.GetCategories();
+
+            return View(productViewModel);
         }
 
         public IActionResult Add()

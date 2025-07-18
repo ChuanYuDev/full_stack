@@ -19,7 +19,11 @@
         </div>
 
         <div class="col-6">
-            @* The <select> element is used to create a drop-down list *@
+            @*
+            The <select> element is used to create a drop-down list
+            
+            asp-for tag helper even can select the option based on the Product.CategoryId we send
+            *@
             <select asp-for="Product.CategoryId" class="form-control">
                 <option>- Please Select -</option>
 
@@ -64,7 +68,8 @@
 
             min="0"
                 minimum value is 0
-                Even without it, the [Range(0, int.MaxValue)] attribute which decorate Price property kicks in
+                We will get validation information from browser
+                Even without it, the [Range(0, int.MaxValue)] attribute which decorates Price property kicks in
 
             step="any": if you don't use it then you can only use integer
             *@

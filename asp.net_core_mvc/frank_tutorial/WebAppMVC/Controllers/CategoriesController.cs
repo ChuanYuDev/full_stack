@@ -24,7 +24,7 @@ namespace WebAppMVC.Controllers
         // Another way to pass parameter
         //      /categories/edit?id=555
         //      Make sure id=555 name matches with action method parameter name `id`
-        //      Then value will be automatically assigned to `Edit` action method `id` paramater
+        //      Then value will be automatically assigned to `Edit` action method `id` parameter
         //
         // The way to transfer data to the action method using `id` is called model binding
         // 
