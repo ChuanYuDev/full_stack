@@ -35,7 +35,7 @@
 
         <br>
 
-        <div>
+        <div id="productsPartial">
             @* Product list *@
         </div>
         <br>
@@ -53,3 +53,25 @@
     </div>
 
 </div>
+
+@section Scripts{
+    <script>
+        // Document ready event
+        $(function() {
+
+            // Handle category selection
+            //      When #SelectedCategoryId change, trigger the function
+            //      The #productsPartial element load function to transfer data
+            //      After the controller process the categoryId data, return partial view which is a bunch of HTML
+            //      Load function puts the partial view into #productsPartial element
+            $("#SelectedCategoryId").on("change", function () {
+
+                // {categoryId: }
+                //      Use Javascript object to transfer data to ProductsController, ProductsByCategoryPartial action method
+                //
+                // this points to `#SelectedCategoryId` element
+                $("#productsPartial").load("/products/ProductsByCategoryPartial", { categoryId : $(this).val() });
+            });
+        });
+    </script>
+}
