@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using WebAppMVC.ViewModels;
+using WebAppMVC.Models;
 
 namespace WebAppMVC.Controllers
 {
@@ -6,7 +8,12 @@ namespace WebAppMVC.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var salesViewModel = new SalesViewModel
+            {
+                Categories = CategoriesRepository.GetCategories()
+            };
+
+            return View(salesViewModel);
         }
     }
 }
