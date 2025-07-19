@@ -33,7 +33,7 @@
                         123.456 ("C", en-US) -> $123.46
                         -123.456 ("C3", fr-FR) -> -123,456 €
                     *@
-                    <td>@product.Price?.ToString("c")</td>
+                    <td>@product.Price?.ToString("c", CultureInfo.CreateSpecificCulture("en-US"))</td>
 
                     <td>@product.Quantity</td>
                     <td>

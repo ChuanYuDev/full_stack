@@ -92,5 +92,12 @@ namespace WebAppMVC.Controllers
             // _Products: partial view name
             return PartialView("_Products", products);
         }
+
+        public IActionResult ProductByIdPartial(int productId)
+        {
+            var product = ProductsRepository.GetProductById(productId);
+
+            return PartialView("_ProductDetail", product);
+        }
     }
 }

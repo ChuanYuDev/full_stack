@@ -40,7 +40,7 @@
         </div>
         <br>
 
-        <div>
+        <div id="productDetailPartial">
             @* Product details *@
         </div>
 
@@ -82,7 +82,7 @@
 
                 // Get the product ID from the "data-product-id" attribute of the clicked row
                 var productId = $(this).attr("data-product-id");
-                alert(productId);
+                $("#productDetailPartial").load("/products/ProductByIdPartial", { productId : productId});
             });
 
         });
