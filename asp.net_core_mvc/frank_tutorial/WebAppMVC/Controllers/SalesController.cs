@@ -30,6 +30,11 @@ namespace WebAppMVC.Controllers
                 
             }
 
+            // Get SelectedCategoryId by SelectProductId
+
+            var product = ProductsRepository.GetProductById(salesViewModel.SelectedProductId);
+            salesViewModel.SelectedCategoryId = (product?.CategoryId) ?? 0;
+
             salesViewModel.Categories = CategoriesRepository.GetCategories();
             return View("Index", salesViewModel);
         }

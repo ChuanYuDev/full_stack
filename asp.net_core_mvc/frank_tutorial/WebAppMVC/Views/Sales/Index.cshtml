@@ -18,10 +18,12 @@
 
 <br>
 
-<div class="text-danger" asp-validation-summary="All"></div>
 
 <div class="row">
     <div class="col-4">
+
+        <div class="text-danger" asp-validation-summary="All"></div>
+
         @* Category selection *@
         <select asp-for="SelectedCategoryId" class="form-control">
             <option>- Please Select -</option>
@@ -82,6 +84,14 @@
             //      Hence we use hide and show method instead of empty and load
             $("#formSale").hide();
 
+            // Load the products if category is already selected
+            var selectedCategoryId = $("#SelectedCategoryId").val();
+
+            if (selectedCategoryId > 0)
+            {
+                loadProducts(selectedCategoryId);
+            }
+
             // Handle category selection
             //      When #SelectedCategoryId change, trigger the function
             //      The #productsPartial element load function to transfer data
@@ -89,15 +99,8 @@
             //      Load function puts the partial view into #productsPartial element
             $("#SelectedCategoryId").on("change", function () {
 
-                // {categoryId: }
-                //      Use Javascript object to transfer data to ProductsController, ProductsByCategoryPartial action method
-                //
-                // this points to `#SelectedCategoryId` element
-                $("#productsPartial").load("/products/ProductsByCategoryPartial", { categoryId : $(this).val() });
-
-                // Remove product detail when select other options
-                $("#productDetailPartial").empty();
-                $("#formSale").hide();
+                // This points to `#SelectedCategoryId` element
+                loadProducts($(this).val());
             });
 
             // Handle product selection
@@ -126,5 +129,17 @@
             });
 
         });
+
+        function loadProducts(categoryId)
+        {
+            // {categoryId: }
+            //      Use Javascript object to transfer data to ProductsController, ProductsByCategoryPartial action method
+            $("#productsPartial").load("/products/ProductsByCategoryPartial", { categoryId : categoryId});
+
+            // Remove product detail when select other options
+            $("#productDetailPartial").empty();
+            $("#formSale").hide();
+
+        }
     </script>
 }

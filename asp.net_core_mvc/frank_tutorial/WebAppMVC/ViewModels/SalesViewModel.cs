@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using WebAppMVC.Models;
+using WebAppMVC.ViewModels.Validations;
 
 namespace WebAppMVC.ViewModels
 {
@@ -14,10 +15,13 @@ namespace WebAppMVC.ViewModels
 
         // The type is int
         //      We don't need Require attribute
-
         // [Required]
+
+        // Validate QuantityToSell property
+        //      Create a subfolder in current folder
         [Range(1, int.MaxValue)]
         [Display(Name = "Quantity")]
+        [SalesViewModelEnsureProperQuantity]
         public int QuantityToSell { get; set; }
     }
 }
