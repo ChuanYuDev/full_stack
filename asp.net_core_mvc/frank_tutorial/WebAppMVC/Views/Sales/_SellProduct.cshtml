@@ -27,6 +27,6 @@
     *@
 
     @* <input type="text" class="form-control" id="price" value="@(Model.Price?.ToString("c", CultureInfo.CreateSpecificCulture("en-US")))" disabled> *@
-    <input type="text" class="form-control" id="price" value="@(string.Format(CultureInfo.CreateSpecificCulture("en-US"), "{0:c}", @Model.Price))" disabled>
+    <input type="text" class="form-control" id="Price" value="@(string.Format(CultureInfo.CreateSpecificCulture("en-US"), "{0:c}", @Model.Price))" disabled>
 
 </div>

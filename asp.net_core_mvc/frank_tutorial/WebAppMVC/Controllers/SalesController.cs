@@ -22,5 +22,16 @@ namespace WebAppMVC.Controllers
 
             return PartialView("_SellProduct", product);
         }
+
+        public IActionResult Sell(SalesViewModel salesViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                
+            }
+
+            salesViewModel.Categories = CategoriesRepository.GetCategories();
+            return View("Index", salesViewModel);
+        }
     }
 }

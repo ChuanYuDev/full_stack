@@ -18,6 +18,8 @@
 
 <br>
 
+<div class="text-danger" asp-validation-summary="All"></div>
+
 <div class="row">
     <div class="col-4">
         @* Category selection *@
@@ -45,6 +47,20 @@
         </div>
 
         @* Sales form *@
+        <form method="post" asp-controller="sales" asp-action="sell" id="formSale">
+            <input asp-for="SelectedProductId" type="hidden">
+
+            <div class="pb-3">
+                <label asp-for="QuantityToSell" class="col-form-label"></label>
+                <input asp-for="QuantityToSell" class="form-control" type="number" min="1">
+            </div>
+
+            @* <br> *@
+
+            <div>
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </form>
 
     </div>
 
@@ -58,6 +74,13 @@
     <script>
         // Document ready event
         $(function() {
+
+            // Initialize the form
+            //
+            // Form doesn't contain any data which need to be transfered from model
+            //      Therefore no need to use partial view
+            //      Hence we use hide and show method instead of empty and load
+            $("#formSale").hide();
 
             // Handle category selection
             //      When #SelectedCategoryId change, trigger the function
@@ -74,6 +97,7 @@
 
                 // Remove product detail when select other options
                 $("#productDetailPartial").empty();
+                $("#formSale").hide();
             });
 
             // Handle product selection
@@ -86,6 +110,19 @@
                 // Get the product ID from the "data-product-id" attribute of the clicked row
                 var productId = $(this).attr("data-product-id");
                 $("#productDetailPartial").load("/sales/SellProductPartial", { productId : productId});
+
+                if (productId > 0) {
+                    // <input asp-for="SelectedProductId" type="hidden">
+                    //      Rendered as
+                    //      <input type="hidden" data-val="true" data-val-required="The SelectedProductId field is required." id="SelectedProductId" name="SelectedProductId" value="0">
+                    $("#SelectedProductId").val(productId);
+                    $("#QuantityToSell").val("");
+                    $("#formSale").show();
+                }
+                else {
+                    $("#SelectedProductId").val("");
+                    $("#formSale").hide();
+                }
             });
 
         });
