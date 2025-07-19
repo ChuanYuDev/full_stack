@@ -1,0 +1,6 @@
+/*
+Selector .highlight itself is not specific enough
+*/
+tr.highlight > td {
+    background-color: yellow;    
+}

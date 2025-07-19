@@ -11,8 +11,28 @@ Shared layout among other views
     <meta name="viewport" content="width=device-width,charset initial-scale=1.0">
     <title>Supermarket Management</title>
 
-    @* Add bootstrap css file *@
+    @*
+    Add bootstrap css file
+    Use `~/lib/`
+    *@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css">
+
+    @*
+    asp-append-version="true"
+        We normally use static files like CSS, Image and JS files to our website to make it interactive and dynamic
+
+        But when we update any file like css, js or image then we need to tell the browser to take the latest file, not the oldest one
+            And we really don't want user to do full refresh each and every time when we change/update css, js or image file
+ 
+        There were many options available earlier, like below, to make it possible without having users do a full refresh or Ctrl + F5 or Ctrl + R which was really annoying
+            Change the image file name to have updated image on browser 
+            Add random string behind the js, css or image url
+
+        The good news is that ASP.NET Core has in-build feature solution for this issue
+            asp-append-version="true" 
+            It means no more need to use  Ctrl + F5 or Ctrl + R to do a full refresh now
+    *@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
 </head>
 <body>
     <header>
