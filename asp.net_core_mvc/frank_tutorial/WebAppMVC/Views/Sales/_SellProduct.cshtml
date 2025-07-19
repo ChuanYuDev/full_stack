@@ -1,0 +1,32 @@
+@model Product
+
+<div>
+    <label asp-for="Name" class="col-form-label"></label>
+    <input type="text" asp-for="Name" class="form-control" disabled>
+</div>
+
+<div>
+    <label asp-for="Price" class="col-form-label"></label>
+    
+    @*
+    String.Format
+        Use it If you need to insert the value of an object, variable, or expression into another string
+        For example, you can insert the value of a Decimal value into a string to display it to the user as a single string:
+
+        Decimal pricePerOunce = 17.36m;
+        String s = String.Format("The current price is {0} per ounce.", pricePerOunce);
+        Console.WriteLine(s);
+        // Result: The current price is 17.36 per ounce.
+
+        Overload
+            Format(IFormatProvider, String, Object, Object, Object)	
+                Replaces the format items in a string with the string representation of three specified objects
+                An parameter supplies culture-specific formatting information
+
+            Format(String, Object, Object, Object)
+    *@
+
+    @* <input type="text" class="form-control" id="price" value="@(Model.Price?.ToString("c", CultureInfo.CreateSpecificCulture("en-US")))" disabled> *@
+    <input type="text" class="form-control" id="price" value="@(string.Format(CultureInfo.CreateSpecificCulture("en-US"), "{0:c}", @Model.Price))" disabled>
+
+</div>

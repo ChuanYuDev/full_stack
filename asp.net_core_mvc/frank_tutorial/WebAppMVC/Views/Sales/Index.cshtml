@@ -71,6 +71,9 @@
                 //
                 // this points to `#SelectedCategoryId` element
                 $("#productsPartial").load("/products/ProductsByCategoryPartial", { categoryId : $(this).val() });
+
+                // Remove product detail when select other options
+                $("#productDetailPartial").empty();
             });
 
             // Handle product selection
@@ -82,7 +85,7 @@
 
                 // Get the product ID from the "data-product-id" attribute of the clicked row
                 var productId = $(this).attr("data-product-id");
-                $("#productDetailPartial").load("/products/ProductByIdPartial", { productId : productId});
+                $("#productDetailPartial").load("/sales/SellProductPartial", { productId : productId});
             });
 
         });
