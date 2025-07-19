@@ -79,7 +79,12 @@
                 // Highlight the row selected
                 $(".product-row").removeClass("highlight");
                 $(this).addClass("highlight");
+
+                // Get the product ID from the "data-product-id" attribute of the clicked row
+                var productId = $(this).attr("data-product-id");
+                alert(productId);
             });
+
         });
     </script>
 }
