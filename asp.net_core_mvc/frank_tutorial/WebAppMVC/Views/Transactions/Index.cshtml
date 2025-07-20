@@ -1,6 +1,10 @@
 @model TransactionsViewModel
 
 @section title {
+    <h3>transactions Report</h3>
+}
+
+<div id="printarea">
     @* Use search method instead of Index action method *@
     @* <form method="post" asp-controller="transactions" asp-action="index"> *@
 
@@ -42,65 +46,79 @@
             </div>
 
             <div class="col-2">
-                <div class="h-50"></div>
-                <input type="submit" class="btn btn-primary form-control" value="Print">
+                <div class="col-form-label">&nbsp;</div>
+
+                @* Trigger window print method in Javascript *@
+                <input id="print" type="button" class="btn btn-primary form-control" value="Print">
             </div>
         </div>
     </form>
-}
 
-@if (Model != null && Model.Transactions != null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date Time</th>
-                <th>Cashier Name</th>
-                <th>Product Name</th>
-                <th>Qty Before</th>
-                <th>Qty Sold</th>
-                <th>Qty After</th>
-                <th>Price</th>
-                <th>Sold Amt</th>
-            </tr>
-        </thead>
-
-        <tbody class="table-group-divider">
-            @foreach (var transaction in Model.Transactions)
-            {
+    @if (Model != null && Model.Transactions != null)
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@transaction.TimeStamp.ToString("yyyy-MM-dd hh:mm")</td>
-                    <td>@transaction.CashierName</td>
-                    <td>@transaction.ProductName</td>
-                    <td>@transaction.BeforeQty</td>
-                    <td>@transaction.SoldQty</td>
-                    <td>@(transaction.BeforeQty - transaction.SoldQty)</td>
-                    <td class="text-end">@(transaction.Price.ToString("c", CultureInfo.CreateSpecificCulture("en-US")))</td>
-                    <td class="text-end">@((transaction.SoldQty * transaction.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-US")))</td>
+                    <th>Date Time</th>
+                    <th>Cashier Name</th>
+                    <th>Product Name</th>
+                    <th>Qty Before</th>
+                    <th>Qty Sold</th>
+                    <th>Qty After</th>
+                    <th>Price</th>
+                    <th>Sold Amt</th>
                 </tr>
-            }
-        </tbody>
+            </thead>
 
-        @* No need to align all the contents right *@
-        @* <tfoot align="right" class="fw-bold"> *@
-        <tfoot>
-            <tr>
-                @* Use colspan attribute of <td> *@
-                @* <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td> *@
+            <tbody class="table-group-divider">
+                @foreach (var transaction in Model.Transactions)
+                {
+                    <tr>
+                        <td>@transaction.TimeStamp.ToString("yyyy-MM-dd hh:mm")</td>
+                        <td>@transaction.CashierName</td>
+                        <td>@transaction.ProductName</td>
+                        <td>@transaction.BeforeQty</td>
+                        <td>@transaction.SoldQty</td>
+                        <td>@(transaction.BeforeQty - transaction.SoldQty)</td>
+                        <td class="text-end">@(transaction.Price.ToString("c", CultureInfo.CreateSpecificCulture("en-US")))</td>
+                        <td class="text-end">@((transaction.SoldQty * transaction.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-US")))</td>
+                    </tr>
+                }
+            </tbody>
 
-                <td colspan="6"></td>
-                <td class="text-end">
-                    <b>Grand Total:</b>
-                </td>
-                <td class="text-end">
-                    <b>@(string.Format(CultureInfo.CreateSpecificCulture("en-Us"), "{0:c2}", Model.GrandTotal))</b>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+            @* No need to align all the contents right *@
+            @* <tfoot align="right" class="fw-bold"> *@
+            <tfoot>
+                <tr>
+                    @* Use colspan attribute of <td> *@
+                    @* <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td> *@
+
+                    <td colspan="6"></td>
+                    <td class="text-end">
+                        <b>Grand Total:</b>
+                    </td>
+                    <td class="text-end">
+                        <b>@(string.Format(CultureInfo.CreateSpecificCulture("en-Us"), "{0:c2}", Model.GrandTotal))</b>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+
+            // Handle print
+            $("#print").on("click", function () {
+                window.print();
+            });
+        })
+    </script>
 }

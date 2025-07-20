@@ -4,3 +4,26 @@ Selector .highlight itself is not specific enough
 tr.highlight > td {
     background-color: yellow;    
 }
+
+/*
+Target print
+    The styles only apply to the page when it's being printed
+*/
+@media print {
+    /* Why do we use * universal selector? */
+    /* body * { */
+    body {
+        visibility: hidden;
+    }
+
+    /* #printarea, #printarea * { */
+    #printarea {
+        visibility: visible;
+    }
+
+    #printarea {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
