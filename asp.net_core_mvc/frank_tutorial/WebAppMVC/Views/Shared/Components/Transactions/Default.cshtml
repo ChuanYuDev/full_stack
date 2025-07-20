@@ -1,0 +1,32 @@
+@model IEnumerable<Transaction>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cashier Name</th>
+            <th>Product Name</th>
+            <th>Date Time</th>
+            <th>Qty Before</th>
+            <th>Qty Sold</th>
+            <th>Qty After</th>
+            <th>Sold Amt</th>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.CashierName</td>
+                <td>@transaction.ProductName</td>
+
+                @* Format date *@
+                <td>@transaction.TimeStamp.ToString("MM/dd hh:mm")</td>
+                <td>@transaction.BeforeQty</td>
+                <td>@transaction.SoldQty</td>
+                <td>@(transaction.BeforeQty - transaction.SoldQty)</td>
+                <td>@((transaction.SoldQty * transaction.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-US")))</td>
+            </tr>
+        }
+    </tbody>
+</table>
