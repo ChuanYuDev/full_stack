@@ -33,6 +33,9 @@ _ of _Category.cshtml
         Tag help asp-for makes <input> element render into
             <input type="hidden" data-val="true" data-val-required="The CategoryId field is required." id="CategoryId" name="CategoryId" value="1">
             Therefore, value which is CategoryId will be sent back to controller
+
+            The value of Tag help is the model property
+            Can use property name CategoryId directly, no need to use @Model.CategoryId
         *@
         <input type="hidden" asp-for="CategoryId">
     }

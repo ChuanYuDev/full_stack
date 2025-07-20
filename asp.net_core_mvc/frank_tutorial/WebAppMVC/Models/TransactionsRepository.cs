@@ -21,7 +21,7 @@ namespace WebAppMVC.Models
                 );
         }
 
-        public static IEnumerable<Transaction> Search(string cashierName, DateTime startDate, DateTime endDate)
+        public static IEnumerable<Transaction> Search(string? cashierName, DateTime startDate, DateTime endDate)
         {
             if (string.IsNullOrWhiteSpace(cashierName))
                 // Add 1 day

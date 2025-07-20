@@ -1,82 +1,106 @@
 @model TransactionsViewModel
 
 @section title {
-    <form method="post" asp-controller="transactions" asp-action="index">
+    @* Use search method instead of Index action method *@
+    @* <form method="post" asp-controller="transactions" asp-action="index"> *@
+
+    <form method="post" asp-controller="transactions" asp-action="search">
         <div class="row">
             <div class="col-2">
-                <label class="col-form-label" asp-for="@Model.CashierName"></label>
-                <input type="text" class="form-control" asp-for="@Model.CashierName"></label>
+                <label class="col-form-label" asp-for="CashierName"></label>
+                <input type="text" class="form-control" asp-for="CashierName"></label>
             </div>
 
             <div class="col-3">
-                <label class="col-form-label" asp-for="@Model.StartDate"></label>
-                <input type="date" class="form-control" asp-for="@Model.StartDate"></label>
+                <label class="col-form-label" asp-for="StartDate"></label>
+                <input type="date" class="form-control" asp-for="StartDate"></label>
 
             </div>
 
             <div class="col-3">
-                <label class="col-form-label" asp-for="@Model.EndDate"></label>
-                <input type="date" class="form-control" asp-for="@Model.EndDate"></label>
+                <label class="col-form-label" asp-for="EndDate"></label>
+                <input type="date" class="form-control" asp-for="EndDate"></label>
+            </div>
+
+            <div class="col-2">
+                @*
+                Can use col-form-label to set height instead of h-50
+                Can use non-breaking space as placeholder
+                *@
+                @* <div class="h-50"></div> *@
+                <div class="col-form-label">&nbsp;</div>
+
+                @*
+                Can use form-control class to set width 100% instead of w-100
+                Can use button or input element
+                *@
+
+                @* <input type="submit" class="btn btn-primary w-100" value="Search"> *@
+
+                @* <input type="submit" class="btn btn-primary form-control" value="Search"> *@
+                <button type="submit" class="btn btn-primary form-control">Search</button>
             </div>
 
             <div class="col-2">
                 <div class="h-50"></div>
-                <input type="submit" class="btn btn-primary w-100" value="Search">
-            </div>
-
-            <div class="col-2">
-                <div class="h-50"></div>
-                <input type="submit" class="btn btn-primary w-100" value="Print">
+                <input type="submit" class="btn btn-primary form-control" value="Print">
             </div>
         </div>
     </form>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Date Time</th>
-            <th>Cashier Name</th>
-            <th>Product Name</th>
-            <th>Qty Before</th>
-            <th>Qty Sold</th>
-            <th>Qty After</th>
-            <th>Price</th>
-            <th>Sold Amt</th>
-        </tr>
-    </thead>
+@if (Model != null && Model.Transactions != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date Time</th>
+                <th>Cashier Name</th>
+                <th>Product Name</th>
+                <th>Qty Before</th>
+                <th>Qty Sold</th>
+                <th>Qty After</th>
+                <th>Price</th>
+                <th>Sold Amt</th>
+            </tr>
+        </thead>
 
-    <tbody class="table-group-divider">
-        @if (Model != null)
-        {
-            foreach (var transaction in Model.Transactions)
+        <tbody class="table-group-divider">
+            @foreach (var transaction in Model.Transactions)
             {
                 <tr>
-                    <td>@transaction.TimeStamp.ToString("MM/dd hh:mm")</td>
+                    <td>@transaction.TimeStamp.ToString("yyyy-MM-dd hh:mm")</td>
                     <td>@transaction.CashierName</td>
                     <td>@transaction.ProductName</td>
                     <td>@transaction.BeforeQty</td>
                     <td>@transaction.SoldQty</td>
                     <td>@(transaction.BeforeQty - transaction.SoldQty)</td>
-                    <td>@transaction.Price</td>
-                    <td>@((transaction.SoldQty * transaction.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-US")))</td>
+                    <td class="text-end">@(transaction.Price.ToString("c", CultureInfo.CreateSpecificCulture("en-US")))</td>
+                    <td class="text-end">@((transaction.SoldQty * transaction.Price).ToString("c", CultureInfo.CreateSpecificCulture("en-US")))</td>
                 </tr>
             }
-        }
-    </tbody>
+        </tbody>
 
-    <tfoot align="right" class="fw-bold">
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>Grand Total:</td>
-            <td>
-                @(string.Format(CultureInfo.CreateSpecificCulture("en-Us"), "{0:c2}", Model?.GrandTotal ?? 0))
-            </td>
-        </tr>
-    </tfoot>
-</table>
+        @* No need to align all the contents right *@
+        @* <tfoot align="right" class="fw-bold"> *@
+        <tfoot>
+            <tr>
+                @* Use colspan attribute of <td> *@
+                @* <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td> *@
+
+                <td colspan="6"></td>
+                <td class="text-end">
+                    <b>Grand Total:</b>
+                </td>
+                <td class="text-end">
+                    <b>@(string.Format(CultureInfo.CreateSpecificCulture("en-Us"), "{0:c2}", Model.GrandTotal))</b>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+}

@@ -8,16 +8,13 @@ namespace WebAppMVC.Controllers
     {
         public IActionResult Index()
         {
-            TransactionsViewModel transactionsViewModel = new TransactionsViewModel
-            {
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now,
-            };
+            TransactionsViewModel transactionsViewModel = new TransactionsViewModel();
             return View(transactionsViewModel);
         }
 
-        [HttpPost]
-        public IActionResult Index(TransactionsViewModel transactionsViewModel)
+        // If we don't have Search method for Http Get, we can omit HttpPost attribute?
+        // [HttpPost]
+        public IActionResult Search(TransactionsViewModel transactionsViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -32,7 +29,7 @@ namespace WebAppMVC.Controllers
                 );
             }
 
-            return View(transactionsViewModel);
+            return View("Index", transactionsViewModel);
         }
     }
 }
