@@ -1,6 +1,6 @@
 ﻿namespace WebAppMVC.Models
 {
-    public class ProductsRepository
+    public static class ProductsRepository
     {
         private static List<Product> _products = new List<Product>()
         {

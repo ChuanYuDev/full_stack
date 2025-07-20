@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+
+    <!--
+    By default, nullable annotation and warning flags are disabled.
+        That means that your existing code compiles without changes and without generating any new warnings
+        Beginning with .NET 6, new projects include the <Nullable>enable</Nullable> element in all project templates, setting these flags to enabled
+    -->
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
