@@ -2,7 +2,7 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace UseCases.TransactionsUseCases
 {
-    public class RecordTransactionUseCase
+    public class RecordTransactionUseCase : IRecordTransactionUseCase
     {
         private readonly ITransactionRepository transactionRepository;
         private readonly IProductRepository productRepository;
@@ -25,8 +25,8 @@ namespace UseCases.TransactionsUseCases
                     cashierName,
                     productId,
                     product.Name,
-                    product.Price.HasValue?product.Price.Value:0,
-                    product.Quantity.HasValue?product.Quantity.Value:0,
+                    product.Price.HasValue ? product.Price.Value : 0,
+                    product.Quantity.HasValue ? product.Quantity.Value : 0,
                     qty
                 );
             }

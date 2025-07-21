@@ -3,7 +3,7 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace UseCases.TransactionsUseCases
 {
-    public class GetTodayTransactionsUseCase
+    public class GetTodayTransactionsUseCase : IGetTodayTransactionsUseCase
     {
         private readonly ITransactionRepository transactionRepository;
 

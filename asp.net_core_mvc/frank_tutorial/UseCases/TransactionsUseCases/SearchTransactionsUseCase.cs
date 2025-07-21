@@ -3,7 +3,7 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace UseCases.TransactionsUseCases
 {
-    public class SearchTransactionsUseCase
+    public class SearchTransactionsUseCase : ISearchTransactionsUseCase
     {
         private readonly ITransactionRepository transactionRepository;
 
