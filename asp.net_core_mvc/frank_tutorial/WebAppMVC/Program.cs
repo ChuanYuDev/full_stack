@@ -1,6 +1,8 @@
 using Plugins.DataStore.InMemory;
-using UseCases.CategoriesUseCases;
 using UseCases.DataStorePluginInterfaces;
+using UseCases.CategoriesUseCases;
+using UseCases.ProductsUseCases;
+using UseCases.TransactionsUseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +33,23 @@ builder.Services.AddSingleton<ITransactionsRepository, TransactionsInMemoryRepos
 // AddTransient mapping
 //      The lifespan of the created object is going to live as long as the controller
 
+builder.Services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
+builder.Services.AddTransient<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
+builder.Services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();
 builder.Services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
+builder.Services.AddTransient<IViewSelectedCategoryUseCase, ViewSelectedCategoryUseCase>();
+
+builder.Services.AddTransient<IAddProductUseCase, AddProductUseCase>();
+builder.Services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
+builder.Services.AddTransient<IEditProductUseCase, EditProductUseCase>();
+builder.Services.AddTransient<ISellProductUseCase, SellProductUseCase>();
+builder.Services.AddTransient<IViewProductsInCategoryUseCase, ViewProductsInCategoryUseCase>();
+builder.Services.AddTransient<IViewProductsUseCase, ViewProductsUseCase>();
+builder.Services.AddTransient<IViewSelectedProductUseCase, ViewSelectedProductUseCase>();
+
+builder.Services.AddTransient<IGetTodayTransactionsUseCase, GetTodayTransactionsUseCase>();
+builder.Services.AddTransient<IRecordTransactionUseCase, RecordTransactionUseCase>();
+builder.Services.AddTransient<ISearchTransactionsUseCase, SearchTransactionsUseCase>();
 
 var app = builder.Build();
 
