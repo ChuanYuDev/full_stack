@@ -59,7 +59,7 @@ namespace Plugins.DataStore.InMemory
             // If _products is null, return an empty list of product
             return _products ?? new List<Product>();
         }
-        public List<Product> GetProductsByCategoryId(int categoryId)
+        public IEnumerable<Product> GetProductsByCategoryId(int categoryId)
         {
             // Where: filters a sequence of values based on a predicate
             var products = _products.Where(x => x.CategoryId == categoryId);
