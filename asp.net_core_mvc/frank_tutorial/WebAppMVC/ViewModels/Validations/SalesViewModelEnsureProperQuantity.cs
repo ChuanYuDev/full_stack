@@ -41,6 +41,8 @@ namespace WebAppMVC.ViewModels.Validations
                 else
                 {
                     // var product = ProductsRepository.GetProductById(salesViewModel.SelectedProductId);
+
+                    // Don't have constructor based dependency injection
                     var viewSelectedProductUseCase = validationContext.GetService(typeof(IViewSelectedProductUseCase)) as IViewSelectedProductUseCase;
 
                     if (viewSelectedProductUseCase != null)
