@@ -5,15 +5,15 @@ namespace UseCases.CategoriesUseCases
 {
     public class EditCategoryUseCase : IEditCategoryUseCase
     {
-        private readonly ICategoryRepository categoryRepository;
+        private readonly ICategoriesRepository categoriesRepository;
 
-        public EditCategoryUseCase(ICategoryRepository categoryRepository)
+        public EditCategoryUseCase(ICategoriesRepository categoriesRepository)
         {
-            this.categoryRepository = categoryRepository;
+            this.categoriesRepository = categoriesRepository;
         }
         public void Execute(int categoryId, Category category)
         {
-            categoryRepository.UpdateCategory(categoryId, category);
+            categoriesRepository.UpdateCategory(categoryId, category);
         }
     }
 }

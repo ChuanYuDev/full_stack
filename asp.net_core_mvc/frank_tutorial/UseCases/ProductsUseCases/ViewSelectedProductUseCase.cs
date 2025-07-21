@@ -5,16 +5,16 @@ namespace UseCases.ProductsUseCases
 {
     public class ViewSelectedProductUseCase : IViewSelectedProductUseCase
     {
-        private readonly IProductRepository productRepository;
+        private readonly IProductsRepository productsRepository;
 
-        public ViewSelectedProductUseCase(IProductRepository productRepository)
+        public ViewSelectedProductUseCase(IProductsRepository productsRepository)
         {
-            this.productRepository = productRepository;
+            this.productsRepository = productsRepository;
         }
 
         public Product? Execute(int productId)
         {
-            return productRepository.GetProductById(productId);
+            return productsRepository.GetProductById(productId);
         }
     }
 }

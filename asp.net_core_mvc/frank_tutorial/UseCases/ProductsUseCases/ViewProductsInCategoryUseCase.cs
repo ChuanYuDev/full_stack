@@ -5,15 +5,15 @@ namespace UseCases.ProductsUseCases
 {
     public class ViewProductsInCategoryUseCase : IViewProductsInCategoryUseCase
     {
-        private readonly IProductRepository productRepository;
+        private readonly IProductsRepository productsRepository;
 
-        public ViewProductsInCategoryUseCase(IProductRepository productRepository)
+        public ViewProductsInCategoryUseCase(IProductsRepository productsRepository)
         {
-            this.productRepository = productRepository;
+            this.productsRepository = productsRepository;
         }
         public IEnumerable<Product> Execute(int categoryId)
         {
-            return productRepository.GetProductsByCategoryId(categoryId);
+            return productsRepository.GetProductsByCategoryId(categoryId);
         }
     }
 }

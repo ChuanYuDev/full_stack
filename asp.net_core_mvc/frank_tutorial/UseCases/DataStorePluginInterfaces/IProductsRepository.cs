@@ -2,12 +2,12 @@ using CoreBusiness;
 
 namespace UseCases.DataStorePluginInterfaces
 {
-    public interface IProductRepository
+    public interface IProductsRepository
     {
         void AddProduct(Product product);
         void DeleteProduct(int productId);
-        Product? GetProductById(int productId);
-        IEnumerable<Product> GetProducts(bool loadCategory);
+        Product? GetProductById(int productId, bool loadCategory = false);
+        IEnumerable<Product> GetProducts(bool loadCategory = false);
         IEnumerable<Product> GetProductsByCategoryId(int categoryId);
         void UpdateProduct(int productId, Product product);
     }

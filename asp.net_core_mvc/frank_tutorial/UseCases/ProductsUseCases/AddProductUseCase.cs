@@ -5,14 +5,14 @@ namespace UseCases.ProductsUseCases
 {
     public class AddProductUseCase : IAddProductUseCase
     {
-        private readonly IProductRepository productRepository;
-        public AddProductUseCase(IProductRepository productRepository)
+        private readonly IProductsRepository productsRepository;
+        public AddProductUseCase(IProductsRepository productsRepository)
         {
-            this.productRepository = productRepository;
+            this.productsRepository = productsRepository;
         }
         public void Execute(Product product)
         {
-            productRepository.AddProduct(product);
+            productsRepository.AddProduct(product);
         }
     }
 }

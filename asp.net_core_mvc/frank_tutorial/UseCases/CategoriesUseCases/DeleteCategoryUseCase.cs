@@ -4,14 +4,14 @@ namespace UseCases.CategoriesUseCases
 {
     public class DeleteCategoryUseCase : IDeleteCategoryUseCase
     {
-        private readonly ICategoryRepository categoryRepository;
-        public DeleteCategoryUseCase(ICategoryRepository categoryRepository)
+        private readonly ICategoriesRepository categoriesRepository;
+        public DeleteCategoryUseCase(ICategoriesRepository categoriesRepository)
         {
-            this.categoryRepository = categoryRepository;
+            this.categoriesRepository = categoriesRepository;
         }
         public void Execute(int categoryId)
         {
-            categoryRepository.DeleteCategory(categoryId);
+            categoriesRepository.DeleteCategory(categoryId);
         }
     }
 }

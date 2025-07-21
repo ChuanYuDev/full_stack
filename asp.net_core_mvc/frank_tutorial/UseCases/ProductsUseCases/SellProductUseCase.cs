@@ -5,15 +5,15 @@ namespace UseCases.ProductsUseCases
 {
     public class SellProductUseCase : ISellProductUseCase
     {
-        private readonly IProductRepository productRepository;
+        private readonly IProductsRepository productRepository;
         private readonly IRecordTransactionUseCase recordTransactionUseCase;
 
         public SellProductUseCase(
-            IProductRepository productRepository,
+            IProductsRepository productsRepository,
             IRecordTransactionUseCase recordTransactionUseCase
         )
         {
-            this.productRepository = productRepository;
+            this.productRepository = productsRepository;
             this.recordTransactionUseCase = recordTransactionUseCase;
         }
         public void Execute(string cashierName, int productId, int qtyToSell)

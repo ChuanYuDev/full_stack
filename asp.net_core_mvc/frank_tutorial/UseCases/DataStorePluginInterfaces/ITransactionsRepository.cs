@@ -2,7 +2,7 @@ using CoreBusiness;
 
 namespace UseCases.DataStorePluginInterfaces
 {
-    public interface ITransactionRepository
+    public interface ITransactionsRepository
     {
         public void Add(string cashierName, int productId, string productName, double price, int beforeQty, int soldQty);
         public IEnumerable<Transaction> GetByDayAndCashier(string cashierName, DateTime date);

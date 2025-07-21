@@ -5,16 +5,16 @@ namespace UseCases.CategoriesUseCases
 {
     public class AddCategoryUseCase : IAddCategoryUseCase
     {
-        private readonly ICategoryRepository categoryRepository;
+        private readonly ICategoriesRepository categoriesRepository;
 
-        public AddCategoryUseCase(ICategoryRepository categoryRepository)
+        public AddCategoryUseCase(ICategoriesRepository categoriesRepository)
         {
-            this.categoryRepository = categoryRepository;
+            this.categoriesRepository = categoriesRepository;
         }
 
         public void Execute(Category category)
         {
-            categoryRepository.AddCategory(category);
+            categoriesRepository.AddCategory(category);
         }
     }
 }

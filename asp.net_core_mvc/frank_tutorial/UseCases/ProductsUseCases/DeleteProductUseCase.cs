@@ -4,15 +4,15 @@ namespace UseCases.ProductsUseCases
 {
     public class DeleteProductUseCase : IDeleteProductUseCase
     {
-        private readonly IProductRepository productRepository;
+        private readonly IProductsRepository productsRepository;
 
-        public DeleteProductUseCase(IProductRepository productRepository)
+        public DeleteProductUseCase(IProductsRepository productsRepository)
         {
-            this.productRepository = productRepository;
+            this.productsRepository = productsRepository;
         }
         public void DeleteProduct(int productId)
         {
-            productRepository.DeleteProduct(productId);
+            productsRepository.DeleteProduct(productId);
         }
     }
 }

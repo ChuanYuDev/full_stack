@@ -5,15 +5,15 @@ namespace UseCases.ProductsUseCases
 {
     public class EditProductUseCase : IEditProductUseCase
     {
-        private readonly IProductRepository productRepository;
+        private readonly IProductsRepository productsRepository;
 
-        public EditProductUseCase(IProductRepository productRepository)
+        public EditProductUseCase(IProductsRepository productsRepository)
         {
-            this.productRepository = productRepository;
+            this.productsRepository = productsRepository;
         }
         public void Execute(int productId, Product product)
         {
-            productRepository.UpdateProduct(productId, product);
+            productsRepository.UpdateProduct(productId, product);
         }
     }
 }

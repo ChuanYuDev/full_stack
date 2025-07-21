@@ -6,16 +6,16 @@ namespace UseCases.CategoriesUseCases
 {
     public class ViewSelectedCategoryUseCase : IViewSelectedCategoryUseCase
     {
-        private readonly ICategoryRepository categoryRepository;
+        private readonly ICategoriesRepository categoriesRepository;
 
-        public ViewSelectedCategoryUseCase(ICategoryRepository categoryRepository)
+        public ViewSelectedCategoryUseCase(ICategoriesRepository categoriesRepository)
         {
-            this.categoryRepository = categoryRepository;
+            this.categoriesRepository = categoriesRepository;
         }
 
         public Category? Execute(int categoryId)
         {
-            return categoryRepository.GetCategoryById(categoryId);
+            return categoriesRepository.GetCategoryById(categoryId);
         }
     }
 }

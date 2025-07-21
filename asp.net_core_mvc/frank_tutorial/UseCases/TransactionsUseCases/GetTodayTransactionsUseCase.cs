@@ -5,16 +5,16 @@ namespace UseCases.TransactionsUseCases
 {
     public class GetTodayTransactionsUseCase : IGetTodayTransactionsUseCase
     {
-        private readonly ITransactionRepository transactionRepository;
+        private readonly ITransactionsRepository transactionsRepository;
 
-        public GetTodayTransactionsUseCase(ITransactionRepository transactionRepository)
+        public GetTodayTransactionsUseCase(ITransactionsRepository transactionsRepository)
         {
-            this.transactionRepository = transactionRepository;
+            this.transactionsRepository = transactionsRepository;
         }
 
         public IEnumerable<Transaction> Execute(string cashierName)
         {
-            return transactionRepository.GetByDayAndCashier(cashierName, DateTime.Now);
+            return transactionsRepository.GetByDayAndCashier(cashierName, DateTime.Now);
         }
     }
 }

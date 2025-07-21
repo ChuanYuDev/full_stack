@@ -2,7 +2,7 @@ using CoreBusiness;
 
 namespace UseCases.DataStorePluginInterfaces
 {
-    public interface ICategoryRepository
+    public interface ICategoriesRepository
     {
         void AddCategory(Category category);
         void DeleteCategory(int categoryId);

@@ -4,24 +4,24 @@ namespace UseCases.TransactionsUseCases
 {
     public class RecordTransactionUseCase : IRecordTransactionUseCase
     {
-        private readonly ITransactionRepository transactionRepository;
-        private readonly IProductRepository productRepository;
+        private readonly ITransactionsRepository transactionsRepository;
+        private readonly IProductsRepository productsRepository;
 
         public RecordTransactionUseCase(
-            ITransactionRepository transactionRepository,
-            IProductRepository productRepository
+            ITransactionsRepository transactionsRepository,
+            IProductsRepository productsRepository
         )
         {
-            this.transactionRepository = transactionRepository;
-            this.productRepository = productRepository;
+            this.transactionsRepository = transactionsRepository;
+            this.productsRepository = productsRepository;
         }
         public void Execute(string cashierName, int productId, int qty)
         {
-            var product = productRepository.GetProductById(productId);
+            var product = productsRepository.GetProductById(productId);
 
             if (product != null)
             {
-                transactionRepository.Add(
+                transactionsRepository.Add(
                     cashierName,
                     productId,
                     product.Name,

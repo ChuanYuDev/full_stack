@@ -3,7 +3,7 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace Plugins.DataStore.InMemory
 {
-    public class CategoriesInMemoryRepository : ICategoryRepository
+    public class CategoriesInMemoryRepository : ICategoriesRepository
     {
         private List<Category> _categories = new List<Category>()
         {

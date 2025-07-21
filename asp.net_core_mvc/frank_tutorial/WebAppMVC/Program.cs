@@ -28,7 +28,7 @@ builder.Services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
 //      For ICategoryRepository, there's only going to be one instance in the entire ASP.NET core application
 //      Instance is created once
 //      Every time you need to use this instance, it's always going to return back the same instance
-builder.Services.AddSingleton<ICategoryRepository, CategoriesInMemoryRepository>();
+builder.Services.AddSingleton<ICategoriesRepository, CategoriesInMemoryRepository>();
 
 var app = builder.Build();
 

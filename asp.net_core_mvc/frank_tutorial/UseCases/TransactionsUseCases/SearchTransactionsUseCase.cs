@@ -5,15 +5,15 @@ namespace UseCases.TransactionsUseCases
 {
     public class SearchTransactionsUseCase : ISearchTransactionsUseCase
     {
-        private readonly ITransactionRepository transactionRepository;
+        private readonly ITransactionsRepository transactionsRepository;
 
-        public SearchTransactionsUseCase(ITransactionRepository transactionRepository)
+        public SearchTransactionsUseCase(ITransactionsRepository transactionsRepository)
         {
-            this.transactionRepository = transactionRepository;
+            this.transactionsRepository = transactionsRepository;
         }
         public IEnumerable<Transaction> Execute(string cashierName, DateTime startDate, DateTime endDate)
         {
-            return transactionRepository.Search(cashierName, startDate, endDate);
+            return transactionsRepository.Search(cashierName, startDate, endDate);
         }
 
     }
