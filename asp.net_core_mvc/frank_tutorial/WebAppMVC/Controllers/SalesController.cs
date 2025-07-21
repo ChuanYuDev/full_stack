@@ -52,5 +52,18 @@ namespace WebAppMVC.Controllers
             salesViewModel.Categories = CategoriesRepository.GetCategories();
             return View("Index", salesViewModel);
         }
+
+        // Partial
+        //      Returns a partial view result containing the product list to help us render the partial view on the page
+        public IActionResult ProductsByCategoryPartial(int categoryId)
+        {
+            // Test-driven development (TDD)
+            //      Write a test case first and make it fail
+            //      Make a test case work later
+            var products = ProductsRepository.GetProductsByCategoryId(categoryId);
+
+            // _Products: partial view name
+            return PartialView("_Products", products);
+        }
     }
 }

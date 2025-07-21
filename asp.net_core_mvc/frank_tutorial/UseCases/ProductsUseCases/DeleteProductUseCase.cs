@@ -10,7 +10,7 @@ namespace UseCases.ProductsUseCases
         {
             this.productsRepository = productsRepository;
         }
-        public void DeleteProduct(int productId)
+        public void Execute(int productId)
         {
             productsRepository.DeleteProduct(productId);
         }
