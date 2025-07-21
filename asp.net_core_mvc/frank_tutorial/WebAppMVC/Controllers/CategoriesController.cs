@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using UseCases.CategoriesUseCases;
-using WebAppMVC.Models;
+using CoreBusiness;
 
 namespace WebAppMVC.Controllers
 {
@@ -9,7 +9,11 @@ namespace WebAppMVC.Controllers
     //      Prefer plural form of English word
     public class CategoriesController : Controller
     {
+        private readonly IAddCategoryUseCase addCategoryUseCase;
+        private readonly IDeleteCategoryUseCase deleteCategoryUseCase;
+        private readonly IEditCategoryUseCase editCategoryUseCase;
         private readonly IViewCategoriesUseCase viewCategoriesUseCase;
+        private readonly IViewSelectedCategoryUseCase viewSelectedCategoryUseCse;
 
         // When MVC framework tries to instantiate the instance of CategoriesController class
         //      It's going to see that this controller constructor requires IViewCategoriesUseCase
@@ -22,9 +26,19 @@ namespace WebAppMVC.Controllers
         //      That's when we need to actually register the use case
         //      We call it service class
         //
-        public CategoriesController(IViewCategoriesUseCase viewCategoriesUseCase)
+        public CategoriesController(
+            IAddCategoryUseCase addCategoryUseCase,
+            IDeleteCategoryUseCase deleteCategoryUseCase,
+            IEditCategoryUseCase editCategoryUseCase,
+            IViewCategoriesUseCase viewCategoriesUseCase,
+            IViewSelectedCategoryUseCase viewSelectedCategoryUseCse
+        )
         {
+            this.addCategoryUseCase = addCategoryUseCase;
+            this.deleteCategoryUseCase = deleteCategoryUseCase;
+            this.editCategoryUseCase = editCategoryUseCase;
             this.viewCategoriesUseCase = viewCategoriesUseCase;
+            this.viewSelectedCategoryUseCse = viewSelectedCategoryUseCse;
         }
         public IActionResult Index()
         {
@@ -97,7 +111,9 @@ namespace WebAppMVC.Controllers
 
             // var category = new Category { CategoryId = id.HasValue ? id.Value : 0 };
             // Load the category from the data store
-            var category = CategoriesRepository.GetCategoryById(id.HasValue ? id.Value : 0);
+            // var category = CategoriesRepository.GetCategoryById(id.HasValue ? id.Value : 0);
+
+            var category = viewSelectedCategoryUseCse.Execute(id.HasValue ? id.Value : 0);
 
             // One of 4 View signitures
             //      public virtual ViewResult View(object? model)
@@ -117,7 +133,8 @@ namespace WebAppMVC.Controllers
             // Only when ModelState indicates valid, the category will be updated
             if (ModelState.IsValid)
             {
-                CategoriesRepository.UpdateCategory(category.CategoryId, category);
+                // CategoriesRepository.UpdateCategory(category.CategoryId, category);
+                editCategoryUseCase.Execute(category.CategoryId, category);
 
                 // Redirect user to the categories/index page
                 //      If don't specify the Controller which indicates redirecting to the same controller
@@ -154,7 +171,9 @@ namespace WebAppMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                CategoriesRepository.AddCategory(category);
+                // CategoriesRepository.AddCategory(category);
+
+                addCategoryUseCase.Execute(category);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -173,7 +192,9 @@ namespace WebAppMVC.Controllers
         //      Model binding succeeded
         public IActionResult Delete(int categoryId)
         {
-            CategoriesRepository.DeleteCategory(categoryId);
+            // CategoriesRepository.DeleteCategory(categoryId);
+
+            deleteCategoryUseCase.Execute(categoryId);
 
             return RedirectToAction(nameof(Index));
         }
