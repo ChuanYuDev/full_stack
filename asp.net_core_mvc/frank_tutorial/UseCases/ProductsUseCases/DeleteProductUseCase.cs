@@ -2,7 +2,7 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace UseCases.ProductsUseCases
 {
-    public class DeleteProductUseCase
+    public class DeleteProductUseCase : IDeleteProductUseCase
     {
         private readonly IProductRepository productRepository;
 

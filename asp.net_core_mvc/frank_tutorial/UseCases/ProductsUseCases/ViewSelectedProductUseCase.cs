@@ -3,7 +3,7 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace UseCases.ProductsUseCases
 {
-    public class ViewSelectedProductUseCase
+    public class ViewSelectedProductUseCase : IViewSelectedProductUseCase
     {
         private readonly IProductRepository productRepository;
 
