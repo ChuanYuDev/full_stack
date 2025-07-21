@@ -3,7 +3,7 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace UseCases.CategoriesUseCases
 {
-    public class ViewCategoriesUseCase
+    public class ViewCategoriesUseCase : IViewCategoriesUseCase
     {
         // readonly
         //      A readonly field can't be assigned after the constructor exits
