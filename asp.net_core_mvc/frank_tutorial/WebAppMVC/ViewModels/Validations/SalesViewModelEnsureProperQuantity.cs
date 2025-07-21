@@ -59,7 +59,10 @@ namespace WebAppMVC.ViewModels.Validations
                             return new ValidationResult("The selected product doesn't exist.");
                         }
                     }
-                    return new ValidationResult("The viewSelectedProductUseCase class doesn't exist.");
+                    else
+                    {
+                        return new ValidationResult("The viewSelectedProductUseCase class doesn't exist.");
+                    }
                 }
             }
             return ValidationResult.Success;
