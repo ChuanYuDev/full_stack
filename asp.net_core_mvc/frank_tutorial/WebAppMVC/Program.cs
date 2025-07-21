@@ -8,6 +8,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Extension service helps to inject all of the services required by `MapControllerRoute`
 builder.Services.AddControllersWithViews();
 
+// AddSingleton
+//      For ICategoryRepository, there's only going to be one instance in the entire ASP.NET core application
+//      Instance is created once
+//      Every time you need to use this instance, it's always going to return back the same instance
+
+builder.Services.AddSingleton<ICategoriesRepository, CategoriesInMemoryRepository>();
+builder.Services.AddSingleton<IProductsRepository, ProductsInMemoryRepository>();
+builder.Services.AddSingleton<ITransactionsRepository, TransactionsInMemoryRepository>();
+
 // Create a mapping between interface and concrete implementation
 //      Register in services collection that I have an implementation of IViewCategoriesUseCase
 //
@@ -23,12 +32,6 @@ builder.Services.AddControllersWithViews();
 //      The lifespan of the created object is going to live as long as the controller
 
 builder.Services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
-
-// AddSingleton
-//      For ICategoryRepository, there's only going to be one instance in the entire ASP.NET core application
-//      Instance is created once
-//      Every time you need to use this instance, it's always going to return back the same instance
-builder.Services.AddSingleton<ICategoriesRepository, CategoriesInMemoryRepository>();
 
 var app = builder.Build();
 
