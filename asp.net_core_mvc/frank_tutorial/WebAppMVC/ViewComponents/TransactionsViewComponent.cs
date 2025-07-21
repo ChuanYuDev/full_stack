@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WebAppMVC.Models;
+using UseCases.TransactionsUseCases;
 
 // Partial view is not really self-contained
 //      It's not very much encapsulated, at least in terms of behavior, everything mixed up with other action methods
@@ -22,12 +22,22 @@ namespace WebAppMVC.ViewComponents
     [ViewComponent]
     public class TransactionsViewComponent : ViewComponent
     {
+        private readonly IGetTodayTransactionsUseCase getTodayTransactionsUseCase;
+
+        public TransactionsViewComponent(
+            IGetTodayTransactionsUseCase getTodayTransactionsUseCase
+        )
+        {
+            this.getTodayTransactionsUseCase = getTodayTransactionsUseCase;
+        }
         // Similar to mini controller
 
         // Only show the transactions for the current day and login cashier
         public IViewComponentResult Invoke(string userName)
         {
-            var transactions = TransactionsRepository.GetByDayAndCashier(userName, DateTime.Now);
+            // var transactions = TransactionsRepository.GetByDayAndCashier(userName, DateTime.Now);
+            var transactions = getTodayTransactionsUseCase.Execute(userName);
+
             return View(transactions);
         }
     }

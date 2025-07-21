@@ -24,7 +24,7 @@ namespace Plugins.DataStore.InMemory
                 );
         }
 
-        public IEnumerable<Transaction> Search(string? cashierName, DateTime startDate, DateTime endDate)
+        public IEnumerable<Transaction> Search(string cashierName, DateTime startDate, DateTime endDate)
         {
             if (string.IsNullOrWhiteSpace(cashierName))
                 // Add 1 day

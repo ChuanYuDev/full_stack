@@ -1,11 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
-using WebAppMVC.Models;
+using UseCases.TransactionsUseCases;
 using WebAppMVC.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
     public class TransactionsController : Controller
     {
+        private readonly ISearchTransactionsUseCase searchTransactionsUseCase;
+
+        public TransactionsController(
+            ISearchTransactionsUseCase searchTransactionsUseCase
+        )
+        {
+            this.searchTransactionsUseCase = searchTransactionsUseCase;
+        }
+
         public IActionResult Index()
         {
             TransactionsViewModel transactionsViewModel = new TransactionsViewModel();
@@ -18,11 +27,19 @@ namespace WebAppMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                transactionsViewModel.Transactions = TransactionsRepository.Search(
-                    cashierName: transactionsViewModel.CashierName,
+                // transactionsViewModel.Transactions = TransactionsRepository.Search(
+                //     cashierName: transactionsViewModel.CashierName,
+                //     startDate: transactionsViewModel.StartDate,
+                //     endDate: transactionsViewModel.EndDate
+                // );
+
+                var transactions = searchTransactionsUseCase.Execute(
+                    cashierName: transactionsViewModel.CashierName ?? string.Empty,
                     startDate: transactionsViewModel.StartDate,
                     endDate: transactionsViewModel.EndDate
                 );
+
+                transactionsViewModel.Transactions = transactions;
 
                 transactionsViewModel.GrandTotal = transactionsViewModel.Transactions.Sum(
                     x => x.Price * x.SoldQty
