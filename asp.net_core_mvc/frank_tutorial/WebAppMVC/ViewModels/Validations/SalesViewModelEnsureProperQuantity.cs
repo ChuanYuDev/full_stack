@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using WebAppMVC.Models;
+using CoreBusiness;
+using UseCases.ProductsUseCases;
 
 namespace WebAppMVC.ViewModels.Validations
 {
@@ -39,19 +40,26 @@ namespace WebAppMVC.ViewModels.Validations
                 }
                 else
                 {
-                    var product = ProductsRepository.GetProductById(salesViewModel.SelectedProductId);
+                    // var product = ProductsRepository.GetProductById(salesViewModel.SelectedProductId);
+                    var viewSelectedProductUseCase = validationContext.GetService(typeof(IViewSelectedProductUseCase)) as IViewSelectedProductUseCase;
 
-                    if (product != null)
+                    if (viewSelectedProductUseCase != null)
                     {
-                        if (product.Quantity < salesViewModel.QuantityToSell)
+                        var product = viewSelectedProductUseCase.Execute(salesViewModel.SelectedProductId);
+
+                        if (product != null)
                         {
-                            return new ValidationResult($"{product.Name} only has {product.Quantity} left. It is not enough.");
+                            if (product.Quantity < salesViewModel.QuantityToSell)
+                            {
+                                return new ValidationResult($"{product.Name} only has {product.Quantity} left. It is not enough.");
+                            }
+                        }
+                        else
+                        {
+                            return new ValidationResult("The selected product doesn't exist.");
                         }
                     }
-                    else
-                    {
-                        return new ValidationResult("The selected product doesn't exist.");
-                    }
+                    return new ValidationResult("The viewSelectedProductUseCase class doesn't exist.");
                 }
             }
             return ValidationResult.Success;

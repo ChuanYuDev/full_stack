@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using WebAppMVC.Models;
+using CoreBusiness;
 
 namespace WebAppMVC.ViewModels
 {

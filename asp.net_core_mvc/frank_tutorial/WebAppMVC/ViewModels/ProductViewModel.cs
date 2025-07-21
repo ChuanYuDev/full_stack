@@ -1,4 +1,4 @@
-using WebAppMVC.Models;
+using CoreBusiness;
 
 namespace WebAppMVC.ViewModels
 {
