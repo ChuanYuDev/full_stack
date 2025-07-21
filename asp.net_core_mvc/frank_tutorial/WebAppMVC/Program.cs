@@ -1,8 +1,34 @@
+using Plugins.DataStore.InMemory;
+using UseCases.CategoriesUseCases;
+using UseCases.DataStorePluginInterfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Dependency injection
 // Extension service helps to inject all of the services required by `MapControllerRoute`
 builder.Services.AddControllersWithViews();
+
+// Create a mapping between interface and concrete implementation
+//      Register in services collection that I have an implementation of IViewCategoriesUseCase
+//
+// When MVC create an instance of ViewCategoriesUseCase
+//      It raises an exception that it is unable to resolve service for type ICategoryRepository
+//      Because we didn't register the mapping in the service collection
+//
+// ASP.NET core is not a stateful application
+//      That means it doesn't maintain the state and store anything in the session if you don't specially do so
+//      Every time, you ask for a page, a new instance of the corresponding controller class will be created
+//
+// AddTransient mapping
+//      The lifespan of the created object is going to live as long as the controller
+
+builder.Services.AddTransient<IViewCategoriesUseCase, ViewCategoriesUseCase>();
+
+// AddSingleton
+//      For ICategoryRepository, there's only going to be one instance in the entire ASP.NET core application
+//      Instance is created once
+//      Every time you need to use this instance, it's always going to return back the same instance
+builder.Services.AddSingleton<ICategoryRepository, CategoriesInMemoryRepository>();
 
 var app = builder.Build();
 

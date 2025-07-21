@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using UseCases.CategoriesUseCases;
 using WebAppMVC.Models;
 
 namespace WebAppMVC.Controllers
@@ -8,10 +9,32 @@ namespace WebAppMVC.Controllers
     //      Prefer plural form of English word
     public class CategoriesController : Controller
     {
+        private readonly IViewCategoriesUseCase viewCategoriesUseCase;
+
+        // When MVC framework tries to instantiate the instance of CategoriesController class
+        //      It's going to see that this controller constructor requires IViewCategoriesUseCase
+        //      Then it's going to try to create an instance of the implementation of this interface
+        //      Go to service collection and check whether there's anything registered against this interface
+        //      Create the instance of ViewCategoriesUseCase
+        //      Feed the instance into CategoriesController constructor
+        //
+        // How does MVC know where is the implementation of the interface
+        //      That's when we need to actually register the use case
+        //      We call it service class
+        //
+        public CategoriesController(IViewCategoriesUseCase viewCategoriesUseCase)
+        {
+            this.viewCategoriesUseCase = viewCategoriesUseCase;
+        }
         public IActionResult Index()
         {
             // Load static repository data
-            var categories = CategoriesRepository.GetCategories();
+            // var categories = CategoriesRepository.GetCategories();
+
+            // Use view categories use case instance instead
+            var categories = viewCategoriesUseCase.Execute();
+
+
             return View(categories);
         }
 
