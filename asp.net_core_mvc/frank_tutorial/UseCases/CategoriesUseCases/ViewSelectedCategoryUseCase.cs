@@ -4,7 +4,7 @@ using UseCases.DataStorePluginInterfaces;
 
 namespace UseCases.CategoriesUseCases
 {
-    public class ViewSelectedCategoryUseCase
+    public class ViewSelectedCategoryUseCase : IViewSelectedCategoryUseCase
     {
         private readonly ICategoryRepository categoryRepository;
 
