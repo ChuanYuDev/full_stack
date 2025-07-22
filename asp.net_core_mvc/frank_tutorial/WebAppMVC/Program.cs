@@ -1,10 +1,24 @@
 using Plugins.DataStore.InMemory;
+using Plugins.DataStore.SQL;
 using UseCases.DataStorePluginInterfaces;
 using UseCases.CategoriesUseCases;
 using UseCases.ProductsUseCases;
 using UseCases.TransactionsUseCases;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Use dependency injection to provide all of the services that entity framework core actually needs
+builder.Services.AddDbContext<MarketContext>(options =>
+{
+    // UseSqlServer
+    //      Configure the EF core to use SQL server
+    //
+    // Provide connection string
+    //      Pull from appsettings.Development.json because we're using development environment
+    //      It will be fed to the MarketContext in Plugins.DataStore.SQL
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MarketManagement"));
+});
 
 // Dependency injection
 // Extension service helps to inject all of the services required by `MapControllerRoute`

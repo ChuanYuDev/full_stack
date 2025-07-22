@@ -8,6 +8,15 @@ namespace Plugins.DataStore.SQL
     // DbContext is from EntityFrameworkCore Nuget package
     public class MarketContext : DbContext
     {
+        // Specify where is the actual database
+        //
+        // base(options)
+        //      Pass parameters to the base DbContext
+        //      Base constructor will be able to know where the connection is
+        public MarketContext(DbContextOptions options) : base(options)
+        {
+
+        }
         // DbSet corresponds to a database table with generic parameter
         //
         // DbSet<Category>
