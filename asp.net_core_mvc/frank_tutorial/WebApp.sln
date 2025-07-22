@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{07D5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.DataStore.InMemory", "Plugins\Plugins.DataStore.InMemory\Plugins.DataStore.InMemory.csproj", "{A75BADFC-F693-4D13-99D7-6E186CCEB194}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.DataStore.SQL", "Plugins\Plugins.DataStore.SQL\Plugins.DataStore.SQL.csproj", "{ED9953AE-8CCE-4A27-90C2-141A02B77392}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,11 +87,24 @@ Global
 		{A75BADFC-F693-4D13-99D7-6E186CCEB194}.Release|x64.Build.0 = Release|Any CPU
 		{A75BADFC-F693-4D13-99D7-6E186CCEB194}.Release|x86.ActiveCfg = Release|Any CPU
 		{A75BADFC-F693-4D13-99D7-6E186CCEB194}.Release|x86.Build.0 = Release|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Debug|x64.Build.0 = Debug|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Debug|x86.Build.0 = Debug|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Release|x64.ActiveCfg = Release|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Release|x64.Build.0 = Release|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Release|x86.ActiveCfg = Release|Any CPU
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A75BADFC-F693-4D13-99D7-6E186CCEB194} = {07D57EEB-2F50-60C4-C011-FE4FA775C9A8}
+		{ED9953AE-8CCE-4A27-90C2-141A02B77392} = {07D57EEB-2F50-60C4-C011-FE4FA775C9A8}
 	EndGlobalSection
 EndGlobal

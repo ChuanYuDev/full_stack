@@ -1,22 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-
-    <!--
-    By default, nullable annotation and warning flags are disabled.
-        That means that your existing code compiles without changes and without generating any new warnings
-        Beginning with .NET 6, new projects include the <Nullable>enable</Nullable> element in all project templates, setting these flags to enabled
-    -->
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="../CoreBusiness/CoreBusiness.csproj" />
-    <ProjectReference Include="../Plugins/Plugins.DataStore.InMemory/Plugins.DataStore.InMemory.csproj" />
-    <ProjectReference Include="../UseCases/UseCases.csproj" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
