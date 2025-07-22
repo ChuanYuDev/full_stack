@@ -21,17 +21,34 @@ builder.Services.AddDbContext<MarketContext>(options =>
 });
 
 // Dependency injection
-// Extension service helps to inject all of the services required by `MapControllerRoute`
+//      Extension service helps to inject all of the services required by `MapControllerRoute`
 builder.Services.AddControllersWithViews();
 
-// AddSingleton
-//      For ICategoryRepository, there's only going to be one instance in the entire ASP.NET core application
-//      Instance is created once
-//      Every time you need to use this instance, it's always going to return back the same instance
-
-builder.Services.AddSingleton<ICategoriesRepository, CategoriesInMemoryRepository>();
-builder.Services.AddSingleton<IProductsRepository, ProductsInMemoryRepository>();
-builder.Services.AddSingleton<ITransactionsRepository, TransactionsInMemoryRepository>();
+// Implement a logic for dependency injection
+//      Sometimes, when QA wants to test, QA will go through hundreds of thousands of test cases
+//      Talking to actual database is going to be really slow
+//      It's possible that QA wants to use in-memory repositories
+if (builder.Environment.IsEnvironment("QA"))
+{
+    // AddSingleton
+    //      For ICategoryRepository, there's only going to be one instance in the entire ASP.NET core application
+    //      Instance is created once
+    //      Every time you need to use this instance, it's always going to return back the same instance
+    builder.Services.AddSingleton<ICategoriesRepository, CategoriesInMemoryRepository>();
+    builder.Services.AddSingleton<IProductsRepository, ProductsInMemoryRepository>();
+    builder.Services.AddSingleton<ITransactionsRepository, TransactionsInMemoryRepository>();
+}
+else
+{
+    // As soon as we switch the concrete implementation to its SQL server counterpoarts
+    //      We will be able to talk to the database
+    //
+    // Entity Framework Core will control the life span itself
+    //      We will use AddTransient instead
+    builder.Services.AddTransient<ICategoriesRepository, CategoriesSQLRepository>();
+    builder.Services.AddTransient<IProductsRepository, ProductsSQLRepository>();
+    builder.Services.AddTransient<ITransactionsRepository, TransactionsSQLRepository>();
+}
 
 // Create a mapping between interface and concrete implementation
 //      Register in services collection that I have an implementation of IViewCategoriesUseCase
@@ -46,7 +63,6 @@ builder.Services.AddSingleton<ITransactionsRepository, TransactionsInMemoryRepos
 //
 // AddTransient mapping
 //      The lifespan of the created object is going to live as long as the controller
-
 builder.Services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
 builder.Services.AddTransient<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
 builder.Services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();
