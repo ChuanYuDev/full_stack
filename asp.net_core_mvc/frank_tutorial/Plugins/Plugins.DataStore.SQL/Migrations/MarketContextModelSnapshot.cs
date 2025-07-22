@@ -157,7 +157,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasKey("TransactionId");
 
-                    b.ToTable("transactions");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("CoreBusiness.Product", b =>

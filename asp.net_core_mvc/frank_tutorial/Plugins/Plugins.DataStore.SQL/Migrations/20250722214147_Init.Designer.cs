@@ -12,7 +12,7 @@ using Plugins.DataStore.SQL;
 namespace Plugins.DataStore.SQL.Migrations
 {
     [DbContext(typeof(MarketContext))]
-    [Migration("20250722175950_Init")]
+    [Migration("20250722214147_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -160,7 +160,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasKey("TransactionId");
 
-                    b.ToTable("transactions");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("CoreBusiness.Product", b =>

@@ -28,7 +28,7 @@ namespace Plugins.DataStore.SQL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "transactions",
+                name: "Transactions",
                 columns: table => new
                 {
                     TransactionId = table.Column<int>(type: "int", nullable: false)
@@ -43,7 +43,7 @@ namespace Plugins.DataStore.SQL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_transactions", x => x.TransactionId);
+                    table.PrimaryKey("PK_Transactions", x => x.TransactionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,7 +102,7 @@ namespace Plugins.DataStore.SQL.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "transactions");
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "Categories");

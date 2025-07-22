@@ -25,7 +25,7 @@ namespace Plugins.DataStore.SQL
         // Usually we use plural to represent the database inside the context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Transaction> transactions { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
         // Define relationship between the tables
         //
