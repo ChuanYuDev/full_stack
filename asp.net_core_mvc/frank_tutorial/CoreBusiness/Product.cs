@@ -4,6 +4,7 @@ namespace CoreBusiness
 {
     public class Product
     {
+        // Primary key
         public int ProductId { get; set; }
 
         // Normally
@@ -13,6 +14,8 @@ namespace CoreBusiness
         //
         // If we add DisplayAttribute to the property
         //      The content will be the string specified by Display(Name="")
+        //
+        // Serve as the foreign key and will define the relationship
         [Required]
         [Display(Name = "Category")]
         public int? CategoryId { get; set; }
@@ -28,6 +31,7 @@ namespace CoreBusiness
         public double? Price { get; set; }
         
         // Map CategoryId to Category object
+        // Naviagtion property for EF core
         public Category? Category { get; set; }
     }
 }

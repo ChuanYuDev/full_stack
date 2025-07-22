@@ -4,6 +4,8 @@ namespace CoreBusiness
 {
     public class Category
     {
+        // By convention, if we have a class called Category and one property is call CategoryId
+        //      This property will be the primary key of the category table
         public int CategoryId { get; set; }
 
         // public string Name { get; set; }; warning
@@ -29,5 +31,10 @@ namespace CoreBusiness
         //      If we don't input the description field
         // public string Description { get; set; } = string.Empty;
         public string? Description { get; set; }
+
+        // Navigation property for EF core
+        //
+        // Include the products that belong to the category
+        public List<Product>? Products { get; set; }
     }
 }
