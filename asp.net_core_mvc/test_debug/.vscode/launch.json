@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C#: WebAppMVC Debug",
+            "name": "C#: <project-name> Debug",
             "type": "dotnet",
             "request": "launch",
-            "projectPath": "${workspaceFolder}/WebAppMVC/WebAppMVC.csproj",
-            "launchSettingsProfile": "https"
-        },
+            "projectPath": "${workspaceFolder}/WebApplication1/WebApplication1.csproj"
+        }
+
     ]
 }

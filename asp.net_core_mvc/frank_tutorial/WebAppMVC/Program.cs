@@ -5,6 +5,8 @@ using UseCases.CategoriesUseCases;
 using UseCases.ProductsUseCases;
 using UseCases.TransactionsUseCases;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using WebAppMVC.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,8 @@ builder.Services.AddDbContext<MarketContext>(options =>
     //      It will be fed to the MarketContext in Plugins.DataStore.SQL
     options.UseSqlServer(builder.Configuration.GetConnectionString("MarketManagement"));
 });
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AccountContext>();
 
 // Dependency injection
 //      Extension service helps to inject all of the services required by `MapControllerRoute`
