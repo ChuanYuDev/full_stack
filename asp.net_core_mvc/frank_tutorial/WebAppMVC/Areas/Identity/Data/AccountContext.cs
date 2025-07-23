@@ -4,6 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebAppMVC.Data;
 
+// AccountContext
+//      Represent the database tables to store all of the identity information
+//      For authentication and authorization purpose
+//
+// Derive from IdentityDbContext
+//      All of the DbSet are defined inside IdentityDbContext
 public class AccountContext : IdentityDbContext<IdentityUser>
 {
     public AccountContext(DbContextOptions<AccountContext> options)

@@ -22,6 +22,13 @@ builder.Services.AddDbContext<MarketContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MarketManagement"));
 });
 
+builder.Services.AddDbContext<AccountContext>(options =>
+{
+    // Can choose different database for identity
+    //      This course uses the same database
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MarketManagement"));
+});
+
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AccountContext>();
 
 // Dependency injection
