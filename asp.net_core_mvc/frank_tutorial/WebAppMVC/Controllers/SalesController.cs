@@ -6,7 +6,7 @@ using WebAppMVC.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Cashier")]
     public class SalesController : Controller
     {
         private readonly ISellProductUseCase sellProductUseCase;

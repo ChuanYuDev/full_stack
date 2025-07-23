@@ -42,6 +42,19 @@ builder.Services.AddRazorPages();
 //      Extension service helps to inject all of the services required by `MapControllerRoute`
 builder.Services.AddControllersWithViews();
 
+// Configure authorization
+builder.Services.AddAuthorization(options =>
+{
+    // Policy-based authorization
+    //      Use policy to limit access to our pages
+    //
+    // AddPolicy
+    //      Policy name: "Inventory"
+    //      Claim is a key value pair that carries the user information
+    options.AddPolicy("Inventory", p => p.RequireClaim("Position", "Inventory"));
+    options.AddPolicy("Cashier", p => p.RequireClaim("Position", "Cashier"));
+});
+
 // Implement a logic for dependency injection
 //      Sometimes, when QA wants to test, QA will go through hundreds of thousands of test cases
 //      Talking to actual database is going to be really slow
@@ -99,6 +112,7 @@ builder.Services.AddTransient<IGetTodayTransactionsUseCase, GetTodayTransactions
 builder.Services.AddTransient<IRecordTransactionUseCase, RecordTransactionUseCase>();
 builder.Services.AddTransient<ISearchTransactionsUseCase, SearchTransactionsUseCase>();
 
+// Dependency injection should be before the builder.Build()
 var app = builder.Build();
 
 // Add static file middleware
