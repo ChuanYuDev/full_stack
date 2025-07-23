@@ -29,7 +29,14 @@ builder.Services.AddDbContext<AccountContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MarketManagement"));
 });
 
+// Scaffold for identity adds automatically
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AccountContext>();
+
+// Once ASP.NET core finds the user hasn't logged in and tries to access one of `Identity/Pages`, it's going to redirect the user to the login page
+//      The login page is Razor pages
+//      Our application is only set up for accessing ASP.NET core MVC
+//      In order to run the application, we need to add support for Razor pages
+builder.Services.AddRazorPages();
 
 // Dependency injection
 //      Extension service helps to inject all of the services required by `MapControllerRoute`
@@ -103,6 +110,14 @@ app.UseStaticFiles();
 // Add routing middleware
 app.UseRouting();
 
+// For every web request that goes to this application, it's going to
+//      Check the identity to know who the user is 
+//      And then verify the user's permission with the authorization middleware
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Map Razor pages
+app.MapRazorPages();
 // Mapping
 app.MapControllerRoute(
     name: "default",

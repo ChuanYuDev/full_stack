@@ -3,9 +3,11 @@ using CoreBusiness;
 using UseCases.CategoriesUseCases;
 using UseCases.ProductsUseCases;
 using WebAppMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppMVC.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IAddProductUseCase addProductUseCase;

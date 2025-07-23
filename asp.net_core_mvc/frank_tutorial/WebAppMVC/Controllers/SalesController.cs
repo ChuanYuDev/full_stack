@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UseCases.CategoriesUseCases;
 using UseCases.ProductsUseCases;
@@ -5,6 +6,7 @@ using WebAppMVC.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
+    [Authorize]
     public class SalesController : Controller
     {
         private readonly ISellProductUseCase sellProductUseCase;

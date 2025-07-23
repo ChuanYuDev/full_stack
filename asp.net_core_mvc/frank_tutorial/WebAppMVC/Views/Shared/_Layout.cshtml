@@ -89,8 +89,12 @@ Shared layout among other views
 
                     Or using Named arguments
                     @RenderSection("title", required: false)
+            
+            Pages in Identity will also use `_Layout.cshtml`
+                They don't contain title section
+                Change it to optional
             *@
-            @RenderSection("title")
+            @RenderSection("title", required: false)
             <hr>
         </div>
 

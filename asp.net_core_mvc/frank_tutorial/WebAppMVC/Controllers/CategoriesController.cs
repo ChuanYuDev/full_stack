@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using UseCases.CategoriesUseCases;
 using CoreBusiness;
 
@@ -7,6 +8,11 @@ namespace WebAppMVC.Controllers
     // Categories:
     //      Name of the controller
     //      Prefer plural form of English word
+    //
+    // Authorize
+    //      Authorization process
+    //      Means only the user who has logged in can access this controller
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly IAddCategoryUseCase addCategoryUseCase;
