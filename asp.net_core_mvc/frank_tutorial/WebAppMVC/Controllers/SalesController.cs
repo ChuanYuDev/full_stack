@@ -83,7 +83,7 @@ namespace WebAppMVC.Controllers
                 //     ProductsRepository.UpdateProduct(salesViewModel.SelectedProductId, product);
                 // }
 
-                sellProductUseCase.Execute("Cashier1", salesViewModel.SelectedProductId, salesViewModel.QuantityToSell);
+                sellProductUseCase.Execute(User.Identity?.Name??string.Empty, salesViewModel.SelectedProductId, salesViewModel.QuantityToSell);
 
             }
 

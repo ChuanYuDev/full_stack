@@ -18,7 +18,7 @@ namespace WebAppMVC.ViewModels
         // [Required]
 
         // Validate QuantityToSell property
-        //      Create a subfolder in current folder
+        //      Create a Validations subfolder in current folder
         [Range(1, int.MaxValue)]
         [Display(Name = "Quantity")]
         [SalesViewModelEnsureProperQuantity]

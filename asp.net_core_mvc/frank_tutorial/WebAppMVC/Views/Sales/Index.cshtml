@@ -73,7 +73,7 @@
         Argument:
             Name of the ViewComponent (TransactionsViewComponent remove ViewComponent)
         *@
-        @await Component.InvokeAsync("Transactions", "Cashier1")
+        @await Component.InvokeAsync("Transactions", @User.Identity?.Name??string.Empty)
     </div>
 
 </div>
