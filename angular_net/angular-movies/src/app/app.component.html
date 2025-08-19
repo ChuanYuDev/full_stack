@@ -15,7 +15,7 @@
 
 <!-- <p> The double of 3 is {{ duplicateNumber(3) }}</p> -->
 
-<h2>Data of the movie</h2>
+<h2>Example using for</h2>
 
 <!-- 
   track $index
@@ -44,3 +44,21 @@
     </div>
   </div>
 }
+
+<h2>Example using NgFor</h2>
+
+<!-- ngFor will repeat the code including div class="movies-container" -->
+<div class="movies-container" *ngFor="let movie of movies; let $index = index">
+  <div>
+    {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+  </div>
+
+  <div>
+    <!-- Chain pipe -->
+    Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
+  </div>
+
+  <div>
+    Price: {{ movie.price | currency }}
+  </div>
+</div>
