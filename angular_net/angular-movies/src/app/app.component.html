@@ -16,15 +16,31 @@
 <!-- <p> The double of 3 is {{ duplicateNumber(3) }}</p> -->
 
 <h2>Data of the movie</h2>
-<div>
-  Movie: {{ movie.title | uppercase}}
-</div>
 
-<div>
-  <!-- Chain pipe -->
-  Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
-</div>
+<!-- 
+  track $index
+    Allows the angular compiler to keep track of every single movie of the movies array
+      We're doing that tracking using the index, using the order of the elements
 
-<div>
-  Price: {{ movie.price | currency }}
-</div>
+    If I change the second element of movies, only this is going to change in the UI
+      This is a way for angular to do updates efficiently
+
+  $index
+    Contains the order of each movie
+  -->
+@for(movie of movies; track $index) {
+  <div class="movies-container">
+    <div>
+      {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+    </div>
+
+    <div>
+      <!-- Chain pipe -->
+      Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
+    </div>
+
+    <div>
+      Price: {{ movie.price | currency }}
+    </div>
+  </div>
+}

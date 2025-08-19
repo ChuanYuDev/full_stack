@@ -18,9 +18,16 @@ export class AppComponent {
   //   return value * 2;
   // }
 
-  movie = {
-    title: 'Spider-Man',
-    releaseDate: new Date(),
-    price: 1400.99 
-  }
+  movies = [
+    {
+      title: 'Spider-Man',
+      releaseDate: new Date(),
+      price: 1400.99 
+    },
+    {
+      title: 'Moana',
+      releaseDate: new Date("2016-05-03"),
+      price: 300.99 
+    }
+  ]
 }
