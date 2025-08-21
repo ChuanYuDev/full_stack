@@ -15,7 +15,7 @@
 
 <!-- <p> The double of 3 is {{ duplicateNumber(3) }}</p> -->
 
-<h2>Example using for</h2>
+<h2>List of movies</h2>
 
 <!-- 
   track $index
@@ -31,34 +31,58 @@
 @for(movie of movies; track $index) {
   <div class="movies-container">
     <div>
-      {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+      <!-- 
+        Property binding allows us to have a dynamic property for a component or for an HTML element
+          Use [] to indicate the following is JavaScript expression
+        
+        When we reload the page and choose `Disable cache` in CDT, we found that all the posters are loaded
+          We prefer to only load the ones that are on the screen or close to the screen
+          Use NgOptimizedImage
+
+        When we use `ngSrc`, all the posters are still loaded because they are too close to the screen
+          We can increase the margin-bottom
+          Allows us to dynamically load resources only when we get close enough to them
+        
+        Console error
+          NG02955: The NgOptimizedImage directive (activated on an <img> element with the `ngSrc="https://upload.wikimedia.org/wikipedia/en/f/f7/Inside_Out_2_poster.jpg?20240514232832"`) has detected that this image is the Largest Contentful Paint (LCP) element but was not marked "priority"
+          This image should be marked "priority" in order to prioritize its loading
+          To fix this, add the "priority" attribute
+
+          However, if we add priority attribute to the image, all the images are loaded because all of them have priority attribute
+        -->
+      <img [ngSrc]="movie.poster" priority width="169" height="250"/>
     </div>
 
     <div>
-      <!-- Chain pipe -->
-      Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
-    </div>
+      <div>
+        {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+      </div>
 
-    <div>
-      Price: {{ movie.price | currency }}
+      <div>
+        <!-- Chain pipe -->
+        Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
+      </div>
+
+      <div>
+        Price: {{ movie.price | currency }}
+      </div>
     </div>
   </div>
 }
 
-<h2>Example using NgFor</h2>
+<!-- <h2>Example using NgFor</h2> -->
 
 <!-- ngFor will repeat the code including div class="movies-container" -->
-<div class="movies-container" *ngFor="let movie of movies; let $index = index">
+<!-- <div class="movies-container" *ngFor="let movie of movies; let $index = index">
   <div>
     {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
   </div>
 
   <div>
-    <!-- Chain pipe -->
     Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
   </div>
 
   <div>
     Price: {{ movie.price | currency }}
   </div>
-</div>
+</div> -->
