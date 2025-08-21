@@ -49,8 +49,15 @@
           To fix this, add the "priority" attribute
 
           However, if we add priority attribute to the image, all the images are loaded because all of them have priority attribute
+          Use [priority]="$index === 0"
+        
+        For our case, this is dynamic component that is going to dynamically put images
+          Don't want to have to dynamically prioritize or de-prioritize movies
+          This would be great for a static image
         -->
-      <img [ngSrc]="movie.poster" priority width="169" height="250"/>
+
+      <!-- <img [ngSrc]="movie.poster" [priority]="$index === 0" width="169" height="250"/> -->
+      <img [src]="movie.poster" width="169" height="250"/>
     </div>
 
     <div>
