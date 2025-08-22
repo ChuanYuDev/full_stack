@@ -15,68 +15,6 @@
 
 <!-- <p> The double of 3 is {{ duplicateNumber(3) }}</p> -->
 
-<h2>List of movies</h2>
-
-<!-- 
-  track $index
-    Allows the angular compiler to keep track of every single movie of the movies array
-      We're doing that tracking using the index, using the order of the elements
-
-    If I change the second element of movies, only this is going to change in the UI
-      This is a way for angular to do updates efficiently
-
-  $index
-    Contains the order of each movie
-  -->
-@for(movie of movies; track $index) {
-  <div class="movies-container">
-    <div>
-      <!-- 
-        Property binding allows us to have a dynamic property for a component or for an HTML element
-          Use [] to indicate the following is JavaScript expression
-        
-        When we reload the page and choose `Disable cache` in CDT, we found that all the posters are loaded
-          We prefer to only load the ones that are on the screen or close to the screen
-          Use NgOptimizedImage
-
-        When we use `ngSrc`, all the posters are still loaded because they are too close to the screen
-          We can increase the margin-bottom
-          Allows us to dynamically load resources only when we get close enough to them
-        
-        Console error
-          NG02955: The NgOptimizedImage directive (activated on an <img> element with the `ngSrc="https://upload.wikimedia.org/wikipedia/en/f/f7/Inside_Out_2_poster.jpg?20240514232832"`) has detected that this image is the Largest Contentful Paint (LCP) element but was not marked "priority"
-          This image should be marked "priority" in order to prioritize its loading
-          To fix this, add the "priority" attribute
-
-          However, if we add priority attribute to the image, all the images are loaded because all of them have priority attribute
-          Use [priority]="$index === 0"
-        
-        For our case, this is dynamic component that is going to dynamically put images
-          Don't want to have to dynamically prioritize or de-prioritize movies
-          This would be great for a static image
-        -->
-
-      <!-- <img [ngSrc]="movie.poster" [priority]="$index === 0" width="169" height="250"/> -->
-      <img [src]="movie.poster" width="169" height="250"/>
-    </div>
-
-    <div>
-      <div>
-        {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
-      </div>
-
-      <div>
-        <!-- Chain pipe -->
-        Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
-      </div>
-
-      <div>
-        Price: {{ movie.price | currency }}
-      </div>
-    </div>
-  </div>
-}
-
 <!-- <h2>Example using NgFor</h2> -->
 
 <!-- ngFor will repeat the code including div class="movies-container" -->
@@ -93,3 +31,79 @@
     Price: {{ movie.price | currency }}
   </div>
 </div> -->
+
+<h2>List of movies</h2>
+
+@if(!movies){
+  <!-- <div>loading...</div> -->
+
+  <div>
+    <img src="https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif" />
+  </div>
+}
+@else if (movies.length === 0) {
+  <div>
+    <p>There are no movies to display</p>
+  </div>
+}
+@else {
+  <!-- 
+    track $index
+      Allows the angular compiler to keep track of every single movie of the movies array
+        We're doing that tracking using the index, using the order of the elements
+
+      If I change the second element of movies, only this is going to change in the UI
+        This is a way for angular to do updates efficiently
+
+    $index
+      Contains the order of each movie
+    -->
+  @for(movie of movies; track $index) {
+    <div class="movies-container">
+      <div>
+        <!-- 
+          Property binding allows us to have a dynamic property for a component or for an HTML element
+            Use [] to indicate the following is JavaScript expression
+          
+          When we reload the page and choose `Disable cache` in CDT, we found that all the posters are loaded
+            We prefer to only load the ones that are on the screen or close to the screen
+            Use NgOptimizedImage
+
+          When we use `ngSrc`, all the posters are still loaded because they are too close to the screen
+            We can increase the margin-bottom to 10rem
+            Allows us to dynamically load resources only when we get close enough to them
+          
+          Console error
+            NG02955: The NgOptimizedImage directive (activated on an <img> element with the `ngSrc="https://upload.wikimedia.org/wikipedia/en/f/f7/Inside_Out_2_poster.jpg?20240514232832"`) has detected that this image is the Largest Contentful Paint (LCP) element but was not marked "priority"
+            This image should be marked "priority" in order to prioritize its loading
+            To fix this, add the "priority" attribute
+
+            However, if we add priority attribute to the image, all the images are loaded because all of them have priority attribute
+            Use [priority]="$index === 0"
+          
+          For our case, this is dynamic component that is going to dynamically put images
+            Don't want to have to dynamically prioritize or de-prioritize movies
+            This would be great for a static image
+          -->
+
+        <!-- <img [ngSrc]="movie.poster" [priority]="$index === 0" width="169" height="250"/> -->
+        <img [src]="movie.poster" width="169" height="250"/>
+      </div>
+
+      <div>
+        <div>
+          {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+        </div>
+
+        <div>
+          <!-- Chain pipe -->
+          Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
+        </div>
+
+        <div>
+          Price: {{ movie.price | currency }}
+        </div>
+      </div>
+    </div>
+  }
+}
