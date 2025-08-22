@@ -1,4 +1,4 @@
-import { CurrencyPipe, DatePipe, NgFor, NgOptimizedImage, UpperCasePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, NgFor, NgIf, NgOptimizedImage, UpperCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { RouterOutlet } from '@angular/router';
   // From Angular 19 onwards, `standalone: true` is not necessary in component decorator, since components are standalone by default
 
   // Because of standalone application, we need to list the dependencies of the object in the object itself
-  imports: [DatePipe, UpperCasePipe, CurrencyPipe, NgFor, NgOptimizedImage],
+  imports: [DatePipe, UpperCasePipe, CurrencyPipe, NgFor, NgOptimizedImage, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -15,6 +15,10 @@
 
 <!-- <p> The double of 3 is {{ duplicateNumber(3) }}</p> -->
 
+<!--
+  NgFor usage
+  -->
+
 <!-- <h2>Example using NgFor</h2> -->
 
 <!-- ngFor will repeat the code including div class="movies-container" -->
@@ -30,6 +34,44 @@
   <div>
     Price: {{ movie.price | currency }}
   </div>
+</div> -->
+
+<!--
+  NgIf usage
+
+  NgIf condition is complicated, because there is no relation between each ngIf, we have to take all the conditions into account in each condition
+  -->
+
+<!-- <div *ngIf="!movies">
+  <img src="https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif" />
+</div>
+
+<div *ngIf="movies?.length === 0">
+  <p>There are no movies to display</p>
+</div>
+
+<div *ngIf="movies && movies.length > 0">
+  @for(movie of movies; track $index) {
+    <div class="movies-container">
+      <div>
+        <img [src]="movie.poster" width="169" height="250"/>
+      </div>
+
+      <div>
+        <div>
+          {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+        </div>
+
+        <div>
+          Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
+        </div>
+
+        <div>
+          Price: {{ movie.price | currency }}
+        </div>
+      </div>
+    </div>
+  }
 </div> -->
 
 <h2>List of movies</h2>
