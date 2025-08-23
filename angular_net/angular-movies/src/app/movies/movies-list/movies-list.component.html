@@ -1,3 +1,6 @@
+<!-- Event binding -->
+<button (click)="addMovie()">Add a movie</button>
+
 @if(!movies){
   <!-- <div>loading...</div> -->
 
@@ -54,7 +57,17 @@
           -->
 
         <!-- <img [ngSrc]="movie.poster" [priority]="$index === 0" width="169" height="250"/> -->
-        <img [src]="movie.poster" width="169" height="250"/>
+        
+        @if(movie.poster){
+          <img [src]="movie.poster" width="169" height="250"/>
+        }
+        @else {
+          <!--
+            Use normal string instead of property binding, because it's not JavaScript expression
+            From https://jkfenner.com/wp-content/uploads/2019/11/default.jpg
+            -->
+          <img src="default.jpg" width="169" height="250"/>
+        }
       </div>
 
       <div>
@@ -69,6 +82,10 @@
 
         <div>
           Price: {{ movie.price | currency }}
+        </div>
+
+        <div>
+          <button (click)="removeMovie(movie)">Remove</button>
         </div>
       </div>
     </div>

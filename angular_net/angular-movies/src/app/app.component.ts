@@ -69,6 +69,6 @@ export class AppComponent {
         }
       ];
 
-    }, 2000)
+    }, 2000);
   }
 }
