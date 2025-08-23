@@ -17,11 +17,10 @@
 
 <!--
   NgFor usage
+  
+  ngFor will repeat the code including div class="movies-container"
   -->
 
-<!-- <h2>Example using NgFor</h2> -->
-
-<!-- ngFor will repeat the code including div class="movies-container" -->
 <!-- <div class="movies-container" *ngFor="let movie of movies; let $index = index">
   <div>
     {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
@@ -73,6 +72,17 @@
     </div>
   }
 </div> -->
+
+<!--
+  Template reference variable
+    Assign a name to HTML element, and then we can reference that element in our template
+
+  Assign the name uploader to input element
+    Reference the input element in button element
+-->
+
+<input type="file" style="display: none" #uploader/>
+<button (click)="uploader.click()">Upload file</button>
 
 <h2>Upcoming Releases</h2>
 
