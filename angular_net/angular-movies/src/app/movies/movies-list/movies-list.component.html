@@ -1,5 +1,13 @@
-<!-- Event binding -->
-<button (click)="addMovie()">Add a movie</button>
+<!--
+  Event binding
+
+  Use mat-flat-button style
+  -->
+<button mat-flat-button (click)="addMovie()">
+  <!-- Use icon name from https://fonts.google.com/icons -->
+  <mat-icon>add</mat-icon>
+  Add a movie
+</button>
 
 <app-generic-list [elements]="movies">
   <!-- <ng-container empty>
