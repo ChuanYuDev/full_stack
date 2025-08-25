@@ -2,6 +2,7 @@ import { CurrencyPipe, DatePipe, NgFor, NgIf, NgOptimizedImage, UpperCasePipe } 
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MoviesListComponent } from "./movies/movies-list/movies-list.component";
+import { MenuComponent } from "./shared/components/menu/menu.component";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { MoviesListComponent } from "./movies/movies-list/movies-list.component"
 
   // Because of standalone application, we need to list the dependencies of the object in the object itself
   // imports: [NgFor, NgOptimizedImage, NgIf],
-  imports: [MoviesListComponent],
+  imports: [MoviesListComponent, MenuComponent],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
