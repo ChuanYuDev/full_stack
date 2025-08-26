@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { MoviesListComponent } from "./movies/movies-list/movies-list.component";
 import { MenuComponent } from "./shared/components/menu/menu.component";
 import { RatingComponent } from "./shared/components/rating/rating.component";
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { RatingComponent } from "./shared/components/rating/rating.component";
 
   // Because of standalone application, we need to list the dependencies of the object in the object itself
   // imports: [NgFor, NgOptimizedImage, NgIf],
-  imports: [MoviesListComponent, MenuComponent, RatingComponent],
+  imports: [MoviesListComponent, MenuComponent, RatingComponent, MatButtonModule],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
