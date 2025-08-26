@@ -71,7 +71,7 @@ export class AppComponent {
         }
       ];
 
-    }, 2000);
+    }, 100);
   }
 
   processRating(rate: number) {

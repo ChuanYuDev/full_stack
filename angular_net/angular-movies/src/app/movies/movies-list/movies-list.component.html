@@ -72,7 +72,10 @@
 
         <div>
           <div>
-            {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+            <!-- Pipes allow us to change the format of a data to another -->
+            <h2>
+              {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+            </h2>
           </div>
 
           <div>
