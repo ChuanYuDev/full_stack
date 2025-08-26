@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -24,6 +24,11 @@ export class RatingComponent{
   // maxRatingArray: any[] = [];
 
   clickedRating = 0;
+
+  // The EventEmitter is a special class in Angular that allows us to emit events
+  //    Type will be number indicating that we want to pass through this event a number which will be the rate of the user
+  @Output()
+  rated = new EventEmitter<number>();
 
   // Assign maxRating elements in maxRatingArray
   //    But we cannot use constructor because by the time the constructor is invoked, the maxRating will not be filled
@@ -56,5 +61,6 @@ export class RatingComponent{
   handleClick(index: number){
     this.selectedRating = index + 1;
     this.clickedRating = this.selectedRating;
+    this.rated.emit(this.selectedRating);
   }
 }

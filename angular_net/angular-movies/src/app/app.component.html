@@ -86,7 +86,11 @@
 
 <app-menu></app-menu>
 
-<app-rating [maxRating]="5"></app-rating>
+<!--
+  $event
+    Get a hold of value emitted by the rated event
+  -->
+<app-rating [maxRating]="5" (rated)="processRating($event)"></app-rating>
 
 <h2>Upcoming Releases</h2>
 
