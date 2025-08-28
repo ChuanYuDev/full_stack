@@ -1,13 +1,30 @@
 .movies-container {
-    border: 1px solid black;
-    /* margin-bottom: 10rem; */
+    /* border: 1px solid black;
+    margin-bottom: 10rem;
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 1rem; */
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    /* gap: 10px; */
+    gap: 1rem;
+    align-items: center;
+}
+
+.movie-container {
+    text-align: center;
+}
+
+p {
+    max-width: 225px;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 /* Overriding the global style for h2 */
-h2 {
+/* h2 {
     color: green;
+} */
+
+button {
+    margin-left: 1rem;
 }

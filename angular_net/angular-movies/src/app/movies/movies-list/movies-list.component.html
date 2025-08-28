@@ -17,81 +17,87 @@
   </ng-container> -->
 
   <ng-container content>
-    <!-- 
-      track $index
-        Allows the angular compiler to keep track of every single movie of the movies array
-          We're doing that tracking using the index, using the order of the elements
+    <div class="movies-container">
+      <!-- 
+        track $index
+          Allows the angular compiler to keep track of every single movie of the movies array
+            We're doing that tracking using the index, using the order of the elements
 
-        If I change the second element of movies, only this is going to change in the UI
-          This is a way for angular to do updates efficiently
+          If I change the second element of movies, only this is going to change in the UI
+            This is a way for angular to do updates efficiently
 
-      $index
-        Contains the order of each movie
-      -->
-    @for(movie of movies; track $index) {
-      <div class="movies-container">
-        <div>
-          <!-- 
-            Property binding allows us to have a dynamic property for a component or for an HTML element
-              Use [] to indicate the following is JavaScript expression
-            
-            When we reload the page and choose `Disable cache` in CDT, we found that all the posters are loaded
-              We prefer to only load the ones that are on the screen or close to the screen
-              Use NgOptimizedImage
+        $index
+          Contains the order of each movie
+        -->
+      @for(movie of movies; track $index) {
+        <div class="movie-container">
+          <a>
+            <!-- 
+              Property binding allows us to have a dynamic property for a component or for an HTML element
+                Use [] to indicate the following is JavaScript expression
+              
+              When we reload the page and choose `Disable cache` in CDT, we found that all the posters are loaded
+                We prefer to only load the ones that are on the screen or close to the screen
+                Use NgOptimizedImage
 
-            When we use `ngSrc`, all the posters are still loaded because they are too close to the screen
-              We can increase the margin-bottom to 10rem
-              Allows us to dynamically load resources only when we get close enough to them
-            
-            Console error
-              NG02955: The NgOptimizedImage directive (activated on an <img> element with the `ngSrc="https://upload.wikimedia.org/wikipedia/en/f/f7/Inside_Out_2_poster.jpg?20240514232832"`) has detected that this image is the Largest Contentful Paint (LCP) element but was not marked "priority"
-              This image should be marked "priority" in order to prioritize its loading
-              To fix this, add the "priority" attribute
+              When we use `ngSrc`, all the posters are still loaded because they are too close to the screen
+                We can increase the margin-bottom to 10rem
+                Allows us to dynamically load resources only when we get close enough to them
+              
+              Console error
+                NG02955: The NgOptimizedImage directive (activated on an <img> element with the `ngSrc="https://upload.wikimedia.org/wikipedia/en/f/f7/Inside_Out_2_poster.jpg?20240514232832"`) has detected that this image is the Largest Contentful Paint (LCP) element but was not marked "priority"
+                This image should be marked "priority" in order to prioritize its loading
+                To fix this, add the "priority" attribute
 
-              However, if we add priority attribute to the image, all the images are loaded because all of them have priority attribute
-              Use [priority]="$index === 0"
-            
-            For our case, this is dynamic component that is going to dynamically put images
-              Don't want to have to dynamically prioritize or de-prioritize movies
-              This would be great for a static image
-            -->
-
-          <!-- <img [ngSrc]="movie.poster" [priority]="$index === 0" width="169" height="250"/> -->
-          
-          @if(movie.poster){
-            <img [src]="movie.poster" width="169" height="250"/>
-          }
-          @else {
-            <!--
-              Use normal string instead of property binding, because it's not JavaScript expression
-              From https://jkfenner.com/wp-content/uploads/2019/11/default.jpg
+                However, if we add priority attribute to the image, all the images are loaded because all of them have priority attribute
+                Use [priority]="$index === 0"
+              
+              For our case, this is dynamic component that is going to dynamically put images
+                Don't want to have to dynamically prioritize or de-prioritize movies
+                This would be great for a static image
               -->
-            <img src="default.jpg" width="169" height="250"/>
-          }
-        </div>
 
-        <div>
-          <div>
+            <!-- <img [ngSrc]="movie.poster" [priority]="$index === 0" width="169" height="250"/> -->
+            
+            @if(movie.poster){
+              <img [src]="movie.poster" width="169" height="250"/>
+            }
+            @else {
+              <!--
+                Use normal string instead of property binding, because it's not JavaScript expression
+                From https://jkfenner.com/wp-content/uploads/2019/11/default.jpg
+                -->
+              <img src="default.jpg" width="169" height="250"/>
+            }
+          </a>
+
+          <p>
             <!-- Pipes allow us to change the format of a data to another -->
-            <h2>
-              {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
-            </h2>
-          </div>
+            <a>
+              <!-- {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b> -->
+              {{ movie.title | uppercase}}
+            </a>
+          </p>
 
-          <div>
-            <!-- Chain pipe -->
+
+          <!-- Chain pipe -->
+          <!-- <div>
             Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
           </div>
 
           <div>
             Price: {{ movie.price | currency }}
-          </div>
+          </div> -->
 
           <div>
-            <button (click)="removeMovie(movie)">Remove</button>
+            <a mat-flat-button>
+              Edit
+            </a>
+            <button mat-flat-button type="button" class="warn" (click)="removeMovie(movie)">Delete</button>
           </div>
         </div>
-      </div>
-    }
+      }
+
+    </div>
   </ng-container>
 </app-generic-list>
