@@ -1,0 +1,15 @@
+<!--
+    $event
+        Get a hold of value emitted by the rated event
+-->
+<app-rating [maxRating]="5" (rated)="processRating($event)"></app-rating>
+
+<h2>Upcoming Releases</h2>
+
+<!-- Two instances of MoviesListComponent -->
+<app-movies-list [movies]="upcomingReleasesMovies"></app-movies-list>
+
+<h2>In theaters</h2>
+
+<app-movies-list [movies]="inTheatersMovies"></app-movies-list>
+

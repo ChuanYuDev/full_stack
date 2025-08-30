@@ -92,24 +92,14 @@
 <button mat-flat-button color="secondary">Secondary</button>
 <button mat-flat-button color="Warn">Warn</button> -->
 
-<button mat-flat-button class="primary">Primary</button>
+<!-- <button mat-flat-button class="primary">Primary</button>
 <button mat-flat-button class="secondary">Secondary</button>
-<button mat-flat-button class="warn">Warn</button>
+<button mat-flat-button class="warn">Warn</button> -->
 
 <div class="container">
-  <!--
-    $event
-      Get a hold of value emitted by the rated event
+    <!--
+        Whenever we have a component that we want to display from a route, it is going to be put here inside
+            Everything that is outside of it is going to be static through our while application
     -->
-  <app-rating [maxRating]="5" (rated)="processRating($event)"></app-rating>
-
-  <h2>Upcoming Releases</h2>
-
-  <!-- Two instances of MoviesListComponent -->
-  <app-movies-list [movies]="upcomingReleasesMovies"></app-movies-list>
-
-  <h2>In theaters</h2>
-
-  <app-movies-list [movies]="inTheatersMovies"></app-movies-list>
-
+    <router-outlet></router-outlet>
 </div>
