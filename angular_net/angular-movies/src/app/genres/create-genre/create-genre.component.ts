@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,8 +20,25 @@ export class CreateGenreComponent {
     // Group: We will have a group of controls
     form = this.formBuilder.group({
         // '': Represents the initial value of this control
-        name: ['']
+        //
+        // Validators.required
+        //      My name control must have a value so that the form is considered valid
+        name: ['', {validators: [Validators.required]}]
     });
+
+    getErrorMessagesForName(): string {
+        // field is not the content of name, this is a representation of the name field
+        let field = this.form.controls.name;
+
+        if (field.hasError('required')){
+            return "The name field is required";
+
+            // Long error message
+            // return "The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required";
+        }
+
+        return "";
+    }
 
     saveChanges() {
         // .. Save changes
