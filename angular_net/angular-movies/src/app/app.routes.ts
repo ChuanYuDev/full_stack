@@ -37,6 +37,9 @@ export const routes: Routes = [
 
     // Handling unknown routes, redirect to the landing page
     //
+    // **
+    //      Wildcard, we can catch all attempts to navigate to a non-existent route to control user expriences in those cases
+    //
     // Put it last
     //      Angular uses the first match route and ignores the rest
     {path: '**', redirectTo: ''},
