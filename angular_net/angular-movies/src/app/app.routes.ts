@@ -34,4 +34,10 @@ export const routes: Routes = [
     // Use route value
     //      Allows us to have a value read by our application
     {path: 'movies/edit/:id', component: EditMovieComponent},
+
+    // Handling unknown routes, redirect to the landing page
+    //
+    // Put it last
+    //      Angular uses the first match route and ignores the rest
+    {path: '**', redirectTo: ''},
 ];
