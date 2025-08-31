@@ -1,1 +1,25 @@
-<button mat-flat-button (click)="saveChange()">Save changes</button>
+<!-- <button mat-flat-button (click)="saveChange()">Save changes</button> -->
+
+<h2>Create Genre</h2>
+
+<!-- 
+    (submit)="saveChanges()
+        If I press on enter when I'm inside of the form, the form is going to be submitted
+        Allow the user to either use the keyboard or the mouse to submit the form
+
+    [formGroup]="form"
+        Associate this form to my form property
+
+-->
+<form [formGroup]="form" (submit)="saveChanges()">
+    <!-- Use special components of Angular material for the inputs of our form -->
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [formControl]="form.controls.name"/>
+    </mat-form-field>
+
+    <div>
+        <button mat-flat-button type="submit">Save changes</button>
+        <a routerLink="/genres" mat-stroked-button>Cancel</a>
+    </div>
+</form>
