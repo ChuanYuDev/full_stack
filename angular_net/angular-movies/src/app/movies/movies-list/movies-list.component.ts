@@ -5,31 +5,31 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-movies-list',
-  imports: [DatePipe, UpperCasePipe, CurrencyPipe, GenericListComponent, MatButtonModule, MatIconModule],
-  templateUrl: './movies-list.component.html',
-  styleUrl: './movies-list.component.css'
+    selector: 'app-movies-list',
+    imports: [UpperCasePipe, GenericListComponent, MatButtonModule, MatIconModule],
+    templateUrl: './movies-list.component.html',
+    styleUrl: './movies-list.component.css'
 })
 export class MoviesListComponent {
-  // Empty array is true in condition
-  // movies: any[] = [];
+    // Empty array is true in condition
+    // movies: any[] = [];
 
-  // Use Input decorator to indicate movies property is input from parent component
-  //
-  // !: null forgiving operator
-  @Input({required: true})
-  movies!: any[];
+    // Use Input decorator to indicate movies property is input from parent component
+    //
+    // !: null forgiving operator
+    @Input({required: true})
+    movies!: any[];
 
-  addMovie(){
-    this.movies.push({
-      title: 'Inception',
-      releaseDate: new Date('2012-07-03'),
-      price: 500
-    });
-  }
+    addMovie(){
+        this.movies.push({
+        title: 'Inception',
+        releaseDate: new Date('2012-07-03'),
+        price: 500
+        });
+    }
 
-  removeMovie(movie: any){
-    let index = this.movies.findIndex((m: any) => m.title === movie.title);
-    this.movies.splice(index, 1);
-  }
+    removeMovie(movie: any){
+        let index = this.movies.findIndex((m: any) => m.title === movie.title);
+        this.movies.splice(index, 1);
+    }
 }
