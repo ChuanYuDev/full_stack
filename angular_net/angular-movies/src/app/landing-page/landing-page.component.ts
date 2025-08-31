@@ -63,7 +63,7 @@ export class LandingPageComponent {
 
     processRating(rate: number) {
         // Template literals are literals delimited with backtick (`) characters
-        //    Allowing for multi-line strings, string interpolation with embedded expressions, and special constructs called tagged templates
+        //      Allowing for multi-line strings, string interpolation with embedded expressions, and special constructs called tagged templates
         alert(`You rated the movie ${rate}`);
     }
 }

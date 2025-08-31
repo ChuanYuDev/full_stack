@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
+import { firstLetterShouldBeUppercase } from '../../shared/functions/validations';
 
 @Component({
   selector: 'app-create-genre',
@@ -23,7 +24,7 @@ export class CreateGenreComponent {
         //
         // Validators.required
         //      My name control must have a value so that the form is considered valid
-        name: ['', {validators: [Validators.required]}]
+        name: ['', {validators: [Validators.required, firstLetterShouldBeUppercase()]}]
     });
 
     getErrorMessagesForName(): string {
@@ -35,6 +36,10 @@ export class CreateGenreComponent {
 
             // Long error message
             // return "The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required The name field is required";
+        }
+
+        if (field.hasError('firstLetterShouldBeUppercase')) {
+            return field.getError('firstLetterShouldBeUppercase').message;
         }
 
         return "";
