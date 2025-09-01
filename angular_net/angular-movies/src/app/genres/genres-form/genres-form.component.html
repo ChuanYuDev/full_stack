@@ -1,0 +1,26 @@
+<!-- 
+    (submit)="saveChanges()
+        If I press on enter when I'm inside of the form, the form is going to be submitted
+        Allow the user to either use the keyboard or the mouse to submit the form
+
+    [formGroup]="form"
+        Associate this form to my form property
+
+-->
+<form [formGroup]="form" (submit)="saveChanges()">
+    <!-- Use special components of Angular material for the inputs of our form -->
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [formControl]="form.controls.name"/>
+        <mat-error>{{ getErrorMessagesForName() }}</mat-error>
+    </mat-form-field>
+
+    <div class="buttons-container">
+        <!--
+            [disabled]="form.invalid"
+                If the form is invalid, we disable the button
+        -->
+        <button [disabled]="form.invalid" mat-flat-button type="submit">Save changes</button>
+        <a routerLink="/genres" mat-stroked-button>Cancel</a>
+    </div>
+</form>
