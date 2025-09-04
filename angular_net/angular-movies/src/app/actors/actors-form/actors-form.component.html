@@ -1,0 +1,29 @@
+<form [formGroup]="form" (submit)="saveChanges()">
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [formControl]="form.controls.name" />
+        <mat-error>{{ getErrorMessagesForName() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Date of Birth</mat-label>
+
+        <!--
+            Datepicker
+                A datepicker is composed of a text input and a calendar pop-up, connected via the matDatepicker property on the text input
+            
+                There is also an optional datepicker toggle button that gives the user an easy way to open the datepicker pop-up
+        -->
+        <mat-datepicker #picker></mat-datepicker>
+
+        <input matInput [matDatepicker]="picker" [formControl]="form.controls.dateOfBirth" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    </mat-form-field>
+
+    <div class="buttons-container">
+        <button [disabled]="form.invalid" mat-flat-button type="submit">Save changes</button>
+
+        <a routerLink="/actors" mat-stroked-button>Cancel</a>
+    </div>
+
+</form>

@@ -42,7 +42,7 @@ export class GenresFormComponent implements OnInit{
         // field is not the content of name, this is a representation of the name field
         let field = this.form.controls.name;
 
-        if (field.hasError('required')){
+        if (field.hasError("required")){
             return "The name field is required";
 
             // Long error message
