@@ -1,0 +1,105 @@
+<!--
+  Execute JavaScript expression in interpolation
+    The expression is limited
+    1. Simple expression like 2 + 2
+    2. Display properties from the class of the component
+    3. Functions from the class of the component
+    4. Object
+
+    The expression like Console.log() can't be placed in double curly braces
+  -->
+
+<!-- <p>The sum of 2 and 2 is {{ 2 + 2 }}</p> -->
+
+<!-- <p>{{ title }}</p> -->
+
+<!-- <p> The double of 3 is {{ duplicateNumber(3) }}</p> -->
+
+<!--
+  NgFor usage
+  
+  ngFor will repeat the code including div class="movies-container"
+  -->
+
+<!-- <div class="movies-container" *ngFor="let movie of movies; let $index = index">
+  <div>
+    {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+  </div>
+
+  <div>
+    Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
+  </div>
+
+  <div>
+    Price: {{ movie.price | currency }}
+  </div>
+</div> -->
+
+<!--
+  NgIf usage
+
+  NgIf condition is complicated, because there is no relation between each ngIf, we have to take all the conditions into account in each condition
+  -->
+
+<!-- <div *ngIf="!movies">
+  <img src="https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif" />
+</div>
+
+<div *ngIf="movies?.length === 0">
+  <p>There are no movies to display</p>
+</div>
+
+<div *ngIf="movies && movies.length > 0">
+  @for(movie of movies; track $index) {
+    <div class="movies-container">
+      <div>
+        <img [src]="movie.poster" width="169" height="250"/>
+      </div>
+
+      <div>
+        <div>
+          {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b>
+        </div>
+
+        <div>
+          Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
+        </div>
+
+        <div>
+          Price: {{ movie.price | currency }}
+        </div>
+      </div>
+    </div>
+  }
+</div> -->
+
+<!--
+  Template reference variable
+    Assign a name to HTML element, and then we can reference that element in our template
+
+  Assign the name uploader to input element
+    Reference the input element in button element
+-->
+
+<!-- <input type="file" style="display: none" #uploader/>
+<button (click)="uploader.click()">Upload file</button> -->
+
+<app-menu></app-menu>
+
+<!-- This styling way of Angular material is not working -->
+
+<!-- <button mat-flat-button color="primary">Primary</button>
+<button mat-flat-button color="secondary">Secondary</button>
+<button mat-flat-button color="Warn">Warn</button> -->
+
+<!-- <button mat-flat-button class="primary">Primary</button>
+<button mat-flat-button class="secondary">Secondary</button>
+<button mat-flat-button class="warn">Warn</button> -->
+
+<div class="container">
+    <!--
+        Whenever we have a component that we want to display from a route, it is going to be put here inside
+            Everything that is outside of it is going to be static through our while application
+    -->
+    <router-outlet></router-outlet>
+</div>
