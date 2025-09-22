@@ -1,12 +1,23 @@
 <h2>Data of the movie</h2>
-<div>
-    Movie: {{ movie.title | uppercase}}
-</div>
 
-<div>
-    Release Date: {{ movie.releaseDate | date: "MMMM-dd-yyyy" | uppercase}}
-</div>
+@for (movie of movies; track $index) {
+    <div class="movies-container">
+        <div>
+            <img [src]="movie.poster" width="169" height="250"/>
+        </div>
+        
+        <div>
+            <div>
+                {{ $index + 1 }}) <b>Movie: {{ movie.title | uppercase}}</b>
+            </div>
 
-<div>
-    Price: {{ movie.price | currency}}
-</div>
+            <div>
+                Release Date: {{ movie.releaseDate | date: "MMMM-dd-yyyy" | uppercase}}
+            </div>
+
+            <div>
+                Price: {{ movie.price | currency}}
+            </div>
+        </div>
+    </div>
+}
