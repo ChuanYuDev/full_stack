@@ -16,10 +16,5 @@ import { MatButtonModule } from '@angular/material/button';
     styleUrl: './app.component.css'
 })
 export class AppComponent {
-    // title = 'this is a custom title';
-
-    // duplicateNumber(value: number): number {
-    //   return value * 2;
-    // }
 
 }
