@@ -13,7 +13,6 @@ export class LandingPageComponent {
     inTheatersMovies: any;
     upcomingReleasesMovies: any;
 
-    // Simulate the real situation in which it takes sometime to load the movies list from database
     constructor(){
         setTimeout(() => {
             this.inTheatersMovies = [

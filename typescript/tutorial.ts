@@ -15,3 +15,13 @@ const employee: Employee = {
 
 employee.name = "Jessica";
 console.log(employee);
+
+// const movies: any[] = [];
+
+function logic (movies?: any[]){
+    movies = [];
+    if (true && !movies)
+        console.log("All true");
+}
+
+logic();

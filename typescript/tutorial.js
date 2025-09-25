@@ -7,6 +7,12 @@ const employee = {
     department: "Finance",
 };
 employee.name = "Jessica";
-employee.employeeId = 456;
 console.log(employee);
+// const movies: any[] = [];
+function logic(movies) {
+    movies = [];
+    if (true && !movies)
+        console.log("All true");
+}
+logic();
 //# sourceMappingURL=tutorial.js.map

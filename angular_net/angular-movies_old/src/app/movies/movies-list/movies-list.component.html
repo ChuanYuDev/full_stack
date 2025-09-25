@@ -23,8 +23,6 @@
         <div class="movie-container">
           <a>
 
-            <!-- <img [ngSrc]="movie.poster" [priority]="$index === 0" width="169" height="250"/> -->
-            
             @if(movie.poster){
               <img [src]="movie.poster" width="169" height="250"/>
             }
@@ -38,22 +36,10 @@
           </a>
 
           <p>
-            <!-- Pipes allow us to change the format of a data to another -->
             <a>
-              <!-- {{ $index + 1 }}) Movie: <b>{{ movie.title | uppercase}}</b> -->
               {{ movie.title | uppercase}}
             </a>
           </p>
-
-
-          <!-- Chain pipe -->
-          <!-- <div>
-            Release Date: {{ movie.releaseDate | date:"MMMM-dd-yyyy" | uppercase}}
-          </div>
-
-          <div>
-            Price: {{ movie.price | currency }}
-          </div> -->
 
           <div>
             <a mat-flat-button>
