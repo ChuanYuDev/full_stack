@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
-import {CurrencyPipe, DatePipe, NgIf, UpperCasePipe} from "@angular/common";
+import {MoviesListComponent} from "./movies/movies-list/movies-list.component";
 
 @Component({
     selector: 'app-root',
-    imports: [DatePipe, UpperCasePipe, CurrencyPipe, NgIf],
+    imports: [MoviesListComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
 export class AppComponent {
-    movies?: any[];
+    upcomingReleasesMovies?: any[];
+    inTheatersMovies?: any[];
     
     constructor() {
         setTimeout(() => {
-            this.movies = [
+            this.upcomingReleasesMovies = [
                 {
                     title: 'Inside Out 2',
                     releaseDate: new Date(),
@@ -25,6 +26,9 @@ export class AppComponent {
                     price: 300.99,
                     poster: 'https://upload.wikimedia.org/wikipedia/en/7/73/Moana_2_poster.jpg'
                 },
+            ];
+            
+            this.inTheatersMovies = [
                 {
                     title: 'Bad Boys: Ride or Die',
                     releaseDate: new Date('2016-05-03'),

@@ -1,33 +1,7 @@
-<h2>Data of the movie</h2>
+<h2>Upcoming Releases</h2>
 
-@if (!movies) {
-    <div>
-        <img src="/loading.gif"  alt=""/>
-    </div>
-} @else if (movies.length === 0) {
-    <div>
-        <p>There are no movies to display.</p>
-    </div>
-} @else {
-    @for (movie of movies; track $index) {
-        <div class="movies-container">
-            <div>
-                <img [src]="movie.poster" width="169" height="250"/>
-            </div>
+<app-movies-list [movies]="upcomingReleasesMovies"></app-movies-list>
 
-            <div>
-                <div>
-                    {{ $index + 1 }}) <b>Movie: {{ movie.title | uppercase}}</b>
-                </div>
+<h2>In theaters</h2>
 
-                <div>
-                    Release Date: {{ movie.releaseDate | date: "MMMM-dd-yyyy" | uppercase}}
-                </div>
-
-                <div>
-                    Price: {{ movie.price | currency}}
-                </div>
-            </div>
-        </div>
-    }
-}
+<app-movies-list [movies]="inTheatersMovies"></app-movies-list>

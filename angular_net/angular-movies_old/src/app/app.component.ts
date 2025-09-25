@@ -6,10 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-root',
-    // From Angular 19 onwards, `standalone: true` is not necessary in component decorator, since components are standalone by default
 
-    // Because of standalone application, we need to list the dependencies of the object in the object itself
-    // imports: [NgFor, NgOptimizedImage, NgIf],
     imports: [MenuComponent, MatButtonModule, RouterOutlet],
 
     templateUrl: './app.component.html',

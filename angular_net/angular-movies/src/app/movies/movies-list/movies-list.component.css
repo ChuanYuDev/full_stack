@@ -1,0 +1,7 @@
+.movies-container {
+    border: 1px black solid;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 10px;
+}

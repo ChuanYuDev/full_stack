@@ -11,12 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
     styleUrl: './movies-list.component.css'
 })
 export class MoviesListComponent {
-    // Empty array is true in condition
-    // movies: any[] = [];
-
-    // Use Input decorator to indicate movies property is input from parent component
-    //
-    // !: null forgiving operator
     @Input({required: true})
     movies!: any[];
 
