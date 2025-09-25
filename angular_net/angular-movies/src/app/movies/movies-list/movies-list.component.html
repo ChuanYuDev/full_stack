@@ -1,6 +1,8 @@
+<button type="button" (click)="addMovie()">Add movie</button>
+
 @if (!movies) {
     <div>
-        <img src="/loading.gif"  alt=""/>
+        <img src="/loading.gif" alt=""/>
     </div>
 } @else if (movies.length === 0) {
     <div>
@@ -10,7 +12,11 @@
     @for (movie of movies; track $index) {
         <div class="movies-container">
             <div>
-                <img [src]="movie.poster" width="169" height="250"/>
+                @if (movie.poster) {
+                    <img [src]="movie.poster" width="169" height="250" alt="movie poster"/>
+                } @else {
+                    <img src="/default.jpg" width="169" height="250" alt=""/>
+                }
             </div>
 
             <div>
@@ -24,6 +30,10 @@
 
                 <div>
                     Price: {{ movie.price | currency}}
+                </div>
+                
+                <div>
+                    <button type="button" (click)="removeMovie(movie)" >Remove</button>
                 </div>
             </div>
         </div>

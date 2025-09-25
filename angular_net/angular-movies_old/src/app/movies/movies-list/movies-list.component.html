@@ -1,7 +1,4 @@
 <!--
-    Event binding
-        Use (action)
-
     Use mat-flat-button style
 -->
 <button mat-flat-button (click)="addMovie()">
@@ -24,14 +21,9 @@
           <a>
 
             @if(movie.poster){
-              <img [src]="movie.poster" width="169" height="250"/>
-            }
-            @else {
-              <!--
-                Use normal string instead of property binding, because it's not JavaScript expression
-                From https://jkfenner.com/wp-content/uploads/2019/11/default.jpg
-                -->
-              <img src="default.jpg" width="169" height="250"/>
+                <img [src]="movie.poster" width="169" height="250" alt="adsdf"/>
+            } @else {
+                <img src="/default.jpg" width="169" height="250" alt="sdfsdf"/>
             }
           </a>
 
