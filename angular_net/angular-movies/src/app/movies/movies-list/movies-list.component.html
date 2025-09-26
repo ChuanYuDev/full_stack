@@ -1,42 +1,35 @@
 <button type="button" (click)="addMovie()">Add movie</button>
 
-@if (!movies) {
-    <div>
-        <img src="/loading.gif" alt=""/>
-    </div>
-} @else if (movies.length === 0) {
-    <div>
-        <p>There are no movies to display.</p>
-    </div>
-} @else {
-    @for (movie of movies; track $index) {
-        <div class="movies-container">
-            <div>
-                @if (movie.poster) {
-                    <img [src]="movie.poster" width="169" height="250" alt="movie poster"/>
-                } @else {
-                    <img src="/default.jpg" width="169" height="250" alt=""/>
-                }
-            </div>
-
-            <div>
+<app-generic-list [elements]="movies">
+    <ng-container content>
+        @for (movie of movies; track $index) {
+            <div class="movies-container">
                 <div>
-                    {{ $index + 1 }}) <b>Movie: {{ movie.title | uppercase}}</b>
+                    @if (movie.poster) {
+                        <img [src]="movie.poster" width="169" height="250" alt="movie poster"/>
+                    } @else {
+                        <img src="/default.jpg" width="169" height="250" alt=""/>
+                    }
                 </div>
 
                 <div>
-                    Release Date: {{ movie.releaseDate | date: "MMMM-dd-yyyy" | uppercase}}
-                </div>
+                    <div>
+                        {{ $index + 1 }}) <b>Movie: {{ movie.title | uppercase}}</b>
+                    </div>
 
-                <div>
-                    Price: {{ movie.price | currency}}
-                </div>
-                
-                <div>
-                    <button type="button" (click)="removeMovie(movie)" >Remove</button>
+                    <div>
+                        Release Date: {{ movie.releaseDate | date: "MMMM-dd-yyyy" | uppercase}}
+                    </div>
+
+                    <div>
+                        Price: {{ movie.price | currency}}
+                    </div>
+
+                    <div>
+                        <button type="button" (click)="removeMovie(movie)" >Remove</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-}
-
+        }
+    </ng-container>
+</app-generic-list>
