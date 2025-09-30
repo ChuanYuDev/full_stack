@@ -1,13 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {CurrencyPipe, DatePipe, UpperCasePipe} from "@angular/common";
 
 @Component({
   selector: 'app-generic-list',
-    imports: [
-        CurrencyPipe,
-        DatePipe,
-        UpperCasePipe
-    ],
+    imports: [],
   templateUrl: './generic-list.component.html',
   styleUrl: './generic-list.component.css'
 })
