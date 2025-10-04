@@ -1,27 +1,13 @@
-interface Employee {
-    readonly employeeId: number;
-    readonly startDate: Date;
-    
+type UserType = {
+    id: number;
     name: string;
-    department: string;
-}
-
-const employee: Employee = {
-    employeeId: 123,   
-    startDate: new Date(),
-    name: "Pedro",
-    department: "Finance",
+    age: number;
 };
 
-employee.name = "Jessica";
-console.log(employee);
+const User: UserType = {
+    id: 2,
+    name: "Pedro",
+    age: 22
+};
 
-// const movies: any[] = [];
-
-function logic (movies?: any[]){
-    movies = [];
-    if (true && !movies)
-        console.log("All true");
-}
-
-logic();
+console.log(User.id + User.name);

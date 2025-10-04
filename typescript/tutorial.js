@@ -1,18 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const employee = {
-    employeeId: 123,
-    startDate: new Date(),
+const User = {
+    id: 2,
     name: "Pedro",
-    department: "Finance",
+    age: 22
 };
-employee.name = "Jessica";
-console.log(employee);
-// const movies: any[] = [];
-function logic(movies) {
-    movies = [];
-    if (true && !movies)
-        console.log("All true");
-}
-logic();
+console.log(User.id + User.name);
 //# sourceMappingURL=tutorial.js.map
