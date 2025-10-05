@@ -1,7 +1,16 @@
 .movies-container {
-    border: 1px black solid;
-    padding: 1rem;
-    margin-bottom: 1rem;
     display: flex;
-    gap: 10px;
+    gap: 1rem;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.movie-container > p {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+button {
+    margin-left: 1rem;
 }

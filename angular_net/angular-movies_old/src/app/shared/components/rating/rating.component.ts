@@ -17,8 +17,6 @@ export class RatingComponent{
 
     clickedRating = 0;
 
-    // The EventEmitter is a special class in Angular that allows us to emit events
-    //    Type will be number indicating that we want to pass through this event a number which will be the rate of the user
     @Output()
     rated = new EventEmitter<number>();
 
