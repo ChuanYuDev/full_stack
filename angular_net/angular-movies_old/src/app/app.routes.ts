@@ -12,8 +12,6 @@ import { EditGenreComponent } from './genres/edit-genre/edit-genre.component';
 import { EditActorComponent } from './actors/edit-actor/edit-actor.component';
 import { EditTheaterComponent } from './theaters/edit-theater/edit-theater.component';
 
-// Define as many routes as I want
-//      A route is basically the combination of a URL and a component
 export const routes: Routes = [
     {path: '', component: LandingPageComponent},
 
