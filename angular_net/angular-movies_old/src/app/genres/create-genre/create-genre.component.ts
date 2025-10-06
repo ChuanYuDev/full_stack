@@ -15,7 +15,6 @@ import { GenresFormComponent } from "../genres-form/genres-form.component";
     styleUrl: './create-genre.component.css'
 })
 export class CreateGenreComponent {
-    // Inject is a special function that will allow us to get a hold of a service that's already configured
     router = inject(Router);
 
     saveChanges(genre: GenreCreationDTO) {
@@ -23,9 +22,6 @@ export class CreateGenreComponent {
         // console.log(this.form.value);
         console.log(genre);
 
-        // Navigate using JavaScript, we have to use a service
-        //      Service is a piece of functionality that we can reuse throughout the whole application
-        //      We don't have to configure them, but they come pre-configured 
         this.router.navigate(['/genres']);
     }
 }
