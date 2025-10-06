@@ -9,8 +9,6 @@ export const appConfig: ApplicationConfig = {
     providers: [
         provideZoneChangeDetection({ eventCoalescing: true }),
 
-        // withComponentInputBinding
-        //      Enables binding information from the Router state directly to the inputs of the component in Route configurations
         provideRouter(routes, withComponentInputBinding()),
 
         // Use dynamic sizing for our form field

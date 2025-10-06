@@ -28,17 +28,7 @@ export const routes: Routes = [
     {path: 'theaters/edit/:id', component: EditTheaterComponent},
 
     {path: 'movies/create', component: CreateMovieComponent},
-
-    // Use route value
-    //      Allows us to have a value read by our application
     {path: 'movies/edit/:id', component: EditMovieComponent},
 
-    // Handling unknown routes, redirect to the landing page
-    //
-    // **
-    //      Wildcard, we can catch all attempts to navigate to a non-existent route to control user expriences in those cases
-    //
-    // Put it last
-    //      Angular uses the first match route and ignores the rest
     {path: '**', redirectTo: ''},
 ];
