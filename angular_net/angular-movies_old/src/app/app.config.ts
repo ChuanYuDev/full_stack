@@ -11,8 +11,6 @@ export const appConfig: ApplicationConfig = {
 
         provideRouter(routes, withComponentInputBinding()),
 
-        // Use dynamic sizing for our form field
-        //      So that whenever we have to display a long error message, this is going to push down the content of what is below 
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {subscriptSizing: 'dynamic'}},
 
         // Provide labels that we will use in a calendar component that comes with Angular material
