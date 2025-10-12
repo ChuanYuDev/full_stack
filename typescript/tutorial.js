@@ -1,6 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-let x = 4;
-console.log(x);
-console.log(x.length);
+class Test {
+    a = 5;
+    b = this.a++;
+    constructor() {
+        this.a++;
+    }
+}
+const test = new Test();
+console.log(test.a);
+console.log(test.b);
 //# sourceMappingURL=tutorial.js.map

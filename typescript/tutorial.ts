@@ -1,3 +1,13 @@
-let x: unknown = 4;
-console.log((x as string));
-console.log((x as string).length);
+class Test {
+    a: number = 5;
+    b: number = this.a++;
+    
+    constructor() {
+        this.a++;
+    }
+    
+}
+
+const test = new Test();
+console.log(test.a);
+console.log(test.b);

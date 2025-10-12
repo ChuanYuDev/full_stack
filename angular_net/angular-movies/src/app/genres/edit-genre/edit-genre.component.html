@@ -1,1 +1,7 @@
-The id of genre is {{ id }}
+<h2>Edit Genre</h2>
+
+<p>
+    The id of genre is {{ id }}
+</p>
+
+<app-genres-form [model]="model" (postForm)="saveChanges($event)"></app-genres-form>
