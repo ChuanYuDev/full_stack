@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class Test {
     a = 5;
     b = this.a++;
+    c = 6;
     constructor() {
         this.a++;
     }

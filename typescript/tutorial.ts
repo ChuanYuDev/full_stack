@@ -1,6 +1,7 @@
 class Test {
     a: number = 5;
     b: number = this.a++;
+    private c = 6;
     
     constructor() {
         this.a++;

@@ -1,9 +1,11 @@
 <form [formGroup]="form" (submit)="saveChanges()">
-    <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput [formControl]="form.controls.name"/>
-        <mat-error>{{ getErrorMessagesForName() }}</mat-error>
-    </mat-form-field>
+    <div class="fields-container">
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput [formControl]="form.controls.name"/>
+            <mat-error>{{ getErrorMessagesForName() }}</mat-error>
+        </mat-form-field>
+    </div>
 
     <div class="buttons-container">
         <button mat-flat-button [disabled]="form.invalid" type="submit">Save changes</button>

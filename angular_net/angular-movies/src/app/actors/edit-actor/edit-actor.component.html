@@ -1,1 +1,7 @@
-The id of actor is {{ id }}
+<h2>Edit Actor</h2>
+
+<p>
+    The id of actor is {{ id }}
+</p>
+
+<app-actors-form [model]="model" (postForm)="saveChanges($event)"></app-actors-form>
