@@ -27,3 +27,21 @@ export function firstLetterShouldBeUppercase(): ValidatorFn {
         return null;
     };
 }
+
+export function dateCannotBeInTheFuture(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        
+        const date = new Date(control.value);
+        const now = new Date();
+        
+        if (date > now) {
+            return {
+                dateCannotBeInTheFuture: {
+                    message: "The date cannot be in the future"
+                }
+            };
+        }
+        
+        return null;
+    };
+}

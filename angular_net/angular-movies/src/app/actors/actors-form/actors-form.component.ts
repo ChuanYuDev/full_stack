@@ -7,6 +7,7 @@ import {RouterLink} from "@angular/router";
 import {MatButtonModule} from "@angular/material/button";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import moment from "moment";
+import {dateCannotBeInTheFuture} from "../../shared/functions/validations";
 
 @Component({
   selector: 'app-actors-form',
@@ -20,7 +21,7 @@ export class ActorsFormComponent implements OnInit{
     
     form = this.formBuilder.group({
         name: ["", {validators: [Validators.required]}],
-        dateOfBirth: new FormControl<Date | null>(null),
+        dateOfBirth: new FormControl<Date | null>(null, {validators: [Validators.required, dateCannotBeInTheFuture()]}),
     });
     
     @Input()
@@ -40,6 +41,20 @@ export class ActorsFormComponent implements OnInit{
         
         if (field.hasError("required")) {
             return "The name field is required";
+        }
+        
+        return "";
+    }
+    
+    getErrorMessagesForDateOfBirth(): string {
+        const field = this.form.controls.dateOfBirth;
+        
+        if (field.hasError("required")) {
+            return "The date of birth field is required";
+        }
+        
+        if (field.hasError("dateCannotBeInTheFuture")) {
+            return field.getError("dateCannotBeInTheFuture").message;
         }
         
         return "";
