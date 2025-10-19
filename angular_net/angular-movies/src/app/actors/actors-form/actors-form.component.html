@@ -17,7 +17,11 @@
 
         </mat-form-field>
         
-        <app-input-img title="Actor's picture"></app-input-img>
+        <app-input-img 
+            title="Actor's picture"
+            [imageURL]="model?.picture"
+            (selectedFile)="handleSelectedFile($event)">
+        </app-input-img>
     </div>
     
     <div class="buttons-container">

@@ -12,6 +12,9 @@ export class InputImgComponent {
     @Input({required: true})
     title!: string;
     
+    @Input()
+    imageURL?: string;
+    
     imageBase64?: string;
     
     @Output()
@@ -29,6 +32,7 @@ export class InputImgComponent {
                 .catch((error)=> console.log(error));
             
             this.selectedFile.emit(file);
+            this.imageURL = undefined;
         } 
     }
 }

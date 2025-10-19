@@ -14,7 +14,12 @@ export class EditActorComponent {
     @Input({transform: numberAttribute})
     id!: number;
     
-    model: ActorDTO = {id: 1, name: "Tom Hanks", dateOfBirth: new Date("1990-3-4"),}
+    model: ActorDTO = {
+        id: 1, 
+        name: "Tom Hanks", 
+        dateOfBirth: new Date("1990-3-4"),
+        picture: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/TomHanksPrincEdw031223_%2811_of_41%29_%28cropped%29.jpg/500px-TomHanksPrincEdw031223_%2811_of_41%29_%28cropped%29.jpg",
+    }
     
     saveChanges(actor: ActorCreationDTO) {
         console.log("Edit Actor", actor);

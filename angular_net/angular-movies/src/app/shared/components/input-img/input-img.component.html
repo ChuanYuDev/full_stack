@@ -8,5 +8,7 @@
 <div class="image-container">
     @if (imageBase64) {
         <img [src]="imageBase64" width="169" height="250" alt="selected image"/>
+    } @else if (imageURL) {
+        <img [src]="imageURL" width="169" height="250" alt="selected image"/>
     }
 </div>

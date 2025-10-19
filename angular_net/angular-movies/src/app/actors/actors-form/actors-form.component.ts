@@ -23,6 +23,7 @@ export class ActorsFormComponent implements OnInit{
     form = this.formBuilder.group({
         name: ["", {validators: [Validators.required]}],
         dateOfBirth: new FormControl<Date | null>(null, {validators: [Validators.required, dateCannotBeInTheFuture()]}),
+        picture: new FormControl<File | string | null>(null),
     });
     
     @Input()
@@ -61,10 +62,18 @@ export class ActorsFormComponent implements OnInit{
         return "";
     }
     
+    handleSelectedFile(file: File){
+        this.form.controls.picture.setValue(file);
+    }
+    
     saveChanges() {
         const actor = this.form.value as ActorCreationDTO;
         
         actor.dateOfBirth = moment(actor.dateOfBirth).toDate();
+        
+        if (typeof actor.picture === "string") {
+            actor.picture = undefined;
+        }
         this.postForm.emit(actor);
     }
 }
