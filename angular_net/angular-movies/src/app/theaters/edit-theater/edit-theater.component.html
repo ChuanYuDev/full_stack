@@ -1,1 +1,7 @@
-The id of theater is {{ id }}
+<h2>Edit theater</h2>
+
+<p>
+    The id of theater is {{ id }}
+</p>
+
+<app-theaters-form [model]="model" (postForm)="saveChanges($event)"></app-theaters-form>

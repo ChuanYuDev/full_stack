@@ -34,7 +34,7 @@ export class GenresFormComponent implements OnInit{
 
     // TO DO: centralize getErrorMessages functions?
     getErrorMessagesForName(): string {
-        let field = this.form.controls.name;
+        const field = this.form.controls.name;
 
         if (field.hasError("required")) {
             return "The name field is required";
