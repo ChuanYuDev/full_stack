@@ -8,10 +8,10 @@ import {firstLetterShouldBeUppercase} from "../../shared/functions/validations";
 import {GenreCreationDTO, GenreDTO} from "../genres.models";
 
 @Component({
-  selector: 'app-genres-form',
-  imports: [MatButtonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, RouterLink],
-  templateUrl: './genres-form.component.html',
-  styleUrl: './genres-form.component.css'
+    selector: 'app-genres-form',
+    imports: [MatButtonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, RouterLink],
+    templateUrl: './genres-form.component.html',
+    styleUrl: './genres-form.component.css'
 })
 export class GenresFormComponent implements OnInit{
     private formBuilder = inject(FormBuilder);

@@ -6,7 +6,11 @@
             <mat-error>{{ getErrorMessagesForName() }}</mat-error>
         </mat-form-field>
     </div>
-    
+
+    <h4>Select the location of the theater</h4>
+
+    <app-map [initialCoordinates]="initialCoordinate" (selectedCoordinate)="handleSelectedCoordinate($event)" ></app-map>
+
     <div class="buttons-container">
         <button mat-flat-button type="submit" [disabled]="form.invalid">Save changes</button>
         <a mat-stroked-button routerLink="/theaters">Cancel</a>
