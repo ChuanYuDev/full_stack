@@ -1,35 +1,33 @@
 <app-generic-list [elements]="movies">
     <ng-container content>
         <div class="movies-container">
-        @for (movie of movies; track $index) {
-            <div class="movie-container">
-                <a>
-                    @if (movie.poster) {
-                        <img [src]="movie.poster" width="169" height="250" alt="movie poster"/>
-                    } @else {
-                        <img src="/default.jpg" width="169" height="250" alt=""/>
-                    }
-                </a>
-                
-                <p>
-                    {{ movie.title }}
-                </p>
-
-                <div>
-                    <a mat-flat-button>
-                        Edit
+            @for (movie of movies; track $index) {
+                <div class="movie-container">
+                    <a>
+                        @if (movie.poster) {
+                            <img [src]="movie.poster" width="169" height="250" alt="movie poster"/>
+                        } @else {
+                            <img src="/default.jpg" width="169" height="250" alt=""/>
+                        }
                     </a>
-                    
-                    <button
-                        mat-flat-button
-                        type="button"
-                        (click)="removeMovie(movie)"
-                        class="warning">
-                        Delete
-                    </button>
+
+                    <p>
+                        {{ movie.title }}
+                    </p>
+
+                    <div>
+                        <a mat-flat-button>Edit</a>
+
+                        <button
+                            mat-flat-button
+                            type="button"
+                            (click)="removeMovie(movie)"
+                            class="warn">
+                            Delete
+                        </button>
+                    </div>
                 </div>
-            </div>
-        }
+            }
         </div>
     </ng-container>
 </app-generic-list>
