@@ -8,6 +8,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {GenreDTO} from "../../genres/genres.models";
 import {MoviesListComponent} from "../movies-list/movies-list.component";
 import {MoviesSearchDTO} from "./movies-search.model";
+import {ActivatedRoute} from "@angular/router";
+import {Location} from "@angular/common";
 
 @Component({
     selector: 'app-movies-search',
@@ -17,13 +19,17 @@ import {MoviesSearchDTO} from "./movies-search.model";
 })
 export class MoviesSearchComponent implements OnInit{
     private formBuilder = inject(FormBuilder);
+    activatedRoute = inject(ActivatedRoute);
+    location = inject(Location);
 
-    form = this.formBuilder.group({
+    defaultValue: MoviesSearchDTO = {
         title: "",
         genreId: 0,
         upcomingReleases: false,
         inTheaters: false
-    });
+    };
+
+    form = this.formBuilder.group(this.defaultValue);
 
     genres: GenreDTO[] = [
         {id: 1, name: "Comedy"},
@@ -91,10 +97,62 @@ export class MoviesSearchComponent implements OnInit{
     movies = this.moviesOriginal;
 
     ngOnInit(): void {
+        this.readValuesFromURL();
+
         this.form.valueChanges.subscribe(value => {
+            this.writeParametersInURL(value as MoviesSearchDTO);
+
             this.movies = this.moviesOriginal;
             this.filterMovies(value as MoviesSearchDTO);
         });
+    }
+
+    readValuesFromURL() {
+        this.activatedRoute.queryParams.subscribe((params: any) => {
+            const obj: any = {};
+
+            if (params.title) {
+                obj.title = params.title;
+            }
+
+            if (params.genreId) {
+                obj.genreId = Number(params.genreId);
+            }
+
+            if (params.upcomingReleases) {
+                obj.upcomingReleases = params.upcomingReleases;
+            }
+
+            if (params.inTheaters) {
+                obj.inTheaters = params.inTheaters;
+            }
+
+            this.form.patchValue(obj);
+
+            this.filterMovies(this.form.value as MoviesSearchDTO);
+        });
+    }
+
+    writeParametersInURL(value: MoviesSearchDTO) {
+        const queryStrings = [];
+
+        if (value.title) {
+            queryStrings.push(`title=${encodeURIComponent(value.title)}`);
+        }
+
+        if (value.genreId) {
+            queryStrings.push(`genreId=${value.genreId}`);
+        }
+
+        if (value.upcomingReleases) {
+            queryStrings.push(`upcomingReleases=${value.upcomingReleases}`);
+        }
+
+        if (value.inTheaters) {
+            queryStrings.push(`inTheaters=${value.inTheaters}`);
+        }
+
+        this.location.replaceState("movies/search", queryStrings.join('&'));
     }
 
     filterMovies(value: MoviesSearchDTO) {
@@ -116,11 +174,6 @@ export class MoviesSearchComponent implements OnInit{
     }
 
     clear() {
-        this.form.patchValue({
-            title: "",
-            genreId: 0,
-            upcomingReleases: false,
-            inTheaters: false
-        });
+        this.form.patchValue(this.defaultValue);
     }
 }
