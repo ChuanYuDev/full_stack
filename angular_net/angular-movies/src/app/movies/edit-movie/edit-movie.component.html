@@ -1,1 +1,7 @@
-The id of movie is {{ id }}
+<h2>Edit movie</h2>
+
+<p>
+    The id of movie is {{ id }}
+</p>
+
+<app-movies-form [model]="model" (postForm)="saveChanges($event)"></app-movies-form>

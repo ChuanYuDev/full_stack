@@ -11,10 +11,10 @@ import {dateCannotBeInTheFuture} from "../../shared/functions/validations";
 import {InputImgComponent} from "../../shared/components/input-img/input-img.component";
 
 @Component({
-  selector: 'app-actors-form',
+    selector: 'app-actors-form',
     imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, RouterLink, MatButtonModule, MatDatepickerModule, InputImgComponent],
-  templateUrl: './actors-form.component.html',
-  styleUrl: './actors-form.component.css'
+    templateUrl: './actors-form.component.html',
+    styleUrl: './actors-form.component.css'
 })
 export class ActorsFormComponent implements OnInit{
     
