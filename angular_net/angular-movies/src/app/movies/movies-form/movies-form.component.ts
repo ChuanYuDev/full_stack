@@ -8,10 +8,12 @@ import {MatButtonModule} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import moment from "moment";
 import {InputImgComponent} from "../../shared/components/input-img/input-img.component";
+import {MultipleSelectorDTO} from "../../shared/components/multiple-selector/multiple-selector.model";
+import {MultipleSelectorComponent} from "../../shared/components/multiple-selector/multiple-selector.component";
 
 @Component({
     selector: 'app-movies-form',
-    imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatButtonModule, RouterLink, InputImgComponent],
+    imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatButtonModule, RouterLink, InputImgComponent, MultipleSelectorComponent],
     templateUrl: './movies-form.component.html',
     styleUrl: './movies-form.component.css'
 })
@@ -20,6 +22,12 @@ export class MoviesFormComponent implements OnInit{
 
     @Input()
     model?: MovieDTO;
+
+    @Input({required: true})
+    selectedGenres: MultipleSelectorDTO[] = [];
+
+    @Input({required: true})
+    nonSelectedGenres: MultipleSelectorDTO[] = [];
 
     @Output()
     postForm = new EventEmitter<MovieCreationDTO>();
@@ -61,6 +69,8 @@ export class MoviesFormComponent implements OnInit{
         if (typeof movie.poster === "string") {
             movie.poster = undefined;
         }
+
+        movie.genresIds = this.selectedGenres.map(val => val.key);
 
         this.postForm.emit(movie);
     }

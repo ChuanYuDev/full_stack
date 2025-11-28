@@ -26,6 +26,9 @@
             (selectedFile)="handleSelectedFile($event)"
         >
         </app-input-img>
+
+        <h4>Select the genres</h4>
+        <app-multiple-selector [selected]="selectedGenres" [nonSelected]="nonSelectedGenres"></app-multiple-selector>
     </div>
 
     <div class="buttons-container">

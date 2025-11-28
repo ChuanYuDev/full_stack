@@ -4,4 +4,11 @@
     The id of movie is {{ id }}
 </p>
 
-<app-movies-form [model]="model" (postForm)="saveChanges($event)"></app-movies-form>
+<app-movies-form
+    [selectedGenres]="selectedGenres"
+    [nonSelectedGenres]="nonSelectedGenres"
+    [model]="model"
+    (postForm)="saveChanges($event)"
+>
+
+</app-movies-form>
