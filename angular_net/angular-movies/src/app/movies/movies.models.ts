@@ -5,6 +5,7 @@ export interface MovieDTO {
     trailer: string;
     poster?: string;
     genresIds?: number[];
+    theatersIds?: number[];
 }
 
 export interface MovieCreationDTO {
@@ -13,4 +14,5 @@ export interface MovieCreationDTO {
     trailer: string;
     poster?: File | string;
     genresIds?: number[];
+    theatersIds?: number[];
 }

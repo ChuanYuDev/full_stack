@@ -29,6 +29,12 @@ export class MoviesFormComponent implements OnInit{
     @Input({required: true})
     nonSelectedGenres: MultipleSelectorDTO[] = [];
 
+    @Input({required: true})
+    selectedTheaters: MultipleSelectorDTO[] = [];
+
+    @Input({required: true})
+    nonSelectedTheaters: MultipleSelectorDTO[] = [];
+
     @Output()
     postForm = new EventEmitter<MovieCreationDTO>();
 
@@ -71,6 +77,7 @@ export class MoviesFormComponent implements OnInit{
         }
 
         movie.genresIds = this.selectedGenres.map(val => val.key);
+        movie.theatersIds = this.selectedTheaters.map(val => val.key);
 
         this.postForm.emit(movie);
     }

@@ -31,6 +31,13 @@ export class EditMovieComponent {
         {key: 3, description: "Drama"},
     ];
 
+    selectedTheaters: MultipleSelectorDTO[] = [
+        {key: 1, description: "Star cinema"},
+    ];
+    nonSelectedTheaters: MultipleSelectorDTO[] = [
+        {key: 2, description: "Palace ifc"}
+    ];
+
     saveChanges(movie: MovieCreationDTO) {
         console.log("Edit movie", movie);
     }
