@@ -1,25 +1,23 @@
 @use "@angular/material" as mat;
 
 .primary {
-    @include mat.theme(
-        (
-            color: mat.$azure-palette
-        )
-    )
+    @include mat.theme((
+		color: mat.$azure-palette
+	));
 }
 
 .secondary {
-    @include mat.theme(
-        (
-            color: mat.$magenta-palette
-        )
-    )
+    @include mat.theme((
+		color: mat.$magenta-palette
+	));
 }
 
 .warn {
-    @include mat.theme(
-        (
-            color: mat.$red-palette
-        )
-    )
+    @include mat.theme((
+		color: mat.$red-palette
+	));
+}
+
+.mat-elevation-z8 {
+	@include mat.elevation(8);
 }

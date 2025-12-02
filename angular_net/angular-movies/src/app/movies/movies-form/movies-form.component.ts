@@ -10,10 +10,11 @@ import moment from "moment";
 import {InputImgComponent} from "../../shared/components/input-img/input-img.component";
 import {MultipleSelectorDTO} from "../../shared/components/multiple-selector/multiple-selector.model";
 import {MultipleSelectorComponent} from "../../shared/components/multiple-selector/multiple-selector.component";
+import {ActorsAutocompleteComponent} from "../../actors/actors-autocomplete/actors-autocomplete.component";
 
 @Component({
     selector: 'app-movies-form',
-    imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatButtonModule, RouterLink, InputImgComponent, MultipleSelectorComponent],
+    imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatButtonModule, RouterLink, InputImgComponent, MultipleSelectorComponent, ActorsAutocompleteComponent],
     templateUrl: './movies-form.component.html',
     styleUrl: './movies-form.component.css'
 })
