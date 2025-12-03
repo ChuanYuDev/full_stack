@@ -11,6 +11,7 @@ import {InputImgComponent} from "../../shared/components/input-img/input-img.com
 import {MultipleSelectorDTO} from "../../shared/components/multiple-selector/multiple-selector.model";
 import {MultipleSelectorComponent} from "../../shared/components/multiple-selector/multiple-selector.component";
 import {ActorsAutocompleteComponent} from "../../actors/actors-autocomplete/actors-autocomplete.component";
+import {ActorAutoCompleteDTO} from "../../actors/actors.models";
 
 @Component({
     selector: 'app-movies-form',
@@ -19,8 +20,6 @@ import {ActorsAutocompleteComponent} from "../../actors/actors-autocomplete/acto
     styleUrl: './movies-form.component.css'
 })
 export class MoviesFormComponent implements OnInit{
-    private formBuilder = inject(FormBuilder);
-
     @Input()
     model?: MovieDTO;
 
@@ -36,8 +35,13 @@ export class MoviesFormComponent implements OnInit{
     @Input({required: true})
     nonSelectedTheaters: MultipleSelectorDTO[] = [];
 
+    @Input({required: true})
+    selectedActors: ActorAutoCompleteDTO[] = [];
+
     @Output()
     postForm = new EventEmitter<MovieCreationDTO>();
+
+    private formBuilder = inject(FormBuilder);
 
     form = this.formBuilder.group({
         title: ["", {validators: [Validators.required]}],
@@ -79,6 +83,7 @@ export class MoviesFormComponent implements OnInit{
 
         movie.genresIds = this.selectedGenres.map(val => val.key);
         movie.theatersIds = this.selectedTheaters.map(val => val.key);
+        movie.actors = this.selectedActors;
 
         this.postForm.emit(movie);
     }

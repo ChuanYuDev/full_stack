@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {MoviesFormComponent} from "../movies-form/movies-form.component";
 import {MovieCreationDTO} from "../movies.models";
 import {MultipleSelectorDTO} from "../../shared/components/multiple-selector/multiple-selector.model";
+import {ActorAutoCompleteDTO} from "../../actors/actors.models";
 
 @Component({
     selector: 'app-create-movie',
@@ -24,6 +25,8 @@ export class CreateMovieComponent {
         {key: 1, description: "Star cinema"},
         {key: 2, description: "Palace ifc"}
     ];
+
+    selectedActors: ActorAutoCompleteDTO[] = [];
 
     saveChanges(movie: MovieCreationDTO): void {
         console.log("Create movie", movie);

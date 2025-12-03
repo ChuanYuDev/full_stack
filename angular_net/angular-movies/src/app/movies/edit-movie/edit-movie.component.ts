@@ -2,6 +2,7 @@ import {Component, Input, numberAttribute} from '@angular/core';
 import {MovieCreationDTO, MovieDTO} from "../movies.models";
 import {MoviesFormComponent} from "../movies-form/movies-form.component";
 import {MultipleSelectorDTO} from "../../shared/components/multiple-selector/multiple-selector.model";
+import {ActorAutoCompleteDTO} from "../../actors/actors.models";
 
 @Component({
     selector: 'app-edit-movie',
@@ -36,6 +37,10 @@ export class EditMovieComponent {
     ];
     nonSelectedTheaters: MultipleSelectorDTO[] = [
         {key: 2, description: "Palace ifc"}
+    ];
+
+    selectedActors: ActorAutoCompleteDTO[] = [
+        {id: 3, name: 'Samuel L. Jackson', character: 'Nick Fury', picture: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/SamuelLJackson.jpg/250px-SamuelLJackson.jpg' }
     ];
 
     saveChanges(movie: MovieCreationDTO) {
