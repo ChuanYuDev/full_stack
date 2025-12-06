@@ -1,62 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.Drawing;
-using Pastel;
 using System;
 using System.Globalization;
 
-// Module 1
-// Console.WriteLine("Hello, World!".Pastel(Color.Green));
-
-// Module 2
-// Method to divide two numbers
-// public class Program
-// {
-//     public static double DivideNumbers(int numerator, int denominator)
-//     {
-//         if (denominator == 0)
-//         {
-//             Console.WriteLine("Error: Division by zero is not allowed.");
-//             return double.NaN; // Return "Not a Number" to indicate an error
-//         }
-
-//         double result = numerator / denominator;
-//         return result;
-//     }
-
-//     public static void Main()
-//     {
-//         // Attempt to divide 10 by 0
-//         double result = DivideNumbers(10, 0);
-//         Console.WriteLine("The result is: " + result);
-//     }
-// }
-
-// Method to calculate the average of an array
-// public class Program
-// {
-//     public static double CalculateAverage(int[] numbers)
-//     {
-//         if (numbers.Length == 0)
-//         {
-//             Console.WriteLine("Error: Cannot calculate the average of an empty array.");
-//             return double.NaN; // Return "Not a number" to indicate an error
-//         }
-
-//         int sum = 0;
-//         for (int i = 0; i < numbers.Length; i++)
-//         {
-//             sum += numbers[i];
-//         }
-//         return (double)sum / numbers.Length;
-//     }
-
-//     public static void Main()
-//     {
-//         int[] numbers = {}; // Empty array
-//         double average = CalculateAverage(numbers);
-//         Console.WriteLine("The average is: " + average);
-//     }
-// }
 
 // Method to calculate the final price after a discount
 // public class Program
@@ -74,36 +19,6 @@ using System.Globalization;
 //     }
 // }
 
-// public class Program
-// {
-//     public static int FindMax(int[] numbers)
-//     {
-//         // if (numbers.Length == 0)
-//         // {
-//         //     Console.WriteLine("The array is empty");
-//         //     return 0;
-//         // }
-
-//         // int max = numbers[0];
-//         int max = int.MinValue;
-
-//         for (int i = 0; i < numbers.Length; i++)
-//         {
-//             if (numbers[i] > max)
-//             {
-//                 max = numbers[i];
-//             }
-//         }
-//         return max;
-//     }
-
-//     public static void Main()
-//     {
-//         int[] myNumbers = { -5, -10, -3, -8, -2 };
-//         int maxNumber = FindMax(myNumbers);
-//         Console.WriteLine("The maximum number is: " + maxNumber);
-//     }
-// }
 
 // public class Calculator
 // {
@@ -242,5 +157,3 @@ public class ToDoList
         }
     }
 }
-
-// Module 3
