@@ -38,11 +38,6 @@ namespace Plugins.DataStore.InMemory
         {
             if (loadCategory)
             {
-                // Count vs Count()
-                //      Count() is an extension method introduced by LINQ
-                //      While the Count property is part of the List itself (derived from ICollection)
-                //      Internally though, LINQ checks if your IEnumerable implements ICollection and if it does it uses the Count property
-                //      So at the end of the day, there's no difference which one you use for a List
                 if (_products != null && _products.Count > 0)
                 {
                     // ForEach: perform specific action on each element of List<>
