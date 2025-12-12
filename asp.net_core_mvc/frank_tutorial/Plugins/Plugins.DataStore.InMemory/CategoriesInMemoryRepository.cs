@@ -37,13 +37,6 @@ namespace Plugins.DataStore.InMemory
 
         public Category? GetCategoryById(int categoryId)
         {
-            // FirstOrDefault()
-            //      Belongs to LINQ (language integrated query)
-            //
-            //      This method returns the first element of a sequence that satisfies a specified condition
-            //      Or a default value if no such element is found
-            //      The default value for reference types is null
-            //      And for value types, it’s the default value of the type (e.g., 0 for int)
             var category = _categories.FirstOrDefault(x => x.CategoryId == categoryId);
 
             if (category != null)

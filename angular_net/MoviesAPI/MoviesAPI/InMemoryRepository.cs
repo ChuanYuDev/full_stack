@@ -19,4 +19,9 @@ public class InMemoryRepository
     {
         return _genres;
     }
+
+    public Genre? GetById(int id)
+    {
+        return _genres.FirstOrDefault(g => g.Id == id);
+    }
 }
