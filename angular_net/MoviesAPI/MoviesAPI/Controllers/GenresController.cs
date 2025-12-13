@@ -17,10 +17,10 @@ public class GenresController: ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<Genre> Get(int id)
+    public async Task<ActionResult<Genre>> Get(int id)
     {
         var repository = new InMemoryRepository();
-        var genre = repository.GetById(id);
+        var genre = await repository.GetById(id);
 
         if (genre is null)
         {

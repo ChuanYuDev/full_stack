@@ -20,8 +20,9 @@ public class InMemoryRepository
         return _genres;
     }
 
-    public Genre? GetById(int id)
+    public async Task<Genre?> GetById(int id)
     {
+        await Task.Delay(TimeSpan.FromSeconds(3));
         return _genres.FirstOrDefault(g => g.Id == id);
     }
 }
