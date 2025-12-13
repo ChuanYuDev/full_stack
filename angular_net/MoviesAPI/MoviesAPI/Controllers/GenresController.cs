@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using MoviesAPI.Entities;
 
 namespace MoviesAPI.Controllers;
@@ -17,6 +18,7 @@ public class GenresController: ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [OutputCache]
     public async Task<ActionResult<Genre>> Get(int id)
     {
         var repository = new InMemoryRepository();
