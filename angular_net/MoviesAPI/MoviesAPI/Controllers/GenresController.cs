@@ -5,6 +5,7 @@ using MoviesAPI.Entities;
 namespace MoviesAPI.Controllers;
 
 [Route("api/genres")]
+[ApiController]
 public class GenresController: ControllerBase
 {
     [HttpGet]
