@@ -7,8 +7,8 @@ namespace MoviesAPI.Controllers;
 [Route("api/genres")]
 public class GenresController: ControllerBase
 {
-    [HttpGet("api/genres")]
     [HttpGet]
+    [HttpGet("api/genres")]
     [HttpGet("/all-of-the-genres")]
     public List<Genre> Get()
     {
@@ -32,10 +32,17 @@ public class GenresController: ControllerBase
         return genre;
     }
 
-    [HttpPost]
-    public void Post()
+    [HttpGet("{name}")]
+    public async Task<ActionResult<Genre>> Get(string name, [FromQuery] int id)
     {
-        
+        return new Genre { Id = id, Name = name };
+    }
+
+    [HttpPost]
+    public ActionResult<Genre> Post([FromBody] Genre genre)
+    {
+        genre.Id = 3;
+        return genre;
     }
 
     [HttpPut]

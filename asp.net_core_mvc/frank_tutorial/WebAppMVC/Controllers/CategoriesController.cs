@@ -65,8 +65,6 @@ namespace WebAppMVC.Controllers
         // When mapping /categories/edit/abc
         //      "abc" maps to integer failed
         //      No exception is throwed, use default value
-        //      0: default value of int
-        //      null: defalut value of int? which is nullable type
         //
         // Another way to pass parameter
         //      /categories/edit?id=555
@@ -74,21 +72,6 @@ namespace WebAppMVC.Controllers
         //      Then value will be automatically assigned to `Edit` action method `id` parameter
         //
         // The way to transfer data to the action method using `id` is called model binding
-        // 
-        // HttpGet
-        //      If we don't specify what attrobute the action method has, it has to the HttpGet attribute
-        //      So by default, an action method without the attribute is the one that handles Http get
-        // 
-        // Model binding
-        //      We can specify where the data come from
-        //      There are five data source
-        //          [FromQuery] - Gets values from the query string.
-        //          [FromRoute] - Gets values from route data.
-        //          [FromForm] - Gets values from posted form fields.
-        //          [FromBody] - Gets values from the request body.
-        //          [FromHeader] - Gets values from HTTP headers
-        //      If we don't specify the data source, asp.net core is going to go through all of five different places to locate the data  
-        //          If it can't locate the data, it will report error or provide default value for the parameter
         //
         //      FromRoute attribute: the data come from the route
         //          Syntax: public IActionResult Edit([FromRoute] int? id)
