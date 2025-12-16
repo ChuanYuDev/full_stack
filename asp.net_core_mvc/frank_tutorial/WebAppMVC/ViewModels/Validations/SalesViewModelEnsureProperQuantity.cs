@@ -10,19 +10,6 @@ namespace WebAppMVC.ViewModels.Validations
         // Get the SalesViewModel from the validationContext
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            // is keyword
-            //      Syntax: expression is type
-            //
-            //      Here, the expression will be evaluated to an instance of some type
-            //      And type is the name of the type to that the result of the expression is to be converted
-            //      If the expression is not null and the object results from evaluating the expression can be converted to the specified type then is operator will return true otherwise it will return false
-
-            // as keyword
-            //      Syntax: expression as type
-            //
-            //      The above syntax is equivalent to below code. But the expression variable will be evaluated only one time
-            //      expression is type ? (type)expression : (type)null
-            
             // We are going to apply SalesViewModelEnsureProperQuantity to SalesViewModel Quantity property
             //      Therefore the ObjectInstance is going to be the object instance of SalesViewModel
             var salesViewModel = validationContext.ObjectInstance as SalesViewModel;

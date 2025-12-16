@@ -14,16 +14,6 @@ _ of _Category.cshtml
 @* Use tag helper to specify if the submit button is pressed, where do the data go to be processed *@
 <form method="post" asp-controller="categories" asp-action="@action">
 
-    @*
-    ?. null-conditional operator
-        If `a` evaluates to `null`, the result of `a?.x` or `a?[x]` is `null`
-        If `a` evaluates to non-null, the result of `a?.x` or `a?[x]` is the same as the result of `a.x` or `a[x]`, respectively 
-
-    For the equality operator ==
-        If both operands are `null`, the result is `true`
-        If only one of the operands is `null`, the result is false
-            Otherwise, the contained values of operands are compared
-    *@
     @if (action?.ToLower() == "edit")
     {
         @* 
