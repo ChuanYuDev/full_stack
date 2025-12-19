@@ -91,9 +91,6 @@ else
 // ASP.NET core is not a stateful application
 //      That means it doesn't maintain the state and store anything in the session if you don't specially do so
 //      Every time, you ask for a page, a new instance of the corresponding controller class will be created
-//
-// AddTransient mapping
-//      The lifespan of the created object is going to live as long as the controller
 builder.Services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
 builder.Services.AddTransient<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
 builder.Services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();
@@ -112,7 +109,6 @@ builder.Services.AddTransient<IGetTodayTransactionsUseCase, GetTodayTransactions
 builder.Services.AddTransient<IRecordTransactionUseCase, RecordTransactionUseCase>();
 builder.Services.AddTransient<ISearchTransactionsUseCase, SearchTransactionsUseCase>();
 
-// Dependency injection should be before the builder.Build()
 var app = builder.Build();
 
 // Add static file middleware

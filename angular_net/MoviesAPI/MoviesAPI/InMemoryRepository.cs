@@ -25,4 +25,9 @@ public class InMemoryRepository
         await Task.Delay(TimeSpan.FromSeconds(3));
         return _genres.FirstOrDefault(g => g.Id == id);
     }
+
+    public bool Exists(string name)
+    {
+        return _genres.Any(g => g.Name == name);
+    }
 }

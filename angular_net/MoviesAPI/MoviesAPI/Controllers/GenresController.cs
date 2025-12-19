@@ -8,12 +8,18 @@ namespace MoviesAPI.Controllers;
 [ApiController]
 public class GenresController: ControllerBase
 {
+    private readonly InMemoryRepository repository;
+
+    public GenresController(InMemoryRepository repository)
+    {
+        this.repository = repository;
+    }
+
     [HttpGet]
     [HttpGet("api/genres")]
     [HttpGet("/all-of-the-genres")]
     public List<Genre> Get()
     {
-        var repository = new InMemoryRepository();
         var genres = repository.GetAllGenres();
         return genres;
     }
@@ -22,7 +28,6 @@ public class GenresController: ControllerBase
     [OutputCache]
     public async Task<ActionResult<Genre>> Get(int id)
     {
-        var repository = new InMemoryRepository();
         var genre = await repository.GetById(id);
 
         if (genre is null)
@@ -42,6 +47,13 @@ public class GenresController: ControllerBase
     [HttpPost]
     public ActionResult<Genre> Post([FromBody] Genre genre)
     {
+        var genreWithSameNameExists = repository.Exists(genre.Name);
+
+        if (genreWithSameNameExists)
+        {
+            return BadRequest($"There's already a genre with the name {genre.Name}");
+        }
+        
         genre.Id = 3;
         return genre;
     }
