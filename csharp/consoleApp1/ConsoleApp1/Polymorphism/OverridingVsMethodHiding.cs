@@ -1,29 +1,4 @@
-namespace ConsoleApp1.Test;
-
-public class Animal
-{
-    public void Eat()
-    {
-        Console.WriteLine("Animal eats");
-    }
-    public virtual void MakeSound()
-    {
-        Console.WriteLine("Animal makes sound");
-    }
-}
-
-public class Dog : Animal
-{
-    public new void Eat()
-    {
-        Console.WriteLine("Dog eats");
-    }
-
-    public override void MakeSound()
-    {
-        Console.WriteLine("Bark");
-    }
-}
+namespace ConsoleApp1.Polymorphism;
 
 public class OverridingVsMethodHiding
 {

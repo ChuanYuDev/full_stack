@@ -5,7 +5,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-      <StartupObject>ConsoleApp1.Test.OverridingVsMethodHiding</StartupObject>
+      <StartupObject>ConsoleApp1.Polymorphism.OverridingVsMethodHiding</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
