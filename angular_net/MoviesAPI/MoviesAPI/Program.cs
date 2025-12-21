@@ -13,7 +13,7 @@ builder.Services.AddOutputCache(options =>
     options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(15);
 });
 
-builder.Services.AddTransient<InMemoryRepository>();
+builder.Services.AddTransient<IRepository, InMemoryRepository>();
 
 var app = builder.Build();
 

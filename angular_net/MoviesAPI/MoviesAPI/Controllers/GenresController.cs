@@ -8,9 +8,9 @@ namespace MoviesAPI.Controllers;
 [ApiController]
 public class GenresController: ControllerBase
 {
-    private readonly InMemoryRepository repository;
+    private readonly IRepository repository;
 
-    public GenresController(InMemoryRepository repository)
+    public GenresController(IRepository repository)
     {
         this.repository = repository;
     }
