@@ -30,4 +30,9 @@ public class SQLServerRepository: IRepository
     {
         return _genres.Any(g => g.Name == name);
     }
+
+    public int Create(Genre genre)
+    {
+        throw new NotImplementedException();
+    }
 }

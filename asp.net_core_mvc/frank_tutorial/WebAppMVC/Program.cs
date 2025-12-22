@@ -81,16 +81,10 @@ else
     builder.Services.AddTransient<ITransactionsRepository, TransactionsSQLRepository>();
 }
 
-// Create a mapping between interface and concrete implementation
-//      Register in services collection that I have an implementation of IViewCategoriesUseCase
-//
 // When MVC create an instance of ViewCategoriesUseCase
 //      It raises an exception that it is unable to resolve service for type ICategoryRepository
 //      Because we didn't register the mapping in the service collection
 //
-// ASP.NET core is not a stateful application
-//      That means it doesn't maintain the state and store anything in the session if you don't specially do so
-//      Every time, you ask for a page, a new instance of the corresponding controller class will be created
 builder.Services.AddTransient<IAddCategoryUseCase, AddCategoryUseCase>();
 builder.Services.AddTransient<IDeleteCategoryUseCase, DeleteCategoryUseCase>();
 builder.Services.AddTransient<IEditCategoryUseCase, EditCategoryUseCase>();

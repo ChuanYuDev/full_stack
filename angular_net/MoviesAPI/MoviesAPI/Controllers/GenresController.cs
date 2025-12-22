@@ -53,8 +53,8 @@ public class GenresController: ControllerBase
         {
             return BadRequest($"There's already a genre with the name {genre.Name}");
         }
-        
-        genre.Id = 3;
+
+        repository.Create(genre);
         return genre;
     }
 

@@ -30,4 +30,12 @@ public class InMemoryRepository: IRepository
     {
         return _genres.Any(g => g.Name == name);
     }
+
+    public int Create(Genre genre)
+    {
+        var id = _genres.Max(g => g.Id) + 1;
+        genre.Id = id;
+        _genres.Add(genre);
+        return id;
+    }
 }
