@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOutputCache(options =>
 {
-    options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(15);
+    options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(60);
 });
 
 builder.Services.AddSingleton<IRepository, InMemoryRepository>();

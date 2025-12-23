@@ -9,15 +9,19 @@ namespace MoviesAPI.Controllers;
 public class GenresController: ControllerBase
 {
     private readonly IRepository repository;
+    private readonly IOutputCacheStore outputCacheStore;
+    private const string cacheTag = "genres";
 
-    public GenresController(IRepository repository)
+    public GenresController(IRepository repository, IOutputCacheStore outputCacheStore)
     {
         this.repository = repository;
+        this.outputCacheStore = outputCacheStore;
     }
 
     [HttpGet]
-    [HttpGet("api/genres")]
+    [HttpGet("all-genres")]
     [HttpGet("/all-of-the-genres")]
+    [OutputCache(Tags = [cacheTag])]
     public List<Genre> Get()
     {
         var genres = repository.GetAllGenres();
@@ -25,7 +29,7 @@ public class GenresController: ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    [OutputCache]
+    [OutputCache(Tags = [cacheTag])]
     public async Task<ActionResult<Genre>> Get(int id)
     {
         var genre = await repository.GetById(id);
@@ -45,7 +49,7 @@ public class GenresController: ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Genre> Post([FromBody] Genre genre)
+    public async Task<ActionResult<Genre>> Post([FromBody] Genre genre)
     {
         var genreWithSameNameExists = repository.Exists(genre.Name);
 
@@ -55,6 +59,7 @@ public class GenresController: ControllerBase
         }
 
         repository.Create(genre);
+        await outputCacheStore.EvictByTagAsync(cacheTag, default);
         return genre;
     }
 
