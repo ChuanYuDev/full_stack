@@ -4,3 +4,9 @@
     <mat-icon>add</mat-icon>
     Create genre
 </button>
+
+<ul>
+    @for (genre of genres; track $index) {
+        <li>{{ genre.name }}</li>
+    }
+</ul>
