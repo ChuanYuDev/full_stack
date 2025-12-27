@@ -16,6 +16,8 @@ export class IndexGenresComponent {
     genres: GenreDTO[] = [];
     
     constructor() {
-        this.genres = this.genresService.getAll();
+        this.genresService.getAll().subscribe(genres => {
+            this.genres = genres;
+        });
     }
 }
