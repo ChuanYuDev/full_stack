@@ -13,6 +13,16 @@ builder.Services.AddOutputCache(options =>
     options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(60);
 });
 
+var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")?.Split(",") ?? [];
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader();
+    });
+});
+
 builder.Services.AddSingleton<IRepository, InMemoryRepository>();
 
 builder.Services.AddTransient<TransientService>();
@@ -31,9 +41,11 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseOutputCache();
-
 app.UseHttpsRedirection();
+
+app.UseCors();
+
+app.UseOutputCache();
 
 app.UseAuthorization();
 
