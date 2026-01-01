@@ -5,33 +5,12 @@ namespace Plugins.DataStore.SQL
 {
     // Represent in-memory representation of the database
 
-    // DbContext is from EntityFrameworkCore Nuget package
     public class MarketContext : DbContext
     {
-        // Specify where is the actual database
-        //
-        // If we have only one DbContext, we can use
-        //      public MarketContext(DbContextOptions options) : base(options)
-        //      Don't specify DbContextOptions type
-        //
-        // If we have two DbContext 
-        //      In our case, we have MarketContext and AccountContext
-        //      We need to specify DbContextOptions<MarketContext>
-        //      In order to make ASP.NET core to know which context uses which connection string
-        //
-        // base(options)
-        //      Pass parameters to the base DbContext
-        //      Base constructor will be able to know where the connection is
         public MarketContext(DbContextOptions<MarketContext> options) : base(options)
         {
 
         }
-        // DbSet corresponds to a database table with generic parameter
-        //
-        // DbSet<Category>
-        //      We are having a table and the definition of the table is the same as the definition of the category class
-        //
-        // Usually we use plural to represent the database inside the context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Transaction> Transactions { get; set; }

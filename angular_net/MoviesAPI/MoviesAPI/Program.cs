@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MoviesAPI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,12 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader();
     });
+});
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string not found.");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(connectionString);
 });
 
 builder.Services.AddSingleton<IRepository, InMemoryRepository>();
