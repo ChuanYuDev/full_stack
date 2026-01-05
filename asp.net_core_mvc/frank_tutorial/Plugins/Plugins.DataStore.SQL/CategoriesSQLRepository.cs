@@ -7,8 +7,6 @@ namespace Plugins.DataStore.SQL
     {
         private readonly MarketContext db;
 
-        // In order to work with Entity Framework COre, we are going to inject the DbContext
-        //      Constructor dependency injection
         public CategoriesSQLRepository(MarketContext db)
         {
             this.db = db;
@@ -17,7 +15,6 @@ namespace Plugins.DataStore.SQL
         {
             db.Categories.Add(category);
 
-            // Save all changed made in this context to the database
             db.SaveChanges();
         }
 

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MoviesAPI.Controllers;
+namespace WebAPITest.Controllers;
 
 [Route("api/configurations")]
 public class ConfigurationsController: ControllerBase
