@@ -32,10 +32,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddSingleton<IRepository, InMemoryRepository>();
 
-builder.Services.AddTransient<TransientService>();
-builder.Services.AddScoped<ScopedService>();
-builder.Services.AddSingleton<SingletonService>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
