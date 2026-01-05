@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using MoviesAPI;
+using Plugins.DataStore.InMemory;
+using Plugins.DataStore.SQL;
+using UseCases.DataStoreInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,13 +27,20 @@ builder.Services.AddCors(options =>
     });
 });
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+if (builder.Environment.IsEnvironment("QA"))
 {
-    options.UseSqlServer(connectionString);
-});
+    builder.Services.AddSingleton<IGenresRepository, GenresInMemoryRepository>();
+}
+else
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string not found.");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    {
+        options.UseSqlServer(connectionString);
+    });
 
-builder.Services.AddSingleton<IRepository, InMemoryRepository>();
+    builder.Services.AddTransient<IGenresRepository, GenresSQLRepository>();
+}
 
 var app = builder.Build();
 

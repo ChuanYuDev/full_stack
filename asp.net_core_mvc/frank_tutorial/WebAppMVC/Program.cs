@@ -10,7 +10,6 @@ using WebAppMVC.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Use dependency injection to provide all of the services that entity framework core actually needs
 builder.Services.AddDbContext<MarketContext>(options =>
 {
     // UseSqlServer
@@ -55,27 +54,14 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Cashier", p => p.RequireClaim("Position", "Cashier"));
 });
 
-// Implement a logic for dependency injection
-//      Sometimes, when QA wants to test, QA will go through hundreds of thousands of test cases
-//      Talking to actual database is going to be really slow
-//      It's possible that QA wants to use in-memory repositories
 if (builder.Environment.IsEnvironment("QA"))
 {
-    // AddSingleton
-    //      For ICategoryRepository, there's only going to be one instance in the entire ASP.NET core application
-    //      Instance is created once
-    //      Every time you need to use this instance, it's always going to return back the same instance
     builder.Services.AddSingleton<ICategoriesRepository, CategoriesInMemoryRepository>();
     builder.Services.AddSingleton<IProductsRepository, ProductsInMemoryRepository>();
     builder.Services.AddSingleton<ITransactionsRepository, TransactionsInMemoryRepository>();
 }
 else
 {
-    // As soon as we switch the concrete implementation to its SQL server counterpoarts
-    //      We will be able to talk to the database
-    //
-    // Entity Framework Core will control the life span itself
-    //      We will use AddTransient instead
     builder.Services.AddTransient<ICategoriesRepository, CategoriesSQLRepository>();
     builder.Services.AddTransient<IProductsRepository, ProductsSQLRepository>();
     builder.Services.AddTransient<ITransactionsRepository, TransactionsSQLRepository>();

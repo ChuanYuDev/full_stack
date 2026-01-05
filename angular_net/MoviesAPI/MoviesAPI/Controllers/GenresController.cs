@@ -1,6 +1,7 @@
+using CoreBusiness;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
-using MoviesAPI.Entities;
+using UseCases.DataStoreInterfaces;
 
 namespace MoviesAPI.Controllers;
 
@@ -8,31 +9,31 @@ namespace MoviesAPI.Controllers;
 [ApiController]
 public class GenresController: ControllerBase
 {
-    private readonly IRepository repository;
-    private readonly IOutputCacheStore outputCacheStore;
-    private const string cacheTag = "genres";
+    private readonly IGenresRepository _genresRepository;
+    private readonly IOutputCacheStore _outputCacheStore;
+    private const string CacheTag = "genres";
 
-    public GenresController(IRepository repository, IOutputCacheStore outputCacheStore)
+    public GenresController(IGenresRepository genresRepository, IOutputCacheStore outputCacheStore)
     {
-        this.repository = repository;
-        this.outputCacheStore = outputCacheStore;
+        _genresRepository = genresRepository;
+        _outputCacheStore = outputCacheStore;
     }
 
     [HttpGet]
     [HttpGet("all-genres")]
     [HttpGet("/all-of-the-genres")]
-    [OutputCache(Tags = [cacheTag])]
+    [OutputCache(Tags = [CacheTag])]
     public List<Genre> Get()
     {
-        var genres = repository.GetAllGenres();
+        var genres = _genresRepository.GetAllGenres();
         return genres;
     }
 
     [HttpGet("{id:int}")]
-    [OutputCache(Tags = [cacheTag])]
+    [OutputCache(Tags = [CacheTag])]
     public async Task<ActionResult<Genre>> Get(int id)
     {
-        var genre = await repository.GetById(id);
+        var genre = await _genresRepository.GetById(id);
 
         if (genre is null)
         {
@@ -51,15 +52,15 @@ public class GenresController: ControllerBase
     [HttpPost]
     public async Task<ActionResult<Genre>> Post([FromBody] Genre genre)
     {
-        var genreWithSameNameExists = repository.Exists(genre.Name);
+        var genreWithSameNameExists = _genresRepository.Exists(genre.Name);
 
         if (genreWithSameNameExists)
         {
             return BadRequest($"There's already a genre with the name {genre.Name}");
         }
 
-        repository.Create(genre);
-        await outputCacheStore.EvictByTagAsync(cacheTag, default);
+        _genresRepository.Create(genre);
+        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
         return genre;
     }
 

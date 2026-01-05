@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MoviesAPI.Validations;
+namespace CoreBusiness.Validations;
 
 public class FirstLetterUppercaseAttribute: ValidationAttribute
 {

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using MoviesAPI.Validations;
+using CoreBusiness.Validations;
 
-namespace MoviesAPI.Entities;
+namespace CoreBusiness;
 
 public class Genre
 {

@@ -1,5 +1,5 @@
+using CoreBusiness;
 using Microsoft.EntityFrameworkCore;
-using MoviesAPI.Entities;
 
 namespace MoviesAPI;
 

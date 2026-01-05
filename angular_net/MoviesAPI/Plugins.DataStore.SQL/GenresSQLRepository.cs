@@ -1,12 +1,13 @@
-using MoviesAPI.Entities;
+using CoreBusiness;
+using UseCases.DataStoreInterfaces;
 
-namespace MoviesAPI;
+namespace Plugins.DataStore.SQL;
 
-public class SQLServerRepository: IRepository
+public class GenresSQLRepository: IGenresRepository
 {
     private List<Genre> _genres;
 
-    public SQLServerRepository()
+    public GenresSQLRepository()
     {
         _genres = new List<Genre>
         {

@@ -1,12 +1,13 @@
-using MoviesAPI.Entities;
+using CoreBusiness;
+using UseCases.DataStoreInterfaces;
 
-namespace MoviesAPI;
+namespace Plugins.DataStore.InMemory;
 
-public class InMemoryRepository: IRepository
+public class GenresInMemoryRepository: IGenresRepository
 {
-    private List<Genre> _genres;
+    private readonly List<Genre> _genres;
 
-    public InMemoryRepository()
+    public GenresInMemoryRepository()
     {
         _genres = new List<Genre>
         {

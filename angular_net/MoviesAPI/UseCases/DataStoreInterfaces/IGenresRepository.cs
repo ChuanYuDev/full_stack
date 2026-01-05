@@ -1,8 +1,8 @@
-using MoviesAPI.Entities;
+using CoreBusiness;
 
-namespace MoviesAPI;
+namespace UseCases.DataStoreInterfaces;
 
-public interface IRepository
+public interface IGenresRepository
 {
     List<Genre> GetAllGenres();
     Task<Genre?> GetById(int id);
