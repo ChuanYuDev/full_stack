@@ -32,7 +32,7 @@ public class GenresSQLRepository: IGenresRepository
         return _genres.Any(g => g.Name == name);
     }
 
-    public int Create(Genre genre)
+    public int Add(Genre genre)
     {
         throw new NotImplementedException();
     }

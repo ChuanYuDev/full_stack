@@ -32,7 +32,7 @@ public class GenresInMemoryRepository: IGenresRepository
         return _genres.Any(g => g.Name == name);
     }
 
-    public int Create(Genre genre)
+    public int Add(Genre genre)
     {
         var id = _genres.Max(g => g.Id) + 1;
         genre.Id = id;

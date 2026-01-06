@@ -20,8 +20,6 @@ public class GenresController: ControllerBase
     }
 
     [HttpGet]
-    [HttpGet("all-genres")]
-    [HttpGet("/all-of-the-genres")]
     [OutputCache(Tags = [CacheTag])]
     public List<Genre> Get()
     {
@@ -43,12 +41,6 @@ public class GenresController: ControllerBase
         return genre;
     }
 
-    [HttpGet("{name}")]
-    public async Task<ActionResult<Genre>> Get(string name, [FromQuery] int id)
-    {
-        return new Genre { Id = id, Name = name };
-    }
-
     [HttpPost]
     public async Task<ActionResult<Genre>> Post([FromBody] Genre genre)
     {
@@ -59,7 +51,7 @@ public class GenresController: ControllerBase
             return BadRequest($"There's already a genre with the name {genre.Name}");
         }
 
-        _genresRepository.Create(genre);
+        _genresRepository.Add(genre);
         await _outputCacheStore.EvictByTagAsync(CacheTag, default);
         return genre;
     }
