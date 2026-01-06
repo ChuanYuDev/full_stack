@@ -2,20 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MoviesAPI;
+using Plugins.DataStore.SQL;
 
 #nullable disable
 
-namespace MoviesAPI.Migrations
+namespace Plugins.DataStore.SQL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260101075752_GenresTable")]
-    partial class GenresTable
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +21,7 @@ namespace MoviesAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MoviesAPI.Entities.Genre", b =>
+            modelBuilder.Entity("CoreBusiness.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

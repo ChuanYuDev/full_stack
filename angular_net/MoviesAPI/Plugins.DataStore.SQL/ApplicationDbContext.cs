@@ -1,7 +1,7 @@
 using CoreBusiness;
 using Microsoft.EntityFrameworkCore;
 
-namespace MoviesAPI;
+namespace Plugins.DataStore.SQL;
 
 public class ApplicationDbContext: DbContext
 {

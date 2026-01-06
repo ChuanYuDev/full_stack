@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MoviesAPI.Migrations
+namespace Plugins.DataStore.SQL.Migrations
 {
     /// <inheritdoc />
     public partial class GenresTable : Migration

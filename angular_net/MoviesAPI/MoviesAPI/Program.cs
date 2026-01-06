@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using MoviesAPI;
 using Plugins.DataStore.InMemory;
 using Plugins.DataStore.SQL;
 using UseCases.DataStoreInterfaces;
