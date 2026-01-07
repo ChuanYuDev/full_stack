@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {GenreDTO} from "./genres.models";
+import {GenreCreationDTO, GenreDTO} from "./genres.models";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
@@ -15,5 +15,9 @@ export class GenresService {
     
     getAll(): Observable<GenreDTO[]> {
         return this.http.get<GenreDTO[]>(this.baseURL);
+    }
+    
+    create(genre: GenreCreationDTO) {
+        return this.http.post(this.baseURL, genre);
     }
 }

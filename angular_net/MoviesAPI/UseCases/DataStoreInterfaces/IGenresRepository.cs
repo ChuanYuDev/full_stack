@@ -7,5 +7,5 @@ public interface IGenresRepository
     List<Genre> GetAllGenres();
     Task<Genre?> GetById(int id);
     bool Exists(string name);
-    int Add(Genre genre);
+    Task Add(Genre genre);
 }

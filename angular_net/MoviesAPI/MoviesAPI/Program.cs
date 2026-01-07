@@ -38,7 +38,7 @@ else
         options.UseSqlServer(connectionString);
     });
 
-    builder.Services.AddTransient<IGenresRepository, GenresSQLRepository>();
+    builder.Services.AddTransient<IGenresRepository, GenresSqlRepository>();
 }
 
 var app = builder.Build();

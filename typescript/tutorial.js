@@ -11,4 +11,10 @@ class Test {
 const test = new Test();
 console.log(test.a);
 console.log(test.b);
+const user = {
+    id: 2,
+    name: "Pedro",
+    age: 22,
+};
+console.log(user.id + user.name + user.age);
 //# sourceMappingURL=tutorial.js.map

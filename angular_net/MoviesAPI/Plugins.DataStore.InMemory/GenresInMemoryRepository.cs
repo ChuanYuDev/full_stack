@@ -32,11 +32,10 @@ public class GenresInMemoryRepository: IGenresRepository
         return _genres.Any(g => g.Name == name);
     }
 
-    public int Add(Genre genre)
+    public async Task Add(Genre genre)
     {
         var id = _genres.Max(g => g.Id) + 1;
         genre.Id = id;
         _genres.Add(genre);
-        return id;
     }
 }

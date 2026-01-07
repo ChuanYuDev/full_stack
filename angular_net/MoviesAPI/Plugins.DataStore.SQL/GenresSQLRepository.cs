@@ -3,37 +3,32 @@ using UseCases.DataStoreInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class GenresSQLRepository: IGenresRepository
+public class GenresSqlRepository: IGenresRepository
 {
-    private List<Genre> _genres;
-
-    public GenresSQLRepository()
+    private readonly ApplicationDbContext _context;
+    public GenresSqlRepository(ApplicationDbContext context)
     {
-        _genres = new List<Genre>
-        {
-            new Genre { Id = 1, Name = "Comedy SQL" },
-            new Genre { Id = 2, Name = "Action SQL" },
-        };
+        _context = context;
     }
 
     public List<Genre> GetAllGenres()
     {
-        return _genres;
+        throw new NotImplementedException();
     }
 
     public async Task<Genre?> GetById(int id)
     {
-        await Task.Delay(TimeSpan.FromSeconds(3));
-        return _genres.FirstOrDefault(g => g.Id == id);
+        throw new NotImplementedException();
     }
 
     public bool Exists(string name)
     {
-        return _genres.Any(g => g.Name == name);
+        throw new NotImplementedException();
     }
 
-    public int Add(Genre genre)
+    public async Task Add(Genre genre)
     {
-        throw new NotImplementedException();
+        _context.Add(genre);
+        await _context.SaveChangesAsync();
     }
 }
