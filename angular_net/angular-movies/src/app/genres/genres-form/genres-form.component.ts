@@ -17,7 +17,7 @@ export class GenresFormComponent implements OnInit{
     private formBuilder = inject(FormBuilder);
 
     form = this.formBuilder.group({
-        name: ["", {validators: [Validators.required, firstLetterShouldBeUppercase()]}],
+        name: ["", {validators: [Validators.required, firstLetterShouldBeUppercase(), Validators.maxLength(50)]}],
     });
     
     @Input()
@@ -37,11 +37,15 @@ export class GenresFormComponent implements OnInit{
         const field = this.form.controls.name;
 
         if (field.hasError("required")) {
-            return "The name field is required";
+            return "The field Name is required";
         }
 
         if (field.hasError("firstLetterShouldBeUppercase")) {
             return field.getError("firstLetterShouldBeUppercase").message;
+        }
+        
+        if (field.hasError("maxlength")){
+            return `The field Name must not have more than ${field.getError("maxlength").requiredLength} characters`;
         }
 
         return "";

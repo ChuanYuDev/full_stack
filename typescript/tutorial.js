@@ -17,4 +17,14 @@ const user = {
     age: 22,
 };
 console.log(user.id + user.name + user.age);
+const user1 = {
+    greet(message) {
+        console.log(message);
+    }
+};
+user1.greet("Hello user");
+const func = function (message) {
+    console.log(message);
+};
+func("Hello func");
 //# sourceMappingURL=tutorial.js.map

@@ -21,3 +21,28 @@ const user: {
     age: 22,
 };
 console.log(user.id + user.name + user.age);
+
+interface UserInterface {
+    greet(message: string): void;
+}
+
+interface UserInterface2 {
+    greet: (message: string) => void;
+}
+
+const user1: UserInterface2 = {
+    greet(message) {
+        console.log(message);
+    }
+}
+
+user1.greet("Hello user");
+
+interface FuncInterface {
+    (message: string): void;
+}
+const func: FuncInterface = function (message: string): void {
+    console.log(message);
+};
+
+func("Hello func");
