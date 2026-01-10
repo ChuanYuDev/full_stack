@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MoviesAPI.Utilities;
 using Plugins.DataStore.InMemory;
 using Plugins.DataStore.SQL;
 using UseCases.DataStoreInterfaces;
@@ -40,6 +41,8 @@ else
 
     builder.Services.AddTransient<IGenresRepository, GenresSqlRepository>();
 }
+
+builder.Services.AddAutoMapper(cfg => {}, typeof(AutoMapperProfile));
 
 var app = builder.Build();
 

@@ -28,11 +28,6 @@ namespace Plugins.DataStore.InMemory
         }
 
         // Read
-        // Expression Body statements, introduced with C# 6, equvalent to
-        // public static List<Category> GetCategories()
-        // {
-        //     return _categories;
-        // }
         public IEnumerable<Category> GetCategories() => _categories;
 
         public Category? GetCategoryById(int categoryId)
@@ -63,7 +58,6 @@ namespace Plugins.DataStore.InMemory
 
             // GetCategoryById return a copied instance
             //      Therefore the category object in the list will not be updated
-            //      Use LINQ FirstOrDefault instead
 
             // var categoryToUpdate = GetCategoryById(categoryId);
 
@@ -71,7 +65,6 @@ namespace Plugins.DataStore.InMemory
 
             if (categoryToUpdate != null)
             {
-                // If there are a lot of properties, can use automapper library to map the properties to properties
                 categoryToUpdate.Name = category.Name;
                 categoryToUpdate.Description = category.Description;
             }

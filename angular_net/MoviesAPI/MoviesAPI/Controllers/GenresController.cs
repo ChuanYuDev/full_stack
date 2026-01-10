@@ -1,4 +1,6 @@
+using AutoMapper;
 using CoreBusiness;
+using CoreBusiness.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using UseCases.DataStoreInterfaces;
@@ -11,12 +13,14 @@ public class GenresController: ControllerBase
 {
     private readonly IGenresRepository _genresRepository;
     private readonly IOutputCacheStore _outputCacheStore;
+    private readonly IMapper _mapper;
     private const string CacheTag = "genres";
 
-    public GenresController(IGenresRepository genresRepository, IOutputCacheStore outputCacheStore)
+    public GenresController(IGenresRepository genresRepository, IOutputCacheStore outputCacheStore, IMapper mapper)
     {
         _genresRepository = genresRepository;
         _outputCacheStore = outputCacheStore;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -42,12 +46,15 @@ public class GenresController: ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Genre>> Post([FromBody] Genre genre)
+    public async Task<CreatedAtRouteResult> Post([FromBody] GenreCreationDto genreCreationDto)
     {
-        await _genresRepository.Add(genre);
-        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
+        var genre = _mapper.Map<Genre>(genreCreationDto);
         
-        return CreatedAtRoute("GetGenreById", new {id = genre.Id}, genre);
+        await _genresRepository.Add(genre);
+        await _outputCacheStore.EvictByTagAsync(CacheTag, CancellationToken.None);
+
+        var genreDto = _mapper.Map<GenreDto>(genre);
+        return CreatedAtRoute("GetGenreById", new {id = genreDto.Id}, genreDto);
     }
 
     [HttpPut]
