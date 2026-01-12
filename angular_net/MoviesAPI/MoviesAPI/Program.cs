@@ -42,7 +42,19 @@ else
     builder.Services.AddTransient<IGenresRepository, GenresSqlRepository>();
 }
 
-builder.Services.AddAutoMapper(cfg => {}, typeof(AutoMapperProfile));
+var autoMapperLicenseKey = builder.Configuration.GetValue<string>("AutoMapperLicenseKey");
+
+if (autoMapperLicenseKey is null)
+{
+    builder.Services.AddAutoMapper(cfg => {}, typeof(AutoMapperProfiles));
+}
+else
+{
+    builder.Services.AddAutoMapper(cfg =>
+    {
+        cfg.LicenseKey = autoMapperLicenseKey;
+    }, typeof(AutoMapperProfiles));
+}
 
 var app = builder.Build();
 

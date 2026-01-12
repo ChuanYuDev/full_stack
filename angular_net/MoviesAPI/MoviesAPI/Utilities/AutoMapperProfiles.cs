@@ -4,9 +4,9 @@ using CoreBusiness.DTOs;
 
 namespace MoviesAPI.Utilities;
 
-public class AutoMapperProfile: Profile
+public class AutoMapperProfiles: Profile
 {
-    public AutoMapperProfile()
+    public AutoMapperProfiles()
     {
         ConfigureGenres();
     }

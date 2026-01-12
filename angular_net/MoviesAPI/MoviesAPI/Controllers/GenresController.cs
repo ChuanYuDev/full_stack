@@ -13,22 +13,19 @@ public class GenresController: ControllerBase
 {
     private readonly IGenresRepository _genresRepository;
     private readonly IOutputCacheStore _outputCacheStore;
-    private readonly IMapper _mapper;
     private const string CacheTag = "genres";
 
-    public GenresController(IGenresRepository genresRepository, IOutputCacheStore outputCacheStore, IMapper mapper)
+    public GenresController(IGenresRepository genresRepository, IOutputCacheStore outputCacheStore)
     {
         _genresRepository = genresRepository;
         _outputCacheStore = outputCacheStore;
-        _mapper = mapper;
     }
 
     [HttpGet]
     [OutputCache(Tags = [CacheTag])]
-    public List<Genre> Get()
+    public async Task<List<GenreDto>> Get()
     {
-        var genres = _genresRepository.GetAllGenres();
-        return genres;
+        return await _genresRepository.GetAll();
     }
 
     [HttpGet("{id:int}", Name = "GetGenreById")]
@@ -48,12 +45,9 @@ public class GenresController: ControllerBase
     [HttpPost]
     public async Task<CreatedAtRouteResult> Post([FromBody] GenreCreationDto genreCreationDto)
     {
-        var genre = _mapper.Map<Genre>(genreCreationDto);
-        
-        await _genresRepository.Add(genre);
+        var genreDto = await _genresRepository.Add(genreCreationDto);
         await _outputCacheStore.EvictByTagAsync(CacheTag, CancellationToken.None);
 
-        var genreDto = _mapper.Map<GenreDto>(genre);
         return CreatedAtRoute("GetGenreById", new {id = genreDto.Id}, genreDto);
     }
 

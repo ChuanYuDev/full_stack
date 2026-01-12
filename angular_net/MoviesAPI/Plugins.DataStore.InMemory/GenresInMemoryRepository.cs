@@ -1,14 +1,18 @@
+using AutoMapper;
 using CoreBusiness;
+using CoreBusiness.DTOs;
 using UseCases.DataStoreInterfaces;
 
 namespace Plugins.DataStore.InMemory;
 
 public class GenresInMemoryRepository: IGenresRepository
 {
+    private readonly IMapper _mapper;
     private readonly List<Genre> _genres;
 
-    public GenresInMemoryRepository()
+    public GenresInMemoryRepository(IMapper mapper)
     {
+        _mapper = mapper;
         _genres = new List<Genre>
         {
             new Genre { Id = 1, Name = "Comedy" },
@@ -16,9 +20,9 @@ public class GenresInMemoryRepository: IGenresRepository
         };
     }
 
-    public List<Genre> GetAllGenres()
+    public async Task<List<GenreDto>> GetAll()
     {
-        return _genres;
+        return _mapper.Map<List<GenreDto>>(_genres);
     }
 
     public async Task<Genre?> GetById(int id)
@@ -32,10 +36,14 @@ public class GenresInMemoryRepository: IGenresRepository
         return _genres.Any(g => g.Name == name);
     }
 
-    public async Task Add(Genre genre)
+    public async Task<GenreDto> Add(GenreCreationDto genreCreationDto)
     {
+        var genre = _mapper.Map<Genre>(genreCreationDto);
+        
         var id = _genres.Max(g => g.Id) + 1;
         genre.Id = id;
         _genres.Add(genre);
+        
+        return _mapper.Map<GenreDto>(genre);
     }
 }

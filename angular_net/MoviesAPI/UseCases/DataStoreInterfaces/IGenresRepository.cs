@@ -1,11 +1,12 @@
 using CoreBusiness;
+using CoreBusiness.DTOs;
 
 namespace UseCases.DataStoreInterfaces;
 
 public interface IGenresRepository
 {
-    List<Genre> GetAllGenres();
+    Task<List<GenreDto>> GetAll();
     Task<Genre?> GetById(int id);
     bool Exists(string name);
-    Task Add(Genre genre);
+    Task<GenreDto> Add(GenreCreationDto genreCreationDto);
 }
