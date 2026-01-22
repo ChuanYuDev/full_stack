@@ -1,3 +1,19 @@
-<h2>patchValue vs. valueChanges</h2>
+<h2><code>patchValue</code> vs. <code>valueChanges</code></h2>
 
-<form></form>
+<form [formGroup]="form" (submit)="patchName()">
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput [formControl]="form.controls.name"/>
+    </mat-form-field>
+    
+    <mat-checkbox [formControl]="form.controls.emit">Emit</mat-checkbox>
+    
+    <button type="submit">Patch Name</button>
+</form>
+
+<form [formGroup]="formToBePatched">
+    <mat-form-field appearance="outline">
+        <mat-label>Name to be patched</mat-label>
+        <input matInput [formControl]="formToBePatched.controls.name"/>
+    </mat-form-field>
+</form>
