@@ -3,6 +3,7 @@ using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using MoviesAPI.Utilities;
 using UseCases.DataStoreInterfaces;
 
 namespace MoviesAPI.Controllers;
@@ -23,9 +24,11 @@ public class GenresController: ControllerBase
 
     [HttpGet]
     [OutputCache(Tags = [CacheTag])]
-    public async Task<List<GenreDto>> Get()
+    public async Task<List<GenreDto>> Get([FromQuery] PaginationDto paginationDto)
     {
-        return await _genresRepository.GetAll();
+        var count = await _genresRepository.Count();
+        HttpContext.InsertPaginationParametersInHeader(count);
+        return await _genresRepository.Get(paginationDto);
     }
 
     [HttpGet("{id:int}", Name = "GetGenreById")]

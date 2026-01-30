@@ -1,6 +1,7 @@
 using AutoMapper;
 using CoreBusiness;
 using CoreBusiness.DTOs;
+using Plugins.DataStore.InMemory.Utilities;
 using UseCases.DataStoreInterfaces;
 
 namespace Plugins.DataStore.InMemory;
@@ -25,6 +26,11 @@ public class GenresInMemoryRepository: IGenresRepository
         return _mapper.Map<List<GenreDto>>(_genres);
     }
 
+    public async Task<List<GenreDto>> Get(PaginationDto paginationDto)
+    {
+        return _mapper.Map<List<GenreDto>>(_genres.Paginate(paginationDto));
+    }
+
     public async Task<Genre?> GetById(int id)
     {
         await Task.Delay(TimeSpan.FromSeconds(3));
@@ -45,5 +51,10 @@ public class GenresInMemoryRepository: IGenresRepository
         _genres.Add(genre);
         
         return _mapper.Map<GenreDto>(genre);
+    }
+
+    public async Task<int> Count()
+    {
+        return _genres.Count;
     }
 }

@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Plugins.DataStore.SQL.Utilities;
 using UseCases.DataStoreInterfaces;
 
 namespace Plugins.DataStore.SQL;
@@ -23,6 +24,14 @@ public class GenresSqlRepository: IGenresRepository
         return await _context.Genres.ProjectTo<GenreDto>(_mapper.ConfigurationProvider).ToListAsync();
     }
 
+    public async Task<List<GenreDto>> Get(PaginationDto paginationDto)
+    {
+        return await _context.Genres
+            .Paginate(paginationDto)
+            .ProjectTo<GenreDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
     public async Task<Genre?> GetById(int id)
     {
         throw new NotImplementedException();
@@ -40,5 +49,10 @@ public class GenresSqlRepository: IGenresRepository
         await _context.SaveChangesAsync();
 
         return _mapper.Map<GenreDto>(genre);
+    }
+
+    public async Task<int> Count()
+    {
+        return await _context.Genres.CountAsync();
     }
 }
