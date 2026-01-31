@@ -27,6 +27,7 @@ public class GenresSqlRepository: IGenresRepository
     public async Task<List<GenreDto>> Get(PaginationDto paginationDto)
     {
         return await _context.Genres
+            .OrderBy(g=>g.Name)
             .Paginate(paginationDto)
             .ProjectTo<GenreDto>(_mapper.ConfigurationProvider)
             .ToListAsync();

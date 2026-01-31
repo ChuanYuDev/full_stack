@@ -28,7 +28,7 @@ public class GenresInMemoryRepository: IGenresRepository
 
     public async Task<List<GenreDto>> Get(PaginationDto paginationDto)
     {
-        return _mapper.Map<List<GenreDto>>(_genres.Paginate(paginationDto));
+        return _mapper.Map<List<GenreDto>>(_genres.OrderBy(g=> g.Name).Paginate(paginationDto));
     }
 
     public async Task<Genre?> GetById(int id)
