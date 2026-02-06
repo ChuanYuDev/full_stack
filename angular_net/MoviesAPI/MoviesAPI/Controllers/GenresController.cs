@@ -21,6 +21,13 @@ public class GenresController: ControllerBase
         _genresRepository = genresRepository;
         _outputCacheStore = outputCacheStore;
     }
+    
+    [HttpGet("all-genres")]
+    [OutputCache(Tags = [CacheTag])]
+    public async Task<List<GenreDto>> GetAll()
+    {
+        return await _genresRepository.GetAll();
+    }
 
     [HttpGet]
     [OutputCache(Tags = [CacheTag])]
