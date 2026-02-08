@@ -20,6 +20,16 @@ public class GenresInMemoryRepository: IGenresRepository
             new Genre { Id = 2, Name = "Action" },
         };
     }
+    
+    public async Task<int> Count()
+    {
+        return _genres.Count;
+    }
+
+    public async Task<bool> Exists(int id)
+    {
+        return _genres.Any(g => g.Id == id);
+    }
 
     public async Task<List<GenreDto>> GetAll()
     {
@@ -31,15 +41,9 @@ public class GenresInMemoryRepository: IGenresRepository
         return _mapper.Map<List<GenreDto>>(_genres.OrderBy(g=> g.Name).Paginate(paginationDto));
     }
 
-    public async Task<Genre?> GetById(int id)
+    public async Task<GenreDto?> GetById(int id)
     {
-        await Task.Delay(TimeSpan.FromSeconds(3));
-        return _genres.FirstOrDefault(g => g.Id == id);
-    }
-
-    public bool Exists(string name)
-    {
-        return _genres.Any(g => g.Name == name);
+        return _mapper.Map<GenreDto>(_genres.FirstOrDefault(g => g.Id == id));
     }
 
     public async Task<GenreDto> Add(GenreCreationDto genreCreationDto)
@@ -53,8 +57,9 @@ public class GenresInMemoryRepository: IGenresRepository
         return _mapper.Map<GenreDto>(genre);
     }
 
-    public async Task<int> Count()
+    public async Task Update(int id, GenreCreationDto genreCreationDto)
     {
-        return _genres.Count;
+        Genre genre = _genres.First(g => g.Id == id);
+        genre.Name = genreCreationDto.Name;
     }
 }

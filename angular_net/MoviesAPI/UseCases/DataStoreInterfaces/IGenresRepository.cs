@@ -5,10 +5,11 @@ namespace UseCases.DataStoreInterfaces;
 
 public interface IGenresRepository
 {
+    Task<int> Count();
+    Task<bool> Exists(int id);
     Task<List<GenreDto>> GetAll();
     Task<List<GenreDto>> Get(PaginationDto paginationDto);
-    Task<Genre?> GetById(int id);
-    bool Exists(string name);
+    Task<GenreDto?> GetById(int id);
     Task<GenreDto> Add(GenreCreationDto genreCreationDto);
-    Task<int> Count();
+    Task Update(int id, GenreCreationDto genreCreationDto);
 }

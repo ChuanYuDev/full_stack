@@ -19,6 +19,16 @@ public class GenresSqlRepository: IGenresRepository
         _mapper = mapper;
     }
 
+    public async Task<int> Count()
+    {
+        return await _context.Genres.CountAsync();
+    }
+    
+    public async Task<bool> Exists(int id)
+    {
+        return await _context.Genres.AnyAsync(g => g.Id == id);
+    }
+
     public async Task<List<GenreDto>> GetAll()
     {
         return await _context.Genres.ProjectTo<GenreDto>(_mapper.ConfigurationProvider).ToListAsync();
@@ -33,14 +43,11 @@ public class GenresSqlRepository: IGenresRepository
             .ToListAsync();
     }
 
-    public async Task<Genre?> GetById(int id)
+    public async Task<GenreDto?> GetById(int id)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool Exists(string name)
-    {
-        throw new NotImplementedException();
+        return await _context.Genres
+            .ProjectTo<GenreDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(g => g.Id == id);
     }
 
     public async Task<GenreDto> Add(GenreCreationDto genreCreationDto)
@@ -52,8 +59,12 @@ public class GenresSqlRepository: IGenresRepository
         return _mapper.Map<GenreDto>(genre);
     }
 
-    public async Task<int> Count()
+    public async Task Update(int id, GenreCreationDto genreCreationDto)
     {
-        return await _context.Genres.CountAsync();
+        var genre = _mapper.Map<Genre>(genreCreationDto);
+        genre.Id = id;
+
+        _context.Update(genre);
+        await _context.SaveChangesAsync();
     }
 }

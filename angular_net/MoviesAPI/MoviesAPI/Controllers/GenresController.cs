@@ -40,7 +40,7 @@ public class GenresController: ControllerBase
 
     [HttpGet("{id:int}", Name = "GetGenreById")]
     [OutputCache(Tags = [CacheTag])]
-    public async Task<ActionResult<Genre>> Get(int id)
+    public async Task<ActionResult<GenreDto>> Get(int id)
     {
         var genre = await _genresRepository.GetById(id);
 
@@ -56,15 +56,25 @@ public class GenresController: ControllerBase
     public async Task<CreatedAtRouteResult> Post([FromBody] GenreCreationDto genreCreationDto)
     {
         var genreDto = await _genresRepository.Add(genreCreationDto);
-        await _outputCacheStore.EvictByTagAsync(CacheTag, CancellationToken.None);
+        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
 
         return CreatedAtRoute("GetGenreById", new {id = genreDto.Id}, genreDto);
     }
 
-    [HttpPut]
-    public void Put()
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> Put(int id, [FromBody] GenreCreationDto genreCreationDto)
     {
-        
+        var genreExists = await _genresRepository.Exists(id);
+
+        if (!genreExists)
+        {
+            return NotFound();
+        }
+
+        await _genresRepository.Update(id, genreCreationDto);
+        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
+
+        return NoContent();
     }
 
     [HttpDelete]
