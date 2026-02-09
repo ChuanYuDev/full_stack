@@ -16,9 +16,8 @@ import {DisplayErrorsComponent} from "../../shared/components/display-errors/dis
     styleUrl: './create-genre.component.css'
 })
 export class CreateGenreComponent {
-    
-    router = inject(Router);
     genresService = inject(GenresService);
+    router = inject(Router);
     errors: string[] = [];
     
     saveChanges(genre: GenreCreationDTO) {
