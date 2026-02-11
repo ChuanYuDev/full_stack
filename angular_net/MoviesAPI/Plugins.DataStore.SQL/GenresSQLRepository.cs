@@ -67,4 +67,9 @@ public class GenresSqlRepository: IGenresRepository
         _context.Update(genre);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<int> Delete(int id)
+    {
+        return await _context.Genres.Where(g => g.Id == id).ExecuteDeleteAsync();
+    }
 }

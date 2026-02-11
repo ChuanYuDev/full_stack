@@ -31,11 +31,15 @@ export class GenresService {
         return this.http.get<GenreDTO>(`${this.baseURL}/${id}`);
     }
     
-    create(genre: GenreCreationDTO) {
+    create(genre: GenreCreationDTO): Observable<Object> {
         return this.http.post(this.baseURL, genre);
     }
     
-    update(id: number, genre: GenreCreationDTO) {
+    update(id: number, genre: GenreCreationDTO): Observable<Object> {
         return this.http.put(`${this.baseURL}/${id}`, genre);
+    }
+    
+    delete(id: number): Observable<Object> {
+        return this.http.delete(`${this.baseURL}/${id}`);
     }
 }

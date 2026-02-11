@@ -12,4 +12,5 @@ public interface IGenresRepository
     Task<GenreDto?> GetById(int id);
     Task<GenreDto> Add(GenreCreationDto genreCreationDto);
     Task Update(int id, GenreCreationDto genreCreationDto);
+    Task<int> Delete(int id);
 }

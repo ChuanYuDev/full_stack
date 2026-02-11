@@ -62,4 +62,9 @@ public class GenresInMemoryRepository: IGenresRepository
         Genre genre = _genres.First(g => g.Id == id);
         genre.Name = genreCreationDto.Name;
     }
+
+    public async Task<int> Delete(int id)
+    {
+        return _genres.RemoveAll(g => g.Id == id);
+    }
 }

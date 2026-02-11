@@ -9,10 +9,11 @@ import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule, PageEvent} from "@angular/material/paginator";
 import {PaginationDTO} from "../../shared/models/pagination.model";
 import {HttpResponse} from "@angular/common/http";
+import {SwalDirective} from "@sweetalert2/ngx-sweetalert2";
 
 @Component({
     selector: 'app-index-genres',
-    imports: [MatButtonModule, MatIconModule, RouterLink, GenericListComponent, MatTableModule, MatPaginatorModule],
+    imports: [MatButtonModule, MatIconModule, RouterLink, GenericListComponent, MatTableModule, MatPaginatorModule, SwalDirective],
     templateUrl: './index-genres.component.html',
     styleUrl: './index-genres.component.css'
 })
@@ -22,6 +23,11 @@ export class IndexGenresComponent {
     columnsToDisplay = ["id", "name", "actions"];
     pagination: PaginationDTO = {page: 1, recordsPerPage: 5};
     totalRecordsCount: number = 0;
+    swalParams = {
+        title: "Confirmation",
+        text: "Are you sure you want to delete this record?",
+        showCancelButton: true,
+    }
     
     constructor() {
         this.loadRecords();
@@ -38,5 +44,11 @@ export class IndexGenresComponent {
     updatePagination(event: PageEvent) {
         this.pagination = {page: event.pageIndex + 1, recordsPerPage: event.pageSize};
         this.loadRecords();
+    }
+    
+    delete(id: number) {
+        this.genresService.delete(id).subscribe(() => {
+           this.loadRecords(); 
+        });
     }
 }

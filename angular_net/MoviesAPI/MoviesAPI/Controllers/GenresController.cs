@@ -77,9 +77,18 @@ public class GenresController: ControllerBase
         return NoContent();
     }
 
-    [HttpDelete]
-    public void Delete()
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult>  Delete(int id)
     {
-        
+        var deletedRecords = await _genresRepository.Delete(id);
+
+        if (deletedRecords == 0)
+        {
+            return NotFound();
+        }
+
+        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
+
+        return NoContent();
     }
 }
