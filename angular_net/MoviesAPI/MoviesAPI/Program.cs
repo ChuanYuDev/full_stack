@@ -40,6 +40,7 @@ else
     });
 
     builder.Services.AddTransient<IGenresRepository, GenresSqlRepository>();
+    builder.Services.AddTransient<IActorsRepository, ActorsSqlRepository>();
 }
 
 var autoMapperLicenseKey = builder.Configuration.GetValue<string>("AutoMapperLicenseKey");

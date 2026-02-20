@@ -1,4 +1,5 @@
 import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
+import moment from "moment";
 
 export function firstLetterShouldBeUppercase(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -31,7 +32,7 @@ export function firstLetterShouldBeUppercase(): ValidatorFn {
 export function dateCannotBeInTheFuture(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
         
-        const date = new Date(control.value);
+        const date = moment(control.value).toDate();
         const now = new Date();
         
         if (date > now) {
