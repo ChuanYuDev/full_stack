@@ -21,6 +21,7 @@
       <ProjectReference Include="..\CoreBusiness\CoreBusiness.csproj" />
       <ProjectReference Include="..\Plugins.DataStore.InMemory\Plugins.DataStore.InMemory.csproj" />
       <ProjectReference Include="..\Plugins.DataStore.SQL\Plugins.DataStore.SQL.csproj" />
+      <ProjectReference Include="..\Plugins.FileStorage\Plugins.FileStorage.csproj" />
       <ProjectReference Include="..\UseCases\UseCases.csproj" />
     </ItemGroup>
 

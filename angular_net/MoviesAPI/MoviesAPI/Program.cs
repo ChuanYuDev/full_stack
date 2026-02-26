@@ -2,7 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using MoviesAPI.Utilities;
 using Plugins.DataStore.InMemory;
 using Plugins.DataStore.SQL;
+using Plugins.FileStorage;
 using UseCases.DataStoreInterfaces;
+using UseCases.FileStorageInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +35,7 @@ if (builder.Environment.IsEnvironment("QA"))
 }
 else
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string not found.");
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Default connection string not found.");
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
         options.UseSqlServer(connectionString);
@@ -56,6 +58,8 @@ else
         cfg.LicenseKey = autoMapperLicenseKey;
     }, typeof(AutoMapperProfiles));
 }
+
+builder.Services.AddTransient<IFileStorage, AzureFileStorage>();
 
 var app = builder.Build();
 
