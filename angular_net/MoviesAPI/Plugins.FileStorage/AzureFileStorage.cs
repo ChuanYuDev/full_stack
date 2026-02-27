@@ -8,15 +8,15 @@ namespace Plugins.FileStorage;
 
 public class AzureFileStorage: IFileStorage
 {
-    private readonly string connectionString;
+    private readonly string _connectionString;
 
     public AzureFileStorage(IConfiguration configuration)
     {
-        connectionString = configuration.GetConnectionString("AzureStorageConnection") ?? throw new InvalidOperationException("Azure connection string not found.");
+        _connectionString = configuration.GetConnectionString("AzureStorageConnection") ?? throw new InvalidOperationException("Azure connection string not found.");
     }
     public async Task<string> Store(string container, IFormFile file)
     {
-        var client = new BlobContainerClient(connectionString, container);
+        var client = new BlobContainerClient(_connectionString, container);
         await client.CreateIfNotExistsAsync();
         client.SetAccessPolicy(PublicAccessType.Blob);
 
@@ -42,7 +42,7 @@ public class AzureFileStorage: IFileStorage
             return;
         }
         
-        var client = new BlobContainerClient(connectionString, container);
+        var client = new BlobContainerClient(_connectionString, container);
         await client.CreateIfNotExistsAsync();
 
         var fileName = Path.GetFileName(route);

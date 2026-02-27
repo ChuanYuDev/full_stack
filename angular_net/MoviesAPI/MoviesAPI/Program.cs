@@ -59,7 +59,9 @@ else
     }, typeof(AutoMapperProfiles));
 }
 
-builder.Services.AddTransient<IFileStorage, AzureFileStorage>();
+builder.Services.AddTransient<IFileStorage, LocalFileStorage>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -74,6 +76,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseCors();
 

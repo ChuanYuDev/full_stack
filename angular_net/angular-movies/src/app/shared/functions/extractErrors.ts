@@ -1,4 +1,5 @@
 export function extractErrors(obj: any): string[] {
+    console.log(obj);
     const err = obj.error.errors;
     const errorMessages: string[] = [];
     
