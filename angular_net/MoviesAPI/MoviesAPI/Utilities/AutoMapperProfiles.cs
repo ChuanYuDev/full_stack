@@ -24,5 +24,7 @@ public class AutoMapperProfiles: Profile
         {
             options.Ignore();
         });
+
+        CreateMap<Actor, ActorDto>();
     }
 }

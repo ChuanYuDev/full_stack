@@ -19,7 +19,7 @@ import {SwalDirective} from "@sweetalert2/ngx-sweetalert2";
 })
 export class IndexGenresComponent {
     genresService = inject(GenresService);
-    genres!: GenreDTO[];
+    genres: GenreDTO[] = [];
     columnsToDisplay = ["id", "name", "actions"];
     pagination: PaginationDTO = {page: 1, recordsPerPage: 5};
     totalRecordsCount: number = 0;

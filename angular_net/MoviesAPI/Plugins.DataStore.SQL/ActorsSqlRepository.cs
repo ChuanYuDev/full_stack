@@ -1,6 +1,9 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CoreBusiness;
 using CoreBusiness.DTOs;
+using Microsoft.EntityFrameworkCore;
+using Plugins.DataStore.SQL.Utilities;
 using UseCases.DataStoreInterfaces;
 using UseCases.FileStorageInterfaces;
 
@@ -19,8 +22,34 @@ public class ActorsSqlRepository: IActorsRepository
         _mapper = mapper;
         _fileStorage = fileStorage;
     }
-    
-    public async Task Add(ActorCreationDto actorCreationDto)
+
+    public async Task<int> Count()
+    {
+        return await _context.Actors.CountAsync();
+    }
+
+    public Task<bool> Exists(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<ActorDto>> Get(PaginationDto paginationDto)
+    {
+        return await _context.Actors
+            .OrderBy(actor => actor.Name)
+            .Paginate(paginationDto)
+            .ProjectTo<ActorDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task<ActorDto?> GetById(int id)
+    {
+        return await _context.Actors
+            .ProjectTo<ActorDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(actorDto => actorDto.Id == id);
+    }
+
+    public async Task<ActorDto> Add(ActorCreationDto actorCreationDto)
     {
         var actor = _mapper.Map<Actor>(actorCreationDto);
         
@@ -33,5 +62,18 @@ public class ActorsSqlRepository: IActorsRepository
         _context.Add(actor);
 
         await _context.SaveChangesAsync();
+
+        return _mapper.Map<ActorDto>(actor);
     }
+
+    public Task Update(int id, ActorCreationDto actorCreationDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<int> Delete(int id)
+    {
+        throw new NotImplementedException();
+    }
+
 }

@@ -1,6 +1,7 @@
 using CoreBusiness.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using MoviesAPI.Utilities;
 using UseCases.DataStoreInterfaces;
 
 namespace MoviesAPI.Controllers;
@@ -19,12 +20,36 @@ public class ActorsController: ControllerBase
         _outputCacheStore = outputCacheStore;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Post([FromForm] ActorCreationDto actorCreationDto)
+    [HttpGet]
+    [OutputCache(Tags = [CacheTag])]
+    public async Task<List<ActorDto>> Get([FromQuery] PaginationDto paginationDto)
     {
-        await _actorsRepository.Add(actorCreationDto);
+        var count = await _actorsRepository.Count();
+        HttpContext.InsertPaginationParametersInHeader(count);
+
+        return await _actorsRepository.Get(paginationDto);
+    }
+
+    [HttpGet("{id:int}", Name = "GetActorById")]
+    [OutputCache(Tags = [CacheTag])]
+    public async Task<ActionResult<ActorDto>> Get(int id)
+    {
+        var actorDto = await _actorsRepository.GetById(id);
+
+        if (actorDto is null)
+        {
+            return NotFound();
+        }
+
+        return actorDto;
+    }
+    
+    [HttpPost]
+    public async Task<CreatedAtRouteResult> Post([FromForm] ActorCreationDto actorCreationDto)
+    {
+        var actorDto = await _actorsRepository.Add(actorCreationDto);
         await _outputCacheStore.EvictByTagAsync(CacheTag, default);
 
-        return Ok();
+        return CreatedAtRoute("GetActorById", new {id = actorDto.Id}, actorDto);
     }
 }
