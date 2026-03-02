@@ -24,11 +24,6 @@ public class GenresSqlRepository: IGenresRepository
         return await _context.Genres.CountAsync();
     }
     
-    public async Task<bool> Exists(int id)
-    {
-        return await _context.Genres.AnyAsync(g => g.Id == id);
-    }
-
     public async Task<List<GenreDto>> GetAll()
     {
         return await _context.Genres.ProjectTo<GenreDto>(_mapper.ConfigurationProvider).ToListAsync();
@@ -59,13 +54,22 @@ public class GenresSqlRepository: IGenresRepository
         return _mapper.Map<GenreDto>(genre);
     }
 
-    public async Task Update(int id, GenreCreationDto genreCreationDto)
+    public async Task<bool> Update(int id, GenreCreationDto genreCreationDto)
     {
+        var found = await _context.Genres.AnyAsync(g => g.Id == id);
+
+        if (!found)
+        {
+            return false;
+        }
+        
         var genre = _mapper.Map<Genre>(genreCreationDto);
         genre.Id = id;
 
         _context.Update(genre);
         await _context.SaveChangesAsync();
+
+        return true;
     }
 
     public async Task<int> Delete(int id)

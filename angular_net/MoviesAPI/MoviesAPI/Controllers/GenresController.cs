@@ -62,14 +62,13 @@ public class GenresController: ControllerBase
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Put(int id, [FromBody] GenreCreationDto genreCreationDto)
     {
-        var genreExists = await _genresRepository.Exists(id);
+        var found = await _genresRepository.Update(id, genreCreationDto);
 
-        if (!genreExists)
+        if (!found)
         {
             return NotFound();
         }
 
-        await _genresRepository.Update(id, genreCreationDto);
         await _outputCacheStore.EvictByTagAsync(CacheTag, default);
 
         return NoContent();

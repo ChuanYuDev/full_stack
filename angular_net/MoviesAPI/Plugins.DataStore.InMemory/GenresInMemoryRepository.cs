@@ -26,11 +26,6 @@ public class GenresInMemoryRepository: IGenresRepository
         return _genres.Count;
     }
 
-    public async Task<bool> Exists(int id)
-    {
-        return _genres.Any(g => g.Id == id);
-    }
-
     public async Task<List<GenreDto>> GetAll()
     {
         return _mapper.Map<List<GenreDto>>(_genres);
@@ -57,10 +52,17 @@ public class GenresInMemoryRepository: IGenresRepository
         return _mapper.Map<GenreDto>(genre);
     }
 
-    public async Task Update(int id, GenreCreationDto genreCreationDto)
+    public async Task<bool> Update(int id, GenreCreationDto genreCreationDto)
     {
-        Genre genre = _genres.First(g => g.Id == id);
-        genre.Name = genreCreationDto.Name;
+        var genre = _genres.FirstOrDefault(g => g.Id == id);
+
+        if (genre is null)
+        {
+            return false;
+        }
+        
+        _mapper.Map(genreCreationDto, genre);
+        return true;
     }
 
     public async Task<int> Delete(int id)

@@ -66,8 +66,10 @@ public class ActorsSqlRepository: IActorsRepository
         return _mapper.Map<ActorDto>(actor);
     }
 
-    public Task Update(int id, ActorCreationDto actorCreationDto)
+    public async Task Update(int id, ActorCreationDto actorCreationDto)
     {
+        var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Id == id);
+        _mapper.Map(actorCreationDto, actor);
         throw new NotImplementedException();
     }
 

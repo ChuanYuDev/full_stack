@@ -19,7 +19,7 @@ import {SwalDirective} from "@sweetalert2/ngx-sweetalert2";
 })
 export class IndexGenresComponent {
     genresService = inject(GenresService);
-    genres: GenreDTO[] = [];
+    genres!: GenreDTO[];
     columnsToDisplay = ["id", "name", "actions"];
     pagination: PaginationDTO = {page: 1, recordsPerPage: 5};
     totalRecordsCount: number = 0;
@@ -27,7 +27,7 @@ export class IndexGenresComponent {
         title: "Confirmation",
         text: "Are you sure you want to delete this record?",
         showCancelButton: true,
-    }
+    };
     
     constructor() {
         this.loadRecords();

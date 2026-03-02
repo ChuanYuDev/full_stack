@@ -1,7 +1,10 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {ActorCreationDTO} from "./actors.models";
+import {ActorCreationDTO, ActorDTO} from "./actors.models";
+import {PaginationDTO} from "../shared/models/pagination.model";
+import {Observable} from "rxjs";
+import {buildQueryParams} from "../shared/functions/buildQueryParams";
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +15,18 @@ export class ActorsService {
     
     private http = inject(HttpClient);
     private baseURL = environment.apiURL + "/actors";
+    
+    getPaginated(pagination: PaginationDTO): Observable<HttpResponse<ActorDTO[]>> {
+        const queryParams = buildQueryParams(pagination);
+        return this.http.get<ActorDTO[]>(this.baseURL, {
+            params: queryParams, 
+            observe: "response"
+        });
+    }
+    
+    getById(id: number): Observable<ActorDTO> {
+        return this.http.get<ActorDTO>(`${this.baseURL}/${id}`);
+    }
     
     create(actor: ActorCreationDTO) {
         const formData = this.buildFormData(actor);
