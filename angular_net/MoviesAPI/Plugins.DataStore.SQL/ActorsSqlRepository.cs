@@ -14,7 +14,7 @@ public class ActorsSqlRepository: IActorsRepository
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IFileStorage _fileStorage;
-    private readonly string container = "actors";
+    private const string Container = "actors";
 
     public ActorsSqlRepository(ApplicationDbContext context, IMapper mapper, IFileStorage fileStorage)
     {
@@ -26,11 +26,6 @@ public class ActorsSqlRepository: IActorsRepository
     public async Task<int> Count()
     {
         return await _context.Actors.CountAsync();
-    }
-
-    public Task<bool> Exists(int id)
-    {
-        throw new NotImplementedException();
     }
 
     public async Task<List<ActorDto>> Get(PaginationDto paginationDto)
@@ -55,7 +50,7 @@ public class ActorsSqlRepository: IActorsRepository
         
         if (actorCreationDto.Picture is not null)
         {
-            var url = await _fileStorage.Store(container, actorCreationDto.Picture);
+            var url = await _fileStorage.Store(Container, actorCreationDto.Picture);
             actor.Picture = url;
         }
 
@@ -66,11 +61,24 @@ public class ActorsSqlRepository: IActorsRepository
         return _mapper.Map<ActorDto>(actor);
     }
 
-    public async Task Update(int id, ActorCreationDto actorCreationDto)
+    public async Task<bool> Update(int id, ActorCreationDto actorCreationDto)
     {
         var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Id == id);
+
+        if (actor is null)
+        {
+            return false;
+        }
+        
         _mapper.Map(actorCreationDto, actor);
-        throw new NotImplementedException();
+
+        if (actorCreationDto.Picture is not null)
+        {
+            actor.Picture = await _fileStorage.Edit(actor.Picture, Container, actorCreationDto.Picture);
+        }
+
+        await _context.SaveChangesAsync();
+        return true;
     }
 
     public Task<int> Delete(int id)

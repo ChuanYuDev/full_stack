@@ -52,4 +52,18 @@ public class ActorsController: ControllerBase
 
         return CreatedAtRoute("GetActorById", new {id = actorDto.Id}, actorDto);
     }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> Put(int id, [FromForm] ActorCreationDto actorCreationDto)
+    {
+        var found = await _actorsRepository.Update(id, actorCreationDto);
+
+        if (!found)
+        {
+            return NotFound();
+        }
+
+        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
+        return NoContent();
+    }
 }
