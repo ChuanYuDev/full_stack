@@ -66,4 +66,19 @@ public class ActorsController: ControllerBase
         await _outputCacheStore.EvictByTagAsync(CacheTag, default);
         return NoContent();
     }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var found = await _actorsRepository.Delete(id);
+
+        if (!found)
+        {
+            return NotFound();
+        }
+
+        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
+
+        return NoContent();
+    }
 }

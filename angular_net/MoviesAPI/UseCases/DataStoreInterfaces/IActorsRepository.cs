@@ -9,5 +9,5 @@ public interface IActorsRepository
     Task<ActorDto?> GetById(int id);
     Task<ActorDto> Add(ActorCreationDto actorCreationDto);
     Task<bool> Update(int id, ActorCreationDto actorCreationDto);
-    Task<int> Delete(int id);
+    Task<bool> Delete(int id);
 }

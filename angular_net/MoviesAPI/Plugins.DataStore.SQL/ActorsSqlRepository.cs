@@ -81,9 +81,21 @@ public class ActorsSqlRepository: IActorsRepository
         return true;
     }
 
-    public Task<int> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        throw new NotImplementedException();
+        var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Id == id);
+
+        if (actor is null)
+        {
+            return false;
+        }
+        
+        await _fileStorage.Delete(actor.Picture, Container);
+
+        _context.Remove(actor);
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
 }

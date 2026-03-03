@@ -75,7 +75,7 @@ public class GenresController: ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult>  Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
         var deletedRecords = await _genresRepository.Delete(id);
 
