@@ -59,7 +59,7 @@ else
     }, typeof(AutoMapperProfiles));
 }
 
-builder.Services.AddTransient<IFileStorage, LocalFileStorage>();
+builder.Services.AddTransient<IFileStorage, AzureFileStorage>();
 
 builder.Services.AddHttpContextAccessor();
 
