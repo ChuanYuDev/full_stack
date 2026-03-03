@@ -28,7 +28,7 @@
                         type="button"
                         class="warn"
                         [swal]="swalParams"
-                        
+                        (confirm)="delete(element.id)"
                     >
                         Delete
                     </button>

@@ -45,4 +45,10 @@ export class IndexActorsComponent {
         this.pagination = {page: event.pageIndex + 1, recordsPerPage: event.pageSize};
         this.loadRecords();
     }
+    
+    delete(id: number) {
+        this.actorsService.delete(id).subscribe(() => {
+           this.loadRecords(); 
+        });
+    }
 }

@@ -40,6 +40,10 @@ export class ActorsService {
         return this.http.put(`${this.baseURL}/${id}`, formData);
     }
     
+    delete(id: number) {
+        return this.http.delete(`${this.baseURL}/${id}`);
+    }
+    
     private buildFormData(actor: ActorCreationDTO): FormData {
         const formData = new FormData();
         
