@@ -10,7 +10,7 @@ import {toBase64} from "../../functions/toBase64";
 })
 export class InputImgComponent {
     @Input({required: true})
-    title!: string;
+    title?: string;
     
     @Input()
     imageURL?: string;

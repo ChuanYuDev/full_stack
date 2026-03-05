@@ -15,7 +15,8 @@ import {SwalDirective} from "@sweetalert2/ngx-sweetalert2";
     selector: 'app-index-genres',
     imports: [MatButtonModule, MatIconModule, RouterLink, GenericListComponent, MatTableModule, MatPaginatorModule, SwalDirective],
     templateUrl: './index-genres.component.html',
-    styleUrl: './index-genres.component.css'
+    styleUrl: './index-genres.component.css',
+    providers: []
 })
 export class IndexGenresComponent {
     genresService = inject(GenresService);
