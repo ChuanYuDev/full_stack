@@ -39,7 +39,7 @@ export class LandingPageComponent {
                     title: 'Deadpool & Wolverine',
                     releaseDate: new Date('2016-05-03'),
                     price: 300.99,
-                    poster: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Deadpool_%26_Wolverine_poster.jpg/220px-Deadpool_%26_Wolverine_poster.jpg'
+                    poster: 'https://upload.wikimedia.org/wikipedia/en/4/4c/Deadpool_%26_Wolverine_poster.jpg'
                 },
                 {
                     title: 'Oppenheimer',

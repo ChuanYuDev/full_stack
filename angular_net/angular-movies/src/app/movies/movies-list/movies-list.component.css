@@ -5,6 +5,10 @@
     flex-wrap: wrap;
 }
 
+.movie-container img {
+    display: block;
+}
+
 .movie-container > p {
     text-align: center;
     font-size: 15px;
