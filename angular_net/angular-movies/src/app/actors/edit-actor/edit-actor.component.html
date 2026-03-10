@@ -1,9 +1,1 @@
-<h2>Edit Actor</h2>
-
-@if (model) {
-    <app-display-errors [errors]="errors"></app-display-errors>
-    <app-actors-form [model]="model" (postForm)="saveChanges($event)"></app-actors-form>
-} @else {
-    <app-loading></app-loading>
-}
-        
+<app-edit-entity title="Edit Actor" [id]="id" [formComponent]="actorsForm" indexRoute="/actors"></app-edit-entity>

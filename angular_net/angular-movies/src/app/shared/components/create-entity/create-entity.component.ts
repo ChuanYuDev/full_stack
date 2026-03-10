@@ -31,10 +31,12 @@ export class CreateEntityComponent<TDTO, TCreationDTO> implements AfterViewInit{
     private componentRef?: ComponentRef<any>;
 
     ngAfterViewInit(): void {
-        this.componentRef = this.contentForm?.createComponent(this.formComponent);
-        this.componentRef?.instance.postForm.subscribe((entity: TCreationDTO) => {
-            this.saveChanges(entity);
-        });
+        if (this.contentForm) {
+            this.componentRef = this.contentForm.createComponent(this.formComponent);
+            this.componentRef.instance.postForm.subscribe((entity: TCreationDTO) => {
+                this.saveChanges(entity);
+            });
+        }
     }
     saveChanges(entity: TCreationDTO) {
         this.CRUDService.create(entity).subscribe({
