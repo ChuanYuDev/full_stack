@@ -1,91 +1,58 @@
 using CoreBusiness.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
-using MoviesAPI.Utilities;
 using UseCases.DataStoreInterfaces;
 
 namespace MoviesAPI.Controllers;
 
 [Route("api/genres")]
 [ApiController]
-public class GenresController: ControllerBase
+public class GenresController: CustomBaseController<GenreCreationDto, GenreDto>
 {
-    private readonly IGenresRepository _genresRepository;
-    private readonly IOutputCacheStore _outputCacheStore;
     private const string CacheTag = "genres";
+    private const string GetByIdName = "GetGenreById";
 
-    public GenresController(IGenresRepository genresRepository, IOutputCacheStore outputCacheStore)
+    public GenresController(IRepository<GenreCreationDto, GenreDto> genresRepository, IOutputCacheStore outputCacheStore)
+        : base(genresRepository, outputCacheStore, CacheTag)
     {
-        _genresRepository = genresRepository;
-        _outputCacheStore = outputCacheStore;
     }
     
     [HttpGet("all-genres")]
     [OutputCache(Tags = [CacheTag])]
     public async Task<List<GenreDto>> GetAll()
     {
-        return await _genresRepository.GetAll();
+        return await GetAllEntities();
     }
 
     [HttpGet]
     [OutputCache(Tags = [CacheTag])]
     public async Task<List<GenreDto>> Get([FromQuery] PaginationDto paginationDto)
     {
-        var count = await _genresRepository.Count();
-        HttpContext.InsertPaginationParametersInHeader(count);
-        return await _genresRepository.Get(paginationDto);
+        return await GetEntities(paginationDto);
     }
 
-    [HttpGet("{id:int}", Name = "GetGenreById")]
+    [HttpGet("{id:int}", Name = GetByIdName)]
     [OutputCache(Tags = [CacheTag])]
     public async Task<ActionResult<GenreDto>> Get(int id)
     {
-        var genre = await _genresRepository.GetById(id);
-
-        if (genre is null)
-        {
-            return NotFound();
-        }
-        
-        return genre;
+        return await GetEntityById(id);
     }
 
     [HttpPost]
     public async Task<CreatedAtRouteResult> Post([FromBody] GenreCreationDto genreCreationDto)
     {
-        var genreDto = await _genresRepository.Add(genreCreationDto);
-        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
-
-        return CreatedAtRoute("GetGenreById", new {id = genreDto.Id}, genreDto);
+        return await PostEntity(genreCreationDto, GetByIdName);
     }
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Put(int id, [FromBody] GenreCreationDto genreCreationDto)
     {
-        var found = await _genresRepository.Update(id, genreCreationDto);
-
-        if (!found)
-        {
-            return NotFound();
-        }
-
-        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
-
-        return NoContent();
+        return await PutEntity(id, genreCreationDto);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var deletedRecords = await _genresRepository.Delete(id);
-
-        if (deletedRecords == 0)
-        {
-            return NotFound();
-        }
-
-        await _outputCacheStore.EvictByTagAsync(CacheTag, default);
-
-        return NoContent();
+        return await DeleteEntity(id);
     }
 }

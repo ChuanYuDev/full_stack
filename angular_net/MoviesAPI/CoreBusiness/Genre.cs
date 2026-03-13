@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using CoreBusiness.Interfaces;
 using CoreBusiness.Validations;
 
 namespace CoreBusiness;
 
-public class Genre
+public class Genre: IId
 {
     public int Id { get; set; }    
     

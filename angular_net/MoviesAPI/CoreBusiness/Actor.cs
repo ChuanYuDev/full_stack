@@ -1,10 +1,11 @@
 
 using System.ComponentModel.DataAnnotations;
+using CoreBusiness.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreBusiness;
 
-public class Actor
+public class Actor: IId
 {
     public int Id { get; set; }
     

@@ -8,72 +8,19 @@ using UseCases.DataStoreInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class GenresSqlRepository: IGenresRepository
+public class GenresSqlRepository: CustomBaseSqlRepository<Genre, GenreCreationDto, GenreDto>, IRepository<GenreCreationDto, GenreDto>
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public GenresSqlRepository(ApplicationDbContext context, IMapper mapper)
+    public GenresSqlRepository(ApplicationDbContext context, IMapper mapper): base(context, mapper)
     {
-        _context = context;
-        _mapper = mapper;
     }
 
-    public async Task<int> Count()
-    {
-        return await _context.Genres.CountAsync();
-    }
-    
     public async Task<List<GenreDto>> GetAll()
     {
-        return await _context.Genres.ProjectTo<GenreDto>(_mapper.ConfigurationProvider).ToListAsync();
+        return await GetAll(g => g.Name);
     }
 
     public async Task<List<GenreDto>> Get(PaginationDto paginationDto)
     {
-        return await _context.Genres
-            .OrderBy(g=>g.Name)
-            .Paginate(paginationDto)
-            .ProjectTo<GenreDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
-    }
-
-    public async Task<GenreDto?> GetById(int id)
-    {
-        return await _context.Genres
-            .ProjectTo<GenreDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(g => g.Id == id);
-    }
-
-    public async Task<GenreDto> Add(GenreCreationDto genreCreationDto)
-    {
-        var genre = _mapper.Map<Genre>(genreCreationDto);
-        _context.Add(genre);
-        await _context.SaveChangesAsync();
-
-        return _mapper.Map<GenreDto>(genre);
-    }
-
-    public async Task<bool> Update(int id, GenreCreationDto genreCreationDto)
-    {
-        var found = await _context.Genres.AnyAsync(g => g.Id == id);
-
-        if (!found)
-        {
-            return false;
-        }
-        
-        var genre = _mapper.Map<Genre>(genreCreationDto);
-        genre.Id = id;
-
-        _context.Update(genre);
-        await _context.SaveChangesAsync();
-
-        return true;
-    }
-
-    public async Task<int> Delete(int id)
-    {
-        return await _context.Genres.Where(g => g.Id == id).ExecuteDeleteAsync();
+        return await Get(paginationDto, g => g.Name);
     }
 }

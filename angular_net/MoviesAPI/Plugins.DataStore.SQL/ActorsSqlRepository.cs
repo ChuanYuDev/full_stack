@@ -9,44 +9,29 @@ using UseCases.FileStorageInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class ActorsSqlRepository: IActorsRepository
+public class ActorsSqlRepository: CustomBaseSqlRepository<Actor, ActorCreationDto, ActorDto>, IRepository<ActorCreationDto, ActorDto>
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
     private readonly IFileStorage _fileStorage;
     private const string Container = "actors";
 
-    public ActorsSqlRepository(ApplicationDbContext context, IMapper mapper, IFileStorage fileStorage)
+    public ActorsSqlRepository(ApplicationDbContext context, IMapper mapper, IFileStorage fileStorage): base(context, mapper)
     {
-        _context = context;
-        _mapper = mapper;
         _fileStorage = fileStorage;
     }
 
-    public async Task<int> Count()
+    public async Task<List<ActorDto>> GetAll()
     {
-        return await _context.Actors.CountAsync();
+        return await GetAll(a => a.Name);
     }
 
-    public async Task<List<ActorDto>> Get(PaginationDto paginationDto)
+    public Task<List<ActorDto>> Get(PaginationDto paginationDto)
     {
-        return await _context.Actors
-            .OrderBy(actor => actor.Name)
-            .Paginate(paginationDto)
-            .ProjectTo<ActorDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+        return  Get(paginationDto, orderBy: a => a.Name);
     }
 
-    public async Task<ActorDto?> GetById(int id)
+    public override async Task<ActorDto> Add(ActorCreationDto actorCreationDto)
     {
-        return await _context.Actors
-            .ProjectTo<ActorDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(actorDto => actorDto.Id == id);
-    }
-
-    public async Task<ActorDto> Add(ActorCreationDto actorCreationDto)
-    {
-        var actor = _mapper.Map<Actor>(actorCreationDto);
+        var actor = Mapper.Map<Actor>(actorCreationDto);
         
         if (actorCreationDto.Picture is not null)
         {
@@ -54,36 +39,36 @@ public class ActorsSqlRepository: IActorsRepository
             actor.Picture = url;
         }
 
-        _context.Add(actor);
+        Context.Add(actor);
 
-        await _context.SaveChangesAsync();
+        await Context.SaveChangesAsync();
 
-        return _mapper.Map<ActorDto>(actor);
+        return Mapper.Map<ActorDto>(actor);
     }
 
-    public async Task<bool> Update(int id, ActorCreationDto actorCreationDto)
+    public override async Task<bool> Update(int id, ActorCreationDto actorCreationDto)
     {
-        var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Id == id);
+        var actor = await EntityDbSet.FirstOrDefaultAsync(a => a.Id == id);
 
         if (actor is null)
         {
             return false;
         }
         
-        _mapper.Map(actorCreationDto, actor);
+        Mapper.Map(actorCreationDto, actor);
 
         if (actorCreationDto.Picture is not null)
         {
             actor.Picture = await _fileStorage.Edit(actor.Picture, Container, actorCreationDto.Picture);
         }
 
-        await _context.SaveChangesAsync();
+        await Context.SaveChangesAsync();
         return true;
     }
 
-    public async Task<bool> Delete(int id)
+    public override async Task<bool> Delete(int id)
     {
-        var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Id == id);
+        var actor = await EntityDbSet.FirstOrDefaultAsync(a => a.Id == id);
 
         if (actor is null)
         {
@@ -92,8 +77,8 @@ public class ActorsSqlRepository: IActorsRepository
         
         await _fileStorage.Delete(actor.Picture, Container);
 
-        _context.Remove(actor);
-        await _context.SaveChangesAsync();
+        Context.Remove(actor);
+        await Context.SaveChangesAsync();
 
         return true;
     }

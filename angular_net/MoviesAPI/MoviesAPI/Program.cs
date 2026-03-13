@@ -1,3 +1,4 @@
+using CoreBusiness.DTOs;
 using Microsoft.EntityFrameworkCore;
 using MoviesAPI.Utilities;
 using Plugins.DataStore.InMemory;
@@ -41,8 +42,8 @@ else
         options.UseSqlServer(connectionString);
     });
 
-    builder.Services.AddTransient<IGenresRepository, GenresSqlRepository>();
-    builder.Services.AddTransient<IActorsRepository, ActorsSqlRepository>();
+    builder.Services.AddTransient<IRepository<GenreCreationDto, GenreDto>, GenresSqlRepository>();
+    builder.Services.AddTransient<IRepository<ActorCreationDto, ActorDto>, ActorsSqlRepository>();
 }
 
 var autoMapperLicenseKey = builder.Configuration.GetValue<string>("AutoMapperLicenseKey");
