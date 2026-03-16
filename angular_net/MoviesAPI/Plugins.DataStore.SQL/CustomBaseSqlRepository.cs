@@ -49,7 +49,7 @@ public class CustomBaseSqlRepository<TEntity, TCreationDto, TDto>
     {
         return await EntityDbSet
             .ProjectTo<TDto>(Mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(entityDto => entityDto.Id == id);
+            .FirstOrDefaultAsync(dto => dto.Id == id);
     }
 
     public virtual async Task<TDto> Add(TCreationDto creationDto)

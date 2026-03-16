@@ -1,6 +1,10 @@
+using AutoMapper;
 using CoreBusiness.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using MoviesAPI.Utilities;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 using Plugins.DataStore.InMemory;
 using Plugins.DataStore.SQL;
 using Plugins.FileStorage;
@@ -37,28 +41,33 @@ if (builder.Environment.IsEnvironment("QA"))
 else
 {
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Default connection string not found.");
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    builder.Services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
     {
-        options.UseSqlServer(connectionString);
+        optionsBuilder.UseSqlServer(connectionString, sqlServerOptionsBuilder =>
+        {
+            sqlServerOptionsBuilder.UseNetTopologySuite();
+        });
     });
 
     builder.Services.AddTransient<IRepository<GenreCreationDto, GenreDto>, GenresSqlRepository>();
     builder.Services.AddTransient<IRepository<ActorCreationDto, ActorDto>, ActorsSqlRepository>();
 }
 
-var autoMapperLicenseKey = builder.Configuration.GetValue<string>("AutoMapperLicenseKey");
+builder.Services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
 
-if (autoMapperLicenseKey is null)
+// var autoMapperLicenseKey = builder.Configuration.GetValue<string>("AutoMapperLicenseKey");
+
+builder.Services.AddSingleton(provider => new MapperConfiguration(config =>
 {
-    builder.Services.AddAutoMapper(cfg => {}, typeof(AutoMapperProfiles));
-}
-else
-{
-    builder.Services.AddAutoMapper(cfg =>
-    {
-        cfg.LicenseKey = autoMapperLicenseKey;
-    }, typeof(AutoMapperProfiles));
-}
+    var geometryFactory = provider.GetRequiredService<GeometryFactory>();
+    
+    config.AddProfile(new AutoMapperProfiles(geometryFactory));
+    
+    // if (autoMapperLicenseKey is not null)
+    // {
+    //     config.LicenseKey = autoMapperLicenseKey;
+    // }
+}, NullLoggerFactory.Instance).CreateMapper());
 
 builder.Services.AddTransient<IFileStorage, AzureFileStorage>();
 

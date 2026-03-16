@@ -1,12 +1,13 @@
 using AutoMapper;
 using CoreBusiness;
 using CoreBusiness.DTOs;
+using NetTopologySuite.Geometries;
 
 namespace MoviesAPI.Utilities;
 
 public class AutoMapperProfiles: Profile
 {
-    public AutoMapperProfiles()
+    public AutoMapperProfiles(GeometryFactory geometryFactory)
     {
         ConfigureGenres();
         ConfigureActors();
@@ -27,4 +28,10 @@ public class AutoMapperProfiles: Profile
 
         CreateMap<Actor, ActorDto>();
     }
+
+    // private void ConfigureTheaters()
+    // {
+    //     CreateMap<Theater, Actor>()
+    //         .ForMember(x => x.Picture, x => x.MapFrom(p => p.Location.Y));
+    // }
 }
