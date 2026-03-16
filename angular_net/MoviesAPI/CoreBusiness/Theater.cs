@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using CoreBusiness.Interfaces;
 using NetTopologySuite.Geometries;
 
 namespace CoreBusiness;
 
-public class Theater
+public class Theater: IId
 {
     public int Id { get; set; }
     

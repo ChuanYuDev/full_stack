@@ -1,9 +1,7 @@
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.EntityFrameworkCore;
-using Plugins.DataStore.SQL.Utilities;
 using UseCases.DataStoreInterfaces;
 using UseCases.FileStorageInterfaces;
 

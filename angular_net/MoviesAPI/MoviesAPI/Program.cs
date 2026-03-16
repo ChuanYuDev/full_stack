@@ -51,6 +51,7 @@ else
 
     builder.Services.AddTransient<IRepository<GenreCreationDto, GenreDto>, GenresSqlRepository>();
     builder.Services.AddTransient<IRepository<ActorCreationDto, ActorDto>, ActorsSqlRepository>();
+    builder.Services.AddTransient<IRepository<TheaterCreationDto, TheaterDto>, TheatersSqlRepository>();
 }
 
 builder.Services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));

@@ -35,21 +35,21 @@ public class CustomBaseController<TCreationDto, TDto>: ControllerBase
 
     protected async Task<ActionResult<TDto>> GetEntityById(int id)
     {
-        var entity = await _entitiesRepository.GetById(id);
+        var dto = await _entitiesRepository.GetById(id);
 
-        if (entity is null)
+        if (dto is null)
         {
             return NotFound();
         }
 
-        return entity;
+        return dto;
     }
 
     protected async Task<CreatedAtRouteResult> PostEntity(TCreationDto creationDto, string routeName)
     {
-        var entityDto = await _entitiesRepository.Add(creationDto);
+        var dto = await _entitiesRepository.Add(creationDto);
         await _outputCacheStore.EvictByTagAsync(_cacheTag, default);
-        return CreatedAtRoute(routeName, new { id = entityDto.Id }, entityDto);
+        return CreatedAtRoute(routeName, new { id = dto.Id }, dto);
     }
 
     protected async Task<IActionResult> PutEntity(int id, TCreationDto creationDto)
