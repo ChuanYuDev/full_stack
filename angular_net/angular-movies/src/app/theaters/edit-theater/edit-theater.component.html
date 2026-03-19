@@ -1,7 +1,1 @@
-<h2>Edit theater</h2>
-
-<p>
-    The id of theater is {{ id }}
-</p>
-
-<app-theaters-form [model]="model" (postForm)="saveChanges($event)"></app-theaters-form>
+<app-edit-entity title="Edit Theater" [id]="id" [formComponent]="theatersForm" indexRoute="/theaters"></app-edit-entity>

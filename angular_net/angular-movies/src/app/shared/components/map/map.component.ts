@@ -21,7 +21,7 @@ export class MapComponent implements OnInit{
         layers: [
             tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 18,
-                attribution: '...'
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             })
         ],
         zoom: 14,
@@ -44,6 +44,12 @@ export class MapComponent implements OnInit{
         this.layers = this.initialCoordinates.map(coordinate => {
             return marker([coordinate.latitude, coordinate.longitude], this.markerOptions);
         });
+        
+        if (this.initialCoordinates.length >= 1)
+        {
+            const coordinate = this.initialCoordinates[0];        
+            this.options.center = latLng(coordinate.latitude, coordinate.longitude);
+        }
     }
 
     handleClick(event: LeafletMouseEvent) {

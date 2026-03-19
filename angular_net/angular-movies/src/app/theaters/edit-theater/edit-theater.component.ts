@@ -1,22 +1,19 @@
 import {Component, Input, numberAttribute} from '@angular/core';
-import {TheaterCreationDTO, TheaterDTO} from "../theaters.models";
 import {TheatersFormComponent} from "../theaters-form/theaters-form.component";
+import {CRUD_SERVICE_TOKEN} from "../../shared/providers/providers";
+import {TheatersService} from "../theaters.service";
+import {EditEntityComponent} from "../../shared/components/edit-entity/edit-entity.component";
 
 @Component({
     selector: 'app-edit-theater',
-    imports: [
-        TheatersFormComponent
-    ],
+    imports: [EditEntityComponent],
     templateUrl: './edit-theater.component.html',
-    styleUrl: './edit-theater.component.css'
+    styleUrl: './edit-theater.component.css',
+    providers: [{provide: CRUD_SERVICE_TOKEN, useClass: TheatersService}]
 })
 export class EditTheaterComponent {
+    readonly theatersForm = TheatersFormComponent;
+    
     @Input({transform: numberAttribute})
     id!: number;
-    
-    model: TheaterDTO = {id: 1, name: "Star cinema",latitude: 49.242476063446986, longitude: -123.11425209045412};
-    
-    saveChanges(theater: TheaterCreationDTO) {
-        console.log("Edit theater", theater);
-    }
 }
