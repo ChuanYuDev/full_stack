@@ -30,8 +30,6 @@ namespace CoreBusiness
         [Range(0, int.MaxValue)]
         public double? Price { get; set; }
         
-        // Map CategoryId to Category object
-        // Naviagtion property for EF core
         public Category? Category { get; set; }
     }
 }
