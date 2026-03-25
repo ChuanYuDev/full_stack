@@ -15,6 +15,7 @@ public class AutoMapperProfiles: Profile
         ConfigureGenres();
         ConfigureActors();
         ConfigureTheaters();
+        ConfigureMovies();
     }
 
     private void ConfigureGenres()
@@ -25,9 +26,9 @@ public class AutoMapperProfiles: Profile
 
     private void ConfigureActors()
     {
-        CreateMap<ActorCreationDto, Actor>().ForMember(actor => actor.Picture, options =>
+        CreateMap<ActorCreationDto, Actor>().ForMember(actor => actor.Picture, config =>
         {
-            options.Ignore();
+            config.Ignore();
         });
 
         CreateMap<Actor, ActorDto>();
@@ -49,5 +50,31 @@ public class AutoMapperProfiles: Profile
             {
                 config.MapFrom(theater => theater.Location.X);
             });
+    }
+
+    private void ConfigureMovies()
+    {
+        CreateMap<MovieCreationDto, Movie>()
+            .ForMember(movie => movie.Poster, config =>
+            {
+                config.Ignore();
+            })
+            .ForMember(movie => movie.MoviesGenres, config =>
+            {
+                config.MapFrom(movieCreationDto => movieCreationDto.GenresIds.Select(id => new MovieGenre { GenreId = id }));
+            })
+            .ForMember(movie => movie.MoviesTheaters, config =>
+            {
+                config.MapFrom(movieCreationDto => movieCreationDto.TheatersIds.Select(id => new MovieTheater { TheaterId = id }));
+            })
+            .ForMember(movie => movie.MoviesActors, config =>
+            {
+                config.MapFrom(movieCreationDto => movieCreationDto.Actors.Select(movieActorCreationDto => new MovieActor
+                {
+                    ActorId = movieActorCreationDto.ActorId,
+                    Character = movieActorCreationDto.Character
+                }));
+            });
+        CreateMap<Movie, MovieDto>();
     }
 }

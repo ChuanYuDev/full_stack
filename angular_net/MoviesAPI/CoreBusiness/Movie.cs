@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using CoreBusiness.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreBusiness;
 
-public class Movie
+public class Movie: IId
 {
     public int Id { get; set; }
     [Required]

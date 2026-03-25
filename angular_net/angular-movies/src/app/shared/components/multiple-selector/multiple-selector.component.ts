@@ -21,7 +21,7 @@ export class MultipleSelectorComponent {
 
     deselect(element: MultipleSelectorDTO, index: number) {
         this.nonSelected.push(element);
-        this.selected.splice(index);
+        this.selected.splice(index, 1);
     }
 
     selectAll() {
