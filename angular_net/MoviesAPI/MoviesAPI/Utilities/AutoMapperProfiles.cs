@@ -71,7 +71,7 @@ public class AutoMapperProfiles: Profile
             {
                 config.MapFrom(movieCreationDto => movieCreationDto.Actors.Select(movieActorCreationDto => new MovieActor
                 {
-                    ActorId = movieActorCreationDto.ActorId,
+                    ActorId = movieActorCreationDto.Id,
                     Character = movieActorCreationDto.Character
                 }));
             });

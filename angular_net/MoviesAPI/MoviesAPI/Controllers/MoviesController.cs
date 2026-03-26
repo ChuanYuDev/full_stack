@@ -25,13 +25,13 @@ public class MoviesController: CustomBaseController<MovieCreationDto, MovieDto>
         _theatersRepository = theatersRepository;
     }
 
-    [HttpGet("post-read")]
-    public async Task<ActionResult<MoviePostReadDto>> PostRead()
+    [HttpGet("post-get")]
+    public async Task<ActionResult<MoviePostGetDto>> PostRead()
     {
         var genres = await _genresRepository.GetAll();
         var theaters = await _theatersRepository.GetAll();
 
-        return new MoviePostReadDto { Genres = genres, Theaters = theaters };
+        return new MoviePostGetDto { Genres = genres, Theaters = theaters };
     }
 
     [HttpPost]

@@ -11,7 +11,7 @@ public class MovieCreationDto
     [StringLength(300)]
     public required string Title { get; set; }
     
-    public DateTime ReleaseDate { get; set; }
+    public DateTime? ReleaseDate { get; set; }
     public string? Trailer { get; set; }
     
     public IFormFile? Poster { get; set; }
