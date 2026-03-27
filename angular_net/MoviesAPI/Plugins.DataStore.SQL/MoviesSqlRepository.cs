@@ -6,7 +6,7 @@ using UseCases.FileStorageInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class MoviesSqlRepository: CustomBaseSqlRepository<Movie, MovieCreationDto, MovieDto>, IRepository<MovieCreationDto, MovieDto>
+public class MoviesSqlRepository: CustomBaseSqlRepository<Movie, MovieCreationDto, MovieDto>, IMoviesRepository
 {
     private readonly IFileStorage _fileStorage;
     private const string Container = "movies";

@@ -49,10 +49,10 @@ else
         });
     });
 
-    builder.Services.AddTransient<IRepository<GenreCreationDto, GenreDto>, GenresSqlRepository>();
-    builder.Services.AddTransient<IRepository<ActorCreationDto, ActorDto>, ActorsSqlRepository>();
-    builder.Services.AddTransient<IRepository<TheaterCreationDto, TheaterDto>, TheatersSqlRepository>();
-    builder.Services.AddTransient<IRepository<MovieCreationDto, MovieDto>, MoviesSqlRepository>();
+    builder.Services.AddTransient<IGenresRepository, GenresSqlRepository>();
+    builder.Services.AddTransient<IActorsRepository, ActorsSqlRepository>();
+    builder.Services.AddTransient<ITheatersRepository, TheatersSqlRepository>();
+    builder.Services.AddTransient<IMoviesRepository, MoviesSqlRepository>();
 }
 
 builder.Services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));

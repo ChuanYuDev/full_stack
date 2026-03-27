@@ -12,7 +12,7 @@ public class GenresController: CustomBaseController<GenreCreationDto, GenreDto>
     private const string CacheTag = "genres";
     private const string GetByIdName = "GetGenreById";
 
-    public GenresController(IRepository<GenreCreationDto, GenreDto> genresRepository, IOutputCacheStore outputCacheStore)
+    public GenresController(IGenresRepository genresRepository, IOutputCacheStore outputCacheStore)
         : base(genresRepository, outputCacheStore, CacheTag)
     {
     }

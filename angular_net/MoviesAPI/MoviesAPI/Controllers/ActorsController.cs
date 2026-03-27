@@ -10,12 +10,14 @@ namespace MoviesAPI.Controllers;
 [ApiController]
 public class ActorsController: CustomBaseController<ActorCreationDto, ActorDto>
 {
+    private readonly IActorsRepository _actorsRepository;
     private const string CacheTag = "actors";
     private const string GetByIdName = "GetActorById";
 
-    public ActorsController(IRepository<ActorCreationDto, ActorDto> actorsRepository, IOutputCacheStore outputCacheStore)
+    public ActorsController(IActorsRepository actorsRepository, IOutputCacheStore outputCacheStore)
         : base(actorsRepository, outputCacheStore, CacheTag)
     {
+        _actorsRepository = actorsRepository;
     }
 
     [HttpGet("all-actors")]
@@ -37,6 +39,12 @@ public class ActorsController: CustomBaseController<ActorCreationDto, ActorDto>
     public async Task<ActionResult<ActorDto>> Get(int id)
     {
         return await GetEntityById(id);
+    }
+
+    [HttpGet("{name}")]
+    public async Task<List<MovieActorDto>> Get(string name)
+    {
+        return await _actorsRepository.Get(name);
     }
     
     [HttpPost]

@@ -9,15 +9,15 @@ namespace MoviesAPI.Controllers;
 [ApiController]
 public class MoviesController: CustomBaseController<MovieCreationDto, MovieDto>
 {
-    private readonly IRepository<GenreCreationDto, GenreDto> _genresRepository;
-    private readonly IRepository<TheaterCreationDto, TheaterDto> _theatersRepository;
+    private readonly IGenresRepository _genresRepository;
+    private readonly ITheatersRepository _theatersRepository;
     private const string CacheTag = "movies";
     private const string GetByIdName = "GetMovieById";
 
     public MoviesController(
-        IRepository<GenreCreationDto, GenreDto> genresRepository,     
-        IRepository<TheaterCreationDto, TheaterDto> theatersRepository,     
-        IRepository<MovieCreationDto, MovieDto> moviesRepository, 
+        IGenresRepository genresRepository,
+        ITheatersRepository theatersRepository,
+        IMoviesRepository moviesRepository,
         IOutputCacheStore outputCacheStore
     ): base(moviesRepository, outputCacheStore, CacheTag)
     {

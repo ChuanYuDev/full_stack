@@ -5,7 +5,7 @@ using UseCases.DataStoreInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class TheatersSqlRepository: CustomBaseSqlRepository<Theater, TheaterCreationDto, TheaterDto>, IRepository<TheaterCreationDto, TheaterDto>
+public class TheatersSqlRepository: CustomBaseSqlRepository<Theater, TheaterCreationDto, TheaterDto>, ITheatersRepository
 {
     public TheatersSqlRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
     {

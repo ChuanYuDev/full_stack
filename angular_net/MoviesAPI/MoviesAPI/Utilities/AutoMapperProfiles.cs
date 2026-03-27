@@ -32,6 +32,7 @@ public class AutoMapperProfiles: Profile
         });
 
         CreateMap<Actor, ActorDto>();
+        CreateMap<Actor, MovieActorDto>();
     }
 
     private void ConfigureTheaters()

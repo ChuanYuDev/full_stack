@@ -5,7 +5,7 @@ using UseCases.DataStoreInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class GenresSqlRepository: CustomBaseSqlRepository<Genre, GenreCreationDto, GenreDto>, IRepository<GenreCreationDto, GenreDto>
+public class GenresSqlRepository: CustomBaseSqlRepository<Genre, GenreCreationDto, GenreDto>, IGenresRepository 
 {
     public GenresSqlRepository(ApplicationDbContext context, IMapper mapper): base(context, mapper)
     {

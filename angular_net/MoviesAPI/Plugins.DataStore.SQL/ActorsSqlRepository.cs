@@ -1,4 +1,5 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ using UseCases.FileStorageInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class ActorsSqlRepository: CustomBaseSqlRepository<Actor, ActorCreationDto, ActorDto>, IRepository<ActorCreationDto, ActorDto>
+public class ActorsSqlRepository: CustomBaseSqlRepository<Actor, ActorCreationDto, ActorDto>, IActorsRepository 
 {
     private readonly IFileStorage _fileStorage;
     private const string Container = "actors";
@@ -22,9 +23,18 @@ public class ActorsSqlRepository: CustomBaseSqlRepository<Actor, ActorCreationDt
         return await GetAll(a => a.Name);
     }
 
-    public Task<List<ActorDto>> Get(PaginationDto paginationDto)
+    public async Task<List<ActorDto>> Get(PaginationDto paginationDto)
     {
-        return  Get(paginationDto, orderBy: a => a.Name);
+        return  await Get(paginationDto, orderBy: a => a.Name);
+    }
+
+    public async Task<List<MovieActorDto>> Get(string name)
+    {
+        return await EntityDbSet
+            .Where(actor => actor.Name.Contains(name))
+            .OrderBy(actor => actor.Name)
+            .ProjectTo<MovieActorDto>(Mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 
     public override async Task<ActorDto> Add(ActorCreationDto actorCreationDto)

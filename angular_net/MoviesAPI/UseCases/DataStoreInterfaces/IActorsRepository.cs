@@ -2,12 +2,8 @@ using CoreBusiness.DTOs;
 
 namespace UseCases.DataStoreInterfaces;
 
-public interface IActorsRepository
+public interface IActorsRepository: IRepository<ActorCreationDto, ActorDto>
 {
-    Task<int> Count();
-    Task<List<ActorDto>> Get(PaginationDto paginationDto);
-    Task<ActorDto?> GetById(int id);
-    Task<ActorDto> Add(ActorCreationDto actorCreationDto);
-    Task<bool> Update(int id, ActorCreationDto actorCreationDto);
-    Task<bool> Delete(int id);
+    public Task<List<MovieActorDto>> Get(string name);
+
 }

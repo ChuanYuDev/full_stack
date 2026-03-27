@@ -65,8 +65,10 @@ public class GenresInMemoryRepository: IGenresRepository
         return true;
     }
 
-    public async Task<int> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        return _genres.RemoveAll(g => g.Id == id);
+        var deleteRecords = _genres.RemoveAll(g => g.Id == id);
+
+        return deleteRecords != 0;
     }
 }

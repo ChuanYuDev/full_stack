@@ -12,7 +12,7 @@ public class TheatersController: CustomBaseController<TheaterCreationDto, Theate
     private const string CacheTag = "theaters";
     private const string GetByIdName = "GetTheaterById";
 
-    public TheatersController(IRepository<TheaterCreationDto, TheaterDto> theatersRepository, IOutputCacheStore outputCacheStore)
+    public TheatersController(ITheatersRepository theatersRepository, IOutputCacheStore outputCacheStore)
         : base(theatersRepository, outputCacheStore, CacheTag)
     {
     }

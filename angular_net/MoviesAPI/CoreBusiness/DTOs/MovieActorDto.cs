@@ -1,12 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace CoreBusiness.DTOs;
 
-public class MovieActorCreationDto
+public class MovieActorDto
 {
     // ActorId
     public int Id { get; set; }
-    
-    [StringLength(300)]
+    public required string Name { get; set; }
+    public string? Picture { get; set; }
     public string? Character { get; set; }
 }
