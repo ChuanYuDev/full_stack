@@ -34,6 +34,13 @@ public class MoviesController: CustomBaseController<MovieCreationDto, MovieDto>
         return new MoviePostGetDto { Genres = genres, Theaters = theaters };
     }
 
+    [HttpGet("{id:int}", Name = GetByIdName)]
+    [OutputCache(Tags = [CacheTag])]
+    public Task<ActionResult<MovieDto>> Get(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     [HttpPost]
     public async Task<CreatedAtRouteResult> Post([FromForm] MovieCreationDto movieCreationDto)
     {

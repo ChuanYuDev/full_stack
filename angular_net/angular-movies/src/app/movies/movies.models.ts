@@ -1,4 +1,6 @@
 import {ActorAutoCompleteDTO} from "../actors/actors.models";
+import {GenreDTO} from "../genres/genres.models";
+import {TheaterDTO} from "../theaters/theaters.models";
 
 export interface MovieDTO {
     id: number;
@@ -19,4 +21,9 @@ export interface MovieCreationDTO {
     genresIds?: number[];
     theatersIds?: number[];
     actors?: ActorAutoCompleteDTO[];
+}
+
+export interface MoviePostGetDTO {
+    genres: GenreDTO[];
+    theaters: TheaterDTO[];
 }
