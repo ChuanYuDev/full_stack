@@ -1,5 +1,5 @@
 import {Component, inject, Input, OnInit, ViewChild} from '@angular/core';
-import {ActorAutoCompleteDTO} from "../actors.models";
+import {ActorAutoCompleteDto} from "../actors.models";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -19,17 +19,17 @@ export class ActorsAutocompleteComponent implements OnInit{
     
     actorsService = inject(ActorsService);
 
-    actors: ActorAutoCompleteDTO[] = [];
+    actors: ActorAutoCompleteDto[] = [];
 
     @Input({required: true})
-    selectedActors: ActorAutoCompleteDTO[] = [];
+    selectedActors: ActorAutoCompleteDto[] = [];
 
     control = new FormControl("");
 
     columnsToDisplay = ["image", "name", "character", "actions"];
 
     @ViewChild(MatTable)
-    table?: MatTable<ActorAutoCompleteDTO>;
+    table?: MatTable<ActorAutoCompleteDto>;
 
     ngOnInit() {
         this.control.valueChanges.subscribe(value => {
@@ -59,7 +59,7 @@ export class ActorsAutocompleteComponent implements OnInit{
         this.table?.renderRows();
     }
 
-    delete(value: ActorAutoCompleteDTO) {
+    delete(value: ActorAutoCompleteDto) {
         const index = this.selectedActors.findIndex(actor => actor.id == value.id);
 
         this.selectedActors.splice(index, 1);

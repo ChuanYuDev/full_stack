@@ -1,6 +1,6 @@
 import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ActorCreationDTO, ActorDTO} from "../actors.models";
+import {ActorCreationDto, ActorDto} from "../actors.models";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {RouterLink} from "@angular/router";
@@ -27,10 +27,10 @@ export class ActorsFormComponent implements OnInit{
     });
     
     @Input()
-    model?: ActorDTO;
+    model?: ActorDto;
     
     @Output()
-    postForm = new EventEmitter<ActorCreationDTO>();
+    postForm = new EventEmitter<ActorCreationDto>();
     
     ngOnInit() {
         if (this.model) {
@@ -67,7 +67,7 @@ export class ActorsFormComponent implements OnInit{
     }
     
     saveChanges() {
-        const actor = this.form.value as ActorCreationDTO;
+        const actor = this.form.value as ActorCreationDto;
         
         actor.dateOfBirth = moment(actor.dateOfBirth).toDate();
         

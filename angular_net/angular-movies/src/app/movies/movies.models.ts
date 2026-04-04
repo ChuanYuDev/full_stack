@@ -1,8 +1,8 @@
-import {ActorAutoCompleteDTO} from "../actors/actors.models";
-import {GenreDTO} from "../genres/genres.models";
-import {TheaterDTO} from "../theaters/theaters.models";
+import {ActorAutoCompleteDto} from "../actors/actors.models";
+import {GenreDto} from "../genres/genres.models";
+import {TheaterDto} from "../theaters/theaters.models";
 
-export interface MovieDTO {
+export interface MovieDto {
     id: number;
     title: string;
     releaseDate?: Date;
@@ -10,20 +10,25 @@ export interface MovieDTO {
     poster?: string;
     genresIds?: number[];
     theatersIds?: number[];
-    actors?: ActorAutoCompleteDTO[];
+    actors?: ActorAutoCompleteDto[];
 }
 
-export interface MovieCreationDTO {
+export interface MovieCreationDto {
     title: string;
     releaseDate?: Date;
     trailer?: string;
     poster?: File | string;
     genresIds?: number[];
     theatersIds?: number[];
-    actors?: ActorAutoCompleteDTO[];
+    actors?: ActorAutoCompleteDto[];
 }
 
-export interface MoviePostGetDTO {
-    genres: GenreDTO[];
-    theaters: TheaterDTO[];
+export interface MoviePostGetDto {
+    genres: GenreDto[];
+    theaters: TheaterDto[];
+}
+
+export interface LandingDto {
+    inTheaters: MovieDto[];
+    upcomingReleases: MovieDto[];
 }

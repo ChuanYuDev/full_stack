@@ -1,5 +1,5 @@
 import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
-import {MovieCreationDTO, MovieDTO} from "../movies.models";
+import {MovieCreationDto, MovieDto} from "../movies.models";
 import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -8,10 +8,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import moment from "moment";
 import {InputImgComponent} from "../../shared/components/input-img/input-img.component";
-import {MultipleSelectorDTO} from "../../shared/components/multiple-selector/multiple-selector.model";
+import {MultipleSelectorDto} from "../../shared/components/multiple-selector/multiple-selector.model";
 import {MultipleSelectorComponent} from "../../shared/components/multiple-selector/multiple-selector.component";
 import {ActorsAutocompleteComponent} from "../../actors/actors-autocomplete/actors-autocomplete.component";
-import {ActorAutoCompleteDTO} from "../../actors/actors.models";
+import {ActorAutoCompleteDto} from "../../actors/actors.models";
 
 @Component({
     selector: 'app-movies-form',
@@ -21,25 +21,25 @@ import {ActorAutoCompleteDTO} from "../../actors/actors.models";
 })
 export class MoviesFormComponent implements OnInit{
     @Input()
-    model?: MovieDTO;
+    model?: MovieDto;
 
     @Input({required: true})
-    selectedGenres: MultipleSelectorDTO[] = [];
+    selectedGenres: MultipleSelectorDto[] = [];
 
     @Input({required: true})
-    nonSelectedGenres: MultipleSelectorDTO[] = [];
+    nonSelectedGenres: MultipleSelectorDto[] = [];
 
     @Input({required: true})
-    selectedTheaters: MultipleSelectorDTO[] = [];
+    selectedTheaters: MultipleSelectorDto[] = [];
 
     @Input({required: true})
-    nonSelectedTheaters: MultipleSelectorDTO[] = [];
+    nonSelectedTheaters: MultipleSelectorDto[] = [];
 
     @Input({required: true})
-    selectedActors: ActorAutoCompleteDTO[] = [];
+    selectedActors: ActorAutoCompleteDto[] = [];
 
     @Output()
-    postForm = new EventEmitter<MovieCreationDTO>();
+    postForm = new EventEmitter<MovieCreationDto>();
 
     private formBuilder = inject(FormBuilder);
 
@@ -71,7 +71,7 @@ export class MoviesFormComponent implements OnInit{
     }
 
     saveChanges() {
-        const movie = this.form.value as MovieCreationDTO;
+        const movie = this.form.value as MovieCreationDto;
 
         if (movie.releaseDate) {
             movie.releaseDate = moment(movie.releaseDate).toDate();

@@ -5,7 +5,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatButtonModule} from "@angular/material/button";
-import {GenreDTO} from "../../genres/genres.models";
+import {GenreDto} from "../../genres/genres.models";
 import {MoviesListComponent} from "../movies-list/movies-list.component";
 import {MoviesSearchDTO} from "./movies-search.model";
 import {ActivatedRoute} from "@angular/router";
@@ -31,7 +31,7 @@ export class MoviesSearchComponent implements OnInit{
 
     form = this.formBuilder.group(this.defaultValue);
 
-    genres: GenreDTO[] = [
+    genres: GenreDto[] = [
         {id: 1, name: "Comedy"},
         {id: 2, name: "Action"},
         {id: 3, name: "Drama"},

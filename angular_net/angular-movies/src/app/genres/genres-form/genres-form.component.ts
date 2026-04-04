@@ -5,7 +5,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {RouterLink} from "@angular/router";
 import {firstLetterShouldBeUppercase} from "../../shared/functions/validations";
-import {GenreCreationDTO, GenreDTO} from "../genres.models";
+import {GenreCreationDto, GenreDto} from "../genres.models";
 
 @Component({
     selector: 'app-genres-form',
@@ -21,10 +21,10 @@ export class GenresFormComponent implements OnInit{
     });
     
     @Input()
-    model?: GenreDTO;
+    model?: GenreDto;
     
     @Output()
-    postForm = new EventEmitter<GenreCreationDTO>;
+    postForm = new EventEmitter<GenreCreationDto>;
 
     ngOnInit() {
         if (this.model) {
@@ -52,7 +52,7 @@ export class GenresFormComponent implements OnInit{
     }
 
     saveChanges() {
-        const genre = this.form.value as GenreCreationDTO;
+        const genre = this.form.value as GenreCreationDto;
         this.postForm.emit(genre);
     }
 }

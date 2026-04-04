@@ -1,4 +1,4 @@
-export interface MultipleSelectorDTO {
+export interface MultipleSelectorDto {
     key: number;
     description: string;
 }

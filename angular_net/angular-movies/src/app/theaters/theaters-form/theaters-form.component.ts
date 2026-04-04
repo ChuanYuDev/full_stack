@@ -1,6 +1,6 @@
 import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
-import {TheaterCreationDTO, TheaterDTO} from "../theaters.models";
+import {TheaterCreationDto, TheaterDto} from "../theaters.models";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {RouterLink} from "@angular/router";
@@ -23,12 +23,12 @@ export class TheatersFormComponent implements OnInit{
     });
     
     @Input()
-    model?: TheaterDTO;
+    model?: TheaterDto;
 
     initialCoordinate: Coordinate[] = [];
     
     @Output()
-    postForm = new EventEmitter<TheaterCreationDTO>();
+    postForm = new EventEmitter<TheaterCreationDto>();
     
     ngOnInit() {
         if (this.model) {
@@ -55,7 +55,7 @@ export class TheatersFormComponent implements OnInit{
     }
 
     saveChanges() {
-        const theater = this.form.value as TheaterCreationDTO;
+        const theater = this.form.value as TheaterCreationDto;
 
         const coordinate = this.form.controls.coordinate.value;
         theater.latitude = coordinate?.latitude || 0;

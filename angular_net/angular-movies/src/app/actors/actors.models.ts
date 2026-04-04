@@ -1,17 +1,17 @@
-export interface ActorDTO {
+export interface ActorDto {
     id: number;
     name: string;
     dateOfBirth: Date;
     picture?: string;
 }
 
-export interface ActorCreationDTO {
+export interface ActorCreationDto {
     name: string;
     dateOfBirth: Date;
     picture?: File | string;
 }
 
-export interface ActorAutoCompleteDTO {
+export interface ActorAutoCompleteDto {
     id: number;
     name: string;
     character?: string;

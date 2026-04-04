@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {GenreCreationDTO, GenreDTO} from "./genres.models";
+import {GenreCreationDto, GenreDto} from "./genres.models";
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
@@ -10,37 +10,37 @@ import {ICRUDService} from "../shared/interfaces/ICRUDService";
 @Injectable({
     providedIn: 'root'
 })
-export class GenresService implements ICRUDService<GenreDTO, GenreCreationDTO>{
+export class GenresService implements ICRUDService<GenreDto, GenreCreationDto>{
     constructor() { }
     
     private http = inject(HttpClient);
-    private baseURL = environment.apiURL + "/genres";
+    private baseUrl = environment.apiUrl + "/genres";
     
-    getAll(): Observable<GenreDTO[]> {
-        return this.http.get<GenreDTO[]>(this.baseURL);
+    getAll(): Observable<GenreDto[]> {
+        return this.http.get<GenreDto[]>(this.baseUrl);
     }
     
-    getPaginated(pagination: PaginationDTO): Observable<HttpResponse<GenreDTO[]>> {
+    getPaginated(pagination: PaginationDTO): Observable<HttpResponse<GenreDto[]>> {
         const queryParams = buildQueryParams(pagination);
-        return this.http.get<GenreDTO[]>(this.baseURL, {
+        return this.http.get<GenreDto[]>(this.baseUrl, {
             params: queryParams,
             observe: "response"
         });
     }
     
-    getById(id: number): Observable<GenreDTO>{
-        return this.http.get<GenreDTO>(`${this.baseURL}/${id}`);
+    getById(id: number): Observable<GenreDto>{
+        return this.http.get<GenreDto>(`${this.baseUrl}/${id}`);
     }
     
-    create(genre: GenreCreationDTO): Observable<Object> {
-        return this.http.post(this.baseURL, genre);
+    create(genre: GenreCreationDto): Observable<Object> {
+        return this.http.post(this.baseUrl, genre);
     }
     
-    update(id: number, genre: GenreCreationDTO): Observable<Object> {
-        return this.http.put(`${this.baseURL}/${id}`, genre);
+    update(id: number, genre: GenreCreationDto): Observable<Object> {
+        return this.http.put(`${this.baseUrl}/${id}`, genre);
     }
     
     delete(id: number): Observable<Object> {
-        return this.http.delete(`${this.baseURL}/${id}`);
+        return this.http.delete(`${this.baseUrl}/${id}`);
     }
 }

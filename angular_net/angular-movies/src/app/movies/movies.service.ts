@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {MovieCreationDTO, MoviePostGetDTO} from "./movies.models";
+import {LandingDto, MovieCreationDto, MoviePostGetDto} from "./movies.models";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -9,19 +9,23 @@ import {environment} from "../../environments/environment";
 })
 export class MoviesService {
     private http = inject(HttpClient);
-    private baseURL = environment.apiURL + "/movies";
+    private baseUrl = environment.apiUrl + "/movies";
     constructor() { }
     
-    postGet(): Observable<MoviePostGetDTO> {
-        return this.http.get<MoviePostGetDTO>(`${this.baseURL}/post-get`);
+    getLanding(): Observable<LandingDto> {
+        return this.http.get<LandingDto>(`${this.baseUrl}/landing`)
     }
     
-    post(movie: MovieCreationDTO) {
+    postGet(): Observable<MoviePostGetDto> {
+        return this.http.get<MoviePostGetDto>(`${this.baseUrl}/post-get`);
+    }
+    
+    post(movie: MovieCreationDto) {
         const formData = this.buildFormData(movie);
-        return this.http.post(this.baseURL, formData);
+        return this.http.post(this.baseUrl, formData);
     }
     
-    private buildFormData(movie: MovieCreationDTO): FormData {
+    private buildFormData(movie: MovieCreationDto): FormData {
         const formData = new FormData();
         
         formData.append("title", movie.title);
