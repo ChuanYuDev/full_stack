@@ -28,7 +28,7 @@ public class CustomBaseSqlRepository<TEntity, TCreationDto, TDto>
         return await EntityDbSet.CountAsync();
     }
     
-    protected async Task<List<TDto>> GetAll(Expression<Func<TEntity, object>> orderBy)
+    protected async Task<List<TDto>> Get(Expression<Func<TEntity, object>> orderBy)
     {
         return await EntityDbSet 
             .OrderBy(orderBy)
@@ -45,7 +45,7 @@ public class CustomBaseSqlRepository<TEntity, TCreationDto, TDto>
             .ToListAsync();
     }
 
-    public async Task<TDto?> GetById(int id)
+    public async Task<TDto?> Get(int id)
     {
         return await EntityDbSet
             .ProjectTo<TDto>(Mapper.ConfigurationProvider)

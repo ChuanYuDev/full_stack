@@ -1,34 +1,49 @@
+using System.Linq.Expressions;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CoreBusiness;
 using CoreBusiness.DTOs;
+using Microsoft.EntityFrameworkCore;
 using UseCases.DataStoreInterfaces;
 using UseCases.FileStorageInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class MoviesSqlRepository: CustomBaseSqlRepository<Movie, MovieCreationDto, MovieDto>, IMoviesRepository
+public class MoviesSqlRepository: IMoviesRepository
 {
+    private readonly ApplicationDbContext _context;
+    private readonly IMapper _mapper;
     private readonly IFileStorage _fileStorage;
     private const string Container = "movies";
 
-    public MoviesSqlRepository(ApplicationDbContext context, IMapper mapper, IFileStorage fileStorage) : base(context, mapper)
+    public MoviesSqlRepository(ApplicationDbContext context, IMapper mapper, IFileStorage fileStorage)
     {
+        _context = context;
+        _mapper = mapper;
         _fileStorage = fileStorage;
     }
 
-    public Task<List<MovieDto>> GetAll()
+    public async Task<List<MovieDto>> Get(Expression<Func<Movie, bool>> where, int top)
     {
-        throw new NotImplementedException();
+        return await _context.Movies
+            .Where(where)
+            .OrderBy(m => m.ReleaseDate)
+            .Take(top)
+            .ProjectTo<MovieDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 
-    public Task<List<MovieDto>> Get(PaginationDto paginationDto)
+    public async Task<MovieDetailsDto?> Get(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Movies
+            .AsSplitQuery()
+            .ProjectTo<MovieDetailsDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    public override async Task<MovieDto> Add(MovieCreationDto movieCreationDto)
+    public async Task<MovieDto> Add(MovieCreationDto movieCreationDto)
     {
-        var movie = Mapper.Map<Movie>(movieCreationDto);
+        var movie = _mapper.Map<Movie>(movieCreationDto);
 
         if (movieCreationDto.Poster is not null)
         {
@@ -38,10 +53,10 @@ public class MoviesSqlRepository: CustomBaseSqlRepository<Movie, MovieCreationDt
         
         AssignActorOrder(movie);
 
-        Context.Add(movie);
-        await Context.SaveChangesAsync();
+        _context.Add(movie);
+        await _context.SaveChangesAsync();
 
-        return Mapper.Map<MovieDto>(movie);
+        return _mapper.Map<MovieDto>(movie);
     }
 
     private void AssignActorOrder(Movie movie)

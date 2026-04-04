@@ -23,11 +23,6 @@ namespace Plugins.DataStore.SQL
         {
             base.OnModelCreating(modelBuilder);
 
-            // One category has many products
-            // One product belongs to one category
-            //
-            // Fluent API
-            //      Often, the type returned from the method call is the same instance as the one on which the method is called
             modelBuilder.Entity<Category>()
                 .HasMany(c => c.Products)
                 .WithOne(p => p.Category)

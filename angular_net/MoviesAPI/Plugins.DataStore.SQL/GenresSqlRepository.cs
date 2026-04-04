@@ -11,9 +11,9 @@ public class GenresSqlRepository: CustomBaseSqlRepository<Genre, GenreCreationDt
     {
     }
 
-    public async Task<List<GenreDto>> GetAll()
+    public async Task<List<GenreDto>> Get()
     {
-        return await GetAll(g => g.Name);
+        return await Get(g => g.Name);
     }
 
     public async Task<List<GenreDto>> Get(PaginationDto paginationDto)

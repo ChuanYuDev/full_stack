@@ -19,9 +19,9 @@ public class GenresController: CustomBaseController<GenreCreationDto, GenreDto>
     
     [HttpGet("all-genres")]
     [OutputCache(Tags = [CacheTag])]
-    public async Task<List<GenreDto>> GetAll()
+    public async Task<List<GenreDto>> Get()
     {
-        return await GetAllEntities();
+        return await GetEntities();
     }
 
     [HttpGet]
@@ -35,7 +35,7 @@ public class GenresController: CustomBaseController<GenreCreationDto, GenreDto>
     [OutputCache(Tags = [CacheTag])]
     public async Task<ActionResult<GenreDto>> Get(int id)
     {
-        return await GetEntityById(id);
+        return await GetEntity(id);
     }
 
     [HttpPost]

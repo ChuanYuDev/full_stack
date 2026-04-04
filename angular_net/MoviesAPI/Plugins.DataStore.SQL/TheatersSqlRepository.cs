@@ -11,9 +11,9 @@ public class TheatersSqlRepository: CustomBaseSqlRepository<Theater, TheaterCrea
     {
     }
 
-    public async Task<List<TheaterDto>> GetAll()
+    public async Task<List<TheaterDto>> Get()
     {
-        return await GetAll(t => t.Name);
+        return await Get(t => t.Name);
     }
 
     public async Task<List<TheaterDto>> Get(PaginationDto paginationDto)

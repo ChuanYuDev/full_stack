@@ -22,9 +22,9 @@ public class ActorsController: CustomBaseController<ActorCreationDto, ActorDto>
 
     [HttpGet("all-actors")]
     [OutputCache(Tags = [CacheTag])]
-    public async Task<List<ActorDto>> GetAll()
+    public async Task<List<ActorDto>> Get()
     {
-        return await GetAllEntities();
+        return await GetEntities();
     }
 
     [HttpGet]
@@ -38,7 +38,7 @@ public class ActorsController: CustomBaseController<ActorCreationDto, ActorDto>
     [OutputCache(Tags = [CacheTag])]
     public async Task<ActionResult<ActorDto>> Get(int id)
     {
-        return await GetEntityById(id);
+        return await GetEntity(id);
     }
 
     [HttpGet("{name}")]

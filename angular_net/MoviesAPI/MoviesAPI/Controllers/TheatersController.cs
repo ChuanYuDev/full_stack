@@ -19,9 +19,9 @@ public class TheatersController: CustomBaseController<TheaterCreationDto, Theate
 
     [HttpGet("all-theaters")]
     [OutputCache(Tags = [CacheTag])]
-    public async Task<List<TheaterDto>> GetAll()
+    public async Task<List<TheaterDto>> Get()
     {
-        return await GetAllEntities();
+        return await GetEntities();
     }
     
     [HttpGet]
@@ -35,7 +35,7 @@ public class TheatersController: CustomBaseController<TheaterCreationDto, Theate
     [OutputCache(Tags = [CacheTag])]
     public async Task<ActionResult<TheaterDto>> Get(int id)
     {
-        return await GetEntityById(id);
+        return await GetEntity(id);
     }
 
     [HttpPost]

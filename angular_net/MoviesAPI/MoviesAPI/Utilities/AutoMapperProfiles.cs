@@ -76,6 +76,25 @@ public class AutoMapperProfiles: Profile
                     Character = movieActorCreationDto.Character
                 }));
             });
+        
         CreateMap<Movie, MovieDto>();
+
+        CreateMap<Movie, MovieDetailsDto>()
+            .ForMember(movieDetailsDto => movieDetailsDto.Genres, config =>
+            {
+                config.MapFrom(movie => movie.MoviesGenres);
+            })
+            .ForMember(movieDetailsDto => movieDetailsDto.Theaters, config =>
+            {
+                config.MapFrom(movie => movie.MoviesTheaters);
+            })
+            .ForMember(movieDetailsDto => movieDetailsDto.Actors, config =>
+            {
+                config.MapFrom(movie => movie.MoviesActors);
+            });
+
+        CreateMap<MovieGenre, GenreDto>().IncludeMembers(movieGenre => movieGenre.Genre);
+        CreateMap<MovieTheater, TheaterDto>().IncludeMembers(movieTheater => movieTheater.Theater);
+        CreateMap<MovieActor, MovieActorDto>().IncludeMembers(movieActor => movieActor.Actor);
     }
 }

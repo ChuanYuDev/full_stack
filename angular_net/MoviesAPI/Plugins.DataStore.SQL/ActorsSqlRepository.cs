@@ -18,9 +18,9 @@ public class ActorsSqlRepository: CustomBaseSqlRepository<Actor, ActorCreationDt
         _fileStorage = fileStorage;
     }
 
-    public async Task<List<ActorDto>> GetAll()
+    public async Task<List<ActorDto>> Get()
     {
-        return await GetAll(a => a.Name);
+        return await Get(a => a.Name);
     }
 
     public async Task<List<ActorDto>> Get(PaginationDto paginationDto)

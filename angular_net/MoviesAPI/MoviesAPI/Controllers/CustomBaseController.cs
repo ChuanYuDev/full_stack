@@ -21,9 +21,9 @@ public class CustomBaseController<TCreationDto, TDto>: ControllerBase
         _cacheTag = cacheTag;
     }
 
-    protected async Task<List<TDto>> GetAllEntities()
+    protected async Task<List<TDto>> GetEntities()
     {
-        return await _entitiesRepository.GetAll();
+        return await _entitiesRepository.Get();
     }
 
     protected async Task<List<TDto>> GetEntities(PaginationDto paginationDto)
@@ -33,9 +33,9 @@ public class CustomBaseController<TCreationDto, TDto>: ControllerBase
         return await _entitiesRepository.Get(paginationDto);
     }
 
-    protected async Task<ActionResult<TDto>> GetEntityById(int id)
+    protected async Task<ActionResult<TDto>> GetEntity(int id)
     {
-        var dto = await _entitiesRepository.GetById(id);
+        var dto = await _entitiesRepository.Get(id);
 
         if (dto is null)
         {

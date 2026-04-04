@@ -10,7 +10,7 @@ public class ActorsInMemoryRepository: IActorsRepository
         throw new NotImplementedException();
     }
 
-    public Task<List<ActorDto>> GetAll()
+    public Task<List<ActorDto>> Get()
     {
         throw new NotImplementedException();
     }
@@ -20,7 +20,7 @@ public class ActorsInMemoryRepository: IActorsRepository
         throw new NotImplementedException();
     }
 
-    public Task<ActorDto?> GetById(int id)
+    public Task<ActorDto?> Get(int id)
     {
         throw new NotImplementedException();
     }

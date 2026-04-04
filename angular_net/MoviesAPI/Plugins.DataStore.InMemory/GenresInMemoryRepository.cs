@@ -26,7 +26,7 @@ public class GenresInMemoryRepository: IGenresRepository
         return _genres.Count;
     }
 
-    public async Task<List<GenreDto>> GetAll()
+    public async Task<List<GenreDto>> Get()
     {
         return _mapper.Map<List<GenreDto>>(_genres);
     }
@@ -36,7 +36,7 @@ public class GenresInMemoryRepository: IGenresRepository
         return _mapper.Map<List<GenreDto>>(_genres.OrderBy(g=> g.Name).Paginate(paginationDto));
     }
 
-    public async Task<GenreDto?> GetById(int id)
+    public async Task<GenreDto?> Get(int id)
     {
         return _mapper.Map<GenreDto>(_genres.FirstOrDefault(g => g.Id == id));
     }
