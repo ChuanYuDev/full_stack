@@ -1,17 +1,17 @@
-<h2>Edit movie</h2>
+<h2>Edit Movie</h2>
 
-<p>
-    The id of movie is {{ id }}
-</p>
-
-<app-movies-form
-    [selectedGenres]="selectedGenres"
-    [nonSelectedGenres]="nonSelectedGenres"
-    [selectedTheaters]="selectedTheaters"
-    [nonSelectedTheaters]="nonSelectedTheaters"
-    [selectedActors]="selectedActors"
-    [model]="model"
-    (postForm)="saveChanges($event)"
->
-
-</app-movies-form>
+@if (movieDto) {
+    <app-display-errors [errors]="errors"></app-display-errors>
+    <app-movies-form
+        [selectedGenres]="selectedGenres"
+        [nonSelectedGenres]="nonSelectedGenres"
+        [selectedTheaters]="selectedTheaters"
+        [nonSelectedTheaters]="nonSelectedTheaters"
+        [selectedActors]="selectedActors"
+        [model]="movieDto"
+        (postForm)="saveChanges($event)"
+    >
+    </app-movies-form>
+} @else {
+    <app-loading></app-loading>
+}

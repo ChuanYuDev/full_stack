@@ -8,9 +8,6 @@ export interface MovieDto {
     releaseDate?: Date;
     trailer?: string;
     poster?: string;
-    // genresIds?: number[];
-    // theatersIds?: number[];
-    // actors?: ActorAutoCompleteDto[];
 }
 
 export interface MovieCreationDto {
@@ -23,12 +20,21 @@ export interface MovieCreationDto {
     actors?: ActorAutoCompleteDto[];
 }
 
+export interface LandingDto {
+    inTheaters: MovieDto[];
+    upcomingReleases: MovieDto[];
+}
+
 export interface MoviePostGetDto {
     genres: GenreDto[];
     theaters: TheaterDto[];
 }
 
-export interface LandingDto {
-    inTheaters: MovieDto[];
-    upcomingReleases: MovieDto[];
+export interface MoviePutGetDto {
+    movie: MovieDto;
+    selectedGenres: GenreDto[];
+    nonSelectedGenres: GenreDto[];
+    selectedTheaters: TheaterDto[];
+    nonSelectedTheaters: TheaterDto[];
+    actors: ActorAutoCompleteDto[];
 }

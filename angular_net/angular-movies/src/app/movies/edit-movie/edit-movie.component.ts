@@ -1,49 +1,59 @@
-import {Component, Input, numberAttribute} from '@angular/core';
+import {Component, inject, Input, numberAttribute, OnInit} from '@angular/core';
 import {MovieCreationDto, MovieDto} from "../movies.models";
 import {MoviesFormComponent} from "../movies-form/movies-form.component";
 import {MultipleSelectorDto} from "../../shared/components/multiple-selector/multiple-selector.model";
 import {ActorAutoCompleteDto} from "../../actors/actors.models";
+import {MoviesService} from "../movies.service";
+import {Router} from "@angular/router";
+import {DisplayErrorsComponent} from "../../shared/components/display-errors/display-errors.component";
+import {LoadingComponent} from "../../shared/components/loading/loading.component";
+import {extractErrors} from "../../shared/functions/extractErrors";
 
 @Component({
     selector: 'app-edit-movie',
     imports: [
-        MoviesFormComponent
+        MoviesFormComponent,
+        DisplayErrorsComponent,
+        LoadingComponent
     ],
     templateUrl: './edit-movie.component.html',
     styleUrl: './edit-movie.component.css'
 })
-export class EditMovieComponent {
+export class EditMovieComponent implements OnInit{
+    moviesService = inject(MoviesService);
+    router = inject(Router);
+    
+    errors: string[] = [];
+    movieDto?: MovieDto;
+
+    selectedGenres: MultipleSelectorDto[] = [];
+    nonSelectedGenres: MultipleSelectorDto[] = [];
+    selectedTheaters: MultipleSelectorDto[] = [];
+    nonSelectedTheaters: MultipleSelectorDto[] = [];
+    selectedActors: ActorAutoCompleteDto[] = [];
+    
     @Input({transform: numberAttribute})
-    id!: number;
+    id: number = 0;
 
-    model: MovieDto = {
-        id: 1,
-        title: "Spider-Man: Far From Home",
-        releaseDate: new Date("2019-08-04"),
-        trailer: "absd",
-        poster: "https://upload.wikimedia.org/wikipedia/en/b/bd/Spider-Man_Far_From_Home_poster.jpg",
-    };
+    ngOnInit() {
+        this.moviesService.putGet(this.id).subscribe(moviePutGetDto => {
+            this.movieDto = moviePutGetDto.movie;
+            this.selectedGenres = moviePutGetDto.selectedGenres.map(genreDto => <MultipleSelectorDto>{key: genreDto.id, description: genreDto.name});
+            this.nonSelectedGenres = moviePutGetDto.nonSelectedGenres.map(genreDto => <MultipleSelectorDto>{key: genreDto.id, description: genreDto.name});
+            this.selectedTheaters = moviePutGetDto.selectedTheaters.map(theaterDto => <MultipleSelectorDto>{key: theaterDto.id, description: theaterDto.name});
+            this.nonSelectedTheaters = moviePutGetDto.nonSelectedTheaters.map(theaterDto => <MultipleSelectorDto>{key: theaterDto.id, description: theaterDto.name});
+            this.selectedActors = moviePutGetDto.actors;
+        });
+    }
 
-    selectedGenres: MultipleSelectorDto[] = [
-        {key: 2, description: "Action"},
-    ];
-    nonSelectedGenres: MultipleSelectorDto[] = [
-        {key: 1, description: "Comedy"},
-        {key: 3, description: "Drama"},
-    ];
-
-    selectedTheaters: MultipleSelectorDto[] = [
-        {key: 1, description: "Star cinema"},
-    ];
-    nonSelectedTheaters: MultipleSelectorDto[] = [
-        {key: 2, description: "Palace ifc"}
-    ];
-
-    selectedActors: ActorAutoCompleteDto[] = [
-        {id: 3, name: 'Samuel L. Jackson', character: 'Nick Fury', picture: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/SamuelLJackson.jpg/250px-SamuelLJackson.jpg' }
-    ];
-
-    saveChanges(movie: MovieCreationDto) {
-        console.log("Edit movie", movie);
+    saveChanges(movieCreationDto: MovieCreationDto) {
+        this.moviesService.update(this.id, movieCreationDto).subscribe({
+            next: () => {
+                this.router.navigate(["/"]);
+            },
+            error: err => {
+                this.errors = extractErrors(err);
+            }
+        });
     }
 }

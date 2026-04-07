@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {LandingDto, MovieCreationDto, MoviePostGetDto} from "./movies.models";
+import {LandingDto, MovieCreationDto, MoviePostGetDto, MoviePutGetDto} from "./movies.models";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -20,9 +20,18 @@ export class MoviesService {
         return this.http.get<MoviePostGetDto>(`${this.baseUrl}/post-get`);
     }
     
+    putGet(id: number): Observable<MoviePutGetDto> {
+        return this.http.get<MoviePutGetDto>(`${this.baseUrl}/put-get/${id}`);
+    }
+    
     post(movie: MovieCreationDto) {
         const formData = this.buildFormData(movie);
         return this.http.post(this.baseUrl, formData);
+    }
+    
+    update(id: number, movieCreationDto: MovieCreationDto) {
+        const formData = this.buildFormData(movieCreationDto);
+        return this.http.put(`${this.baseUrl}/${id}`, formData);
     }
     
     private buildFormData(movie: MovieCreationDto): FormData {
