@@ -1,3 +1,4 @@
+using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
@@ -7,7 +8,7 @@ namespace MoviesAPI.Controllers;
 
 [Route("api/theaters")]
 [ApiController]
-public class TheatersController: CustomBaseController<TheaterCreationDto, TheaterDto>
+public class TheatersController: Controller<Theater, TheaterCreationDto, TheaterDto>
 {
     private const string CacheTag = "theaters";
     private const string GetByIdName = "GetTheaterById";

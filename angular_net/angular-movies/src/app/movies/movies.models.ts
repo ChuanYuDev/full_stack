@@ -8,9 +8,9 @@ export interface MovieDto {
     releaseDate?: Date;
     trailer?: string;
     poster?: string;
-    genresIds?: number[];
-    theatersIds?: number[];
-    actors?: ActorAutoCompleteDto[];
+    // genresIds?: number[];
+    // theatersIds?: number[];
+    // actors?: ActorAutoCompleteDto[];
 }
 
 export interface MovieCreationDto {

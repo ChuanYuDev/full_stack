@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using CoreBusiness;
@@ -8,7 +9,7 @@ using UseCases.FileStorageInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class ActorsSqlRepository: CustomBaseSqlRepository<Actor, ActorCreationDto, ActorDto>, IActorsRepository 
+public class ActorsSqlRepository: SqlRepository<Actor, ActorCreationDto, ActorDto>, IActorsRepository 
 {
     private readonly IFileStorage _fileStorage;
     private const string Container = "actors";
@@ -18,9 +19,9 @@ public class ActorsSqlRepository: CustomBaseSqlRepository<Actor, ActorCreationDt
         _fileStorage = fileStorage;
     }
 
-    public async Task<List<ActorDto>> Get()
+    public async Task<List<ActorDto>> Get(Expression<Func<Actor, bool>>? where = null, int top = 0)
     {
-        return await Get(a => a.Name);
+        return await Get(where: where, orderBy:a => a.Name, top: top);
     }
 
     public async Task<List<ActorDto>> Get(PaginationDto paginationDto)

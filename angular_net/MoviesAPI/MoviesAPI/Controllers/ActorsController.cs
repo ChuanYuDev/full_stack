@@ -1,3 +1,4 @@
+using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
@@ -8,7 +9,7 @@ namespace MoviesAPI.Controllers;
 
 [Route("api/actors")]
 [ApiController]
-public class ActorsController: CustomBaseController<ActorCreationDto, ActorDto>
+public class ActorsController: Controller<Actor, ActorCreationDto, ActorDto>
 {
     private readonly IActorsRepository _actorsRepository;
     private const string CacheTag = "actors";

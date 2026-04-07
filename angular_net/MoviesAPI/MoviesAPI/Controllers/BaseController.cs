@@ -7,14 +7,15 @@ using UseCases.DataStoreInterfaces;
 
 namespace MoviesAPI.Controllers;
 
-public class CustomBaseController<TCreationDto, TDto>: ControllerBase
+public class BaseController<TEntity, TCreationDto, TDto, TDetailsDto>: ControllerBase
     where TDto: IId
+    where TDetailsDto: TDto
 {
-    private readonly IRepository<TCreationDto, TDto> _entitiesRepository;
+    private readonly IBaseRepository<TEntity, TCreationDto, TDto, TDetailsDto> _entitiesRepository;
     private readonly IOutputCacheStore _outputCacheStore;
     private readonly string _cacheTag;
 
-    public CustomBaseController(IRepository<TCreationDto, TDto> entitiesRepository, IOutputCacheStore outputCacheStore, string cacheTag)
+    public BaseController(IBaseRepository<TEntity, TCreationDto, TDto, TDetailsDto> entitiesRepository, IOutputCacheStore outputCacheStore, string cacheTag)
     {
         _entitiesRepository = entitiesRepository;
         _outputCacheStore = outputCacheStore;
@@ -33,7 +34,7 @@ public class CustomBaseController<TCreationDto, TDto>: ControllerBase
         return await _entitiesRepository.Get(paginationDto);
     }
 
-    protected async Task<ActionResult<TDto>> GetEntity(int id)
+    protected async Task<ActionResult<TDetailsDto>> GetEntity(int id)
     {
         var dto = await _entitiesRepository.Get(id);
 

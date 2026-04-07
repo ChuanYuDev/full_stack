@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+using CoreBusiness;
 using CoreBusiness.DTOs;
 using UseCases.DataStoreInterfaces;
 
@@ -10,7 +12,7 @@ public class ActorsInMemoryRepository: IActorsRepository
         throw new NotImplementedException();
     }
 
-    public Task<List<ActorDto>> Get()
+    public Task<List<ActorDto>> Get(Expression<Func<Actor, bool>>? where = null, int top = 0)
     {
         throw new NotImplementedException();
     }

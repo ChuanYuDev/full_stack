@@ -1,3 +1,4 @@
+using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
@@ -7,7 +8,7 @@ namespace MoviesAPI.Controllers;
 
 [Route("api/genres")]
 [ApiController]
-public class GenresController: CustomBaseController<GenreCreationDto, GenreDto>
+public class GenresController: Controller<Genre, GenreCreationDto, GenreDto>
 {
     private const string CacheTag = "genres";
     private const string GetByIdName = "GetGenreById";

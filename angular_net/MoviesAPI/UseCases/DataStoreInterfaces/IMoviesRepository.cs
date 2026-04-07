@@ -4,12 +4,6 @@ using CoreBusiness.DTOs;
 
 namespace UseCases.DataStoreInterfaces;
 
-public interface IMoviesRepository
+public interface IMoviesRepository: IBaseRepository<Movie, MovieCreationDto, MovieDto, MovieDetailsDto>
 {
-    Task<List<MovieDto>> Get(Expression<Func<Movie, Boolean>> where, int top);
-
-    Task<MovieDetailsDto?> Get(int id);
-
-    Task<MovieDto> Add(MovieCreationDto movieCreationDto);
-
 }

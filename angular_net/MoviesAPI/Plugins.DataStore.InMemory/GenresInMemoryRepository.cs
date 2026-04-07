@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using AutoMapper;
 using CoreBusiness;
 using CoreBusiness.DTOs;
@@ -26,7 +27,7 @@ public class GenresInMemoryRepository: IGenresRepository
         return _genres.Count;
     }
 
-    public async Task<List<GenreDto>> Get()
+    public async Task<List<GenreDto>> Get(Expression<Func<Genre, bool>>? where = null, int top = 0)
     {
         return _mapper.Map<List<GenreDto>>(_genres);
     }

@@ -8,7 +8,7 @@ using Plugins.DataStore.SQL.Utilities;
 
 namespace Plugins.DataStore.SQL;
 
-public class CustomBaseSqlRepository<TEntity, TCreationDto, TDto>
+public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto> where TDetailsDto: TDto
     where TEntity: class, IId
     where TDto: IId
 {
@@ -16,7 +16,7 @@ public class CustomBaseSqlRepository<TEntity, TCreationDto, TDto>
     protected DbSet<TEntity> EntityDbSet { get; }
     protected IMapper Mapper { get; }
 
-    public CustomBaseSqlRepository(ApplicationDbContext context, IMapper mapper)
+    public BaseSqlRepository(ApplicationDbContext context, IMapper mapper)
     {
         Context = context;
         EntityDbSet = Context.Set<TEntity>();
@@ -28,15 +28,23 @@ public class CustomBaseSqlRepository<TEntity, TCreationDto, TDto>
         return await EntityDbSet.CountAsync();
     }
     
-    protected async Task<List<TDto>> Get(Expression<Func<TEntity, object>> orderBy)
+    protected async Task<List<TDto>> Get<TKey>(Expression<Func<TEntity, bool>>? where, Expression<Func<TEntity, TKey>> orderBy, int top)
     {
-        return await EntityDbSet 
-            .OrderBy(orderBy)
+        where ??= entity => true;
+
+        IQueryable<TEntity> queryable = EntityDbSet.Where(where).OrderBy(orderBy);
+
+        if (top != 0)
+        {
+            queryable = queryable.Take(top);
+        }
+        
+        return await queryable
             .ProjectTo<TDto>(Mapper.ConfigurationProvider)
             .ToListAsync();
     }
 
-    protected async Task<List<TDto>> Get(PaginationDto paginationDto, Expression<Func<TEntity, object>> orderBy)
+    protected async Task<List<TDto>> Get<TKey>(PaginationDto paginationDto, Expression<Func<TEntity, TKey>> orderBy)
     {
         return await EntityDbSet 
             .OrderBy(orderBy)
@@ -45,10 +53,10 @@ public class CustomBaseSqlRepository<TEntity, TCreationDto, TDto>
             .ToListAsync();
     }
 
-    public async Task<TDto?> Get(int id)
+    public virtual async Task<TDetailsDto?> Get(int id)
     {
         return await EntityDbSet
-            .ProjectTo<TDto>(Mapper.ConfigurationProvider)
+            .ProjectTo<TDetailsDto>(Mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(dto => dto.Id == id);
     }
 
