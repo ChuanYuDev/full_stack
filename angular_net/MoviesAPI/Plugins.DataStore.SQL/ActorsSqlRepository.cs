@@ -83,11 +83,10 @@ public class ActorsSqlRepository: SqlRepository<Actor, ActorCreationDto, ActorDt
         {
             return false;
         }
-        
-        await _fileStorage.Delete(actor.Picture, Container);
 
         Context.Remove(actor);
         await Context.SaveChangesAsync();
+        await _fileStorage.Delete(actor.Picture, Container);
 
         return true;
     }

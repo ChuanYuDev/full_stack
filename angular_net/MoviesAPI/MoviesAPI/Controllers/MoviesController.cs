@@ -97,4 +97,10 @@ public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto,
     {
         return await PutEntity(id, movieCreationDto);
     }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        return await DeleteEntity(id);
+    }
 }

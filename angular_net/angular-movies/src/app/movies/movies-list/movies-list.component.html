@@ -20,7 +20,13 @@
                             Edit
                         </a>
 
-                        <button mat-flat-button type="button" (click)="removeMovie(movie)" class="warn">
+                        <button
+                            mat-flat-button
+                            type="button"
+                            class="warn"
+                            [swal]="swalParams"
+                            (confirm)="delete(movie.id)"
+                        >
                             Delete
                         </button>
                     </div>

@@ -34,6 +34,10 @@ export class MoviesService {
         return this.http.put(`${this.baseUrl}/${id}`, formData);
     }
     
+    delete(id: number) {
+        return this.http.delete(`${this.baseUrl}/${id}`);
+    }
+    
     private buildFormData(movie: MovieCreationDto): FormData {
         const formData = new FormData();
         

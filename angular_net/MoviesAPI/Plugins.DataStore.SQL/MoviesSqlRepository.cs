@@ -81,6 +81,22 @@ public class MoviesSqlRepository: BaseSqlRepository<Movie, MovieCreationDto, Mov
         return true;
     }
 
+    public override async Task<bool> Delete(int id)
+    {
+        var movie = await Context.Movies.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (movie is null)
+        {
+            return false;
+        }
+
+        Context.Remove(movie);
+        await Context.SaveChangesAsync();
+        await _fileStorage.Delete(movie.Poster, Container);
+
+        return true;
+    }
+
     private void AssignActorOrder(Movie movie)
     {
         for (int i = 0; i < movie.MoviesActors.Count; i++)
