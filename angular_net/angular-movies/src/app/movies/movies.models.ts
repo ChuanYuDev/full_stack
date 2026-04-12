@@ -10,6 +10,12 @@ export interface MovieDto {
     poster?: string;
 }
 
+export interface MovieDetailsDto extends MovieDto{
+    genres?: GenreDto[];
+    theaters?: TheaterDto[];
+    actors?: ActorAutoCompleteDto[];
+}
+
 export interface MovieCreationDto {
     title: string;
     releaseDate?: Date;

@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {LandingDto, MovieCreationDto, MoviePostGetDto, MoviePutGetDto} from "./movies.models";
+import {LandingDto, MovieCreationDto, MovieDetailsDto, MoviePostGetDto, MoviePutGetDto} from "./movies.models";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -14,6 +14,10 @@ export class MoviesService {
     
     getLanding(): Observable<LandingDto> {
         return this.http.get<LandingDto>(`${this.baseUrl}/landing`)
+    }
+    
+    getById(id: number): Observable<MovieDetailsDto> {
+        return this.http.get<MovieDetailsDto>(`${this.baseUrl}/${id}`);
     }
     
     postGet(): Observable<MoviePostGetDto> {

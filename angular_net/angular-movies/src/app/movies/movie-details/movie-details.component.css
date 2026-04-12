@@ -1,0 +1,21 @@
+mat-chip-listbox {
+    display: inline flex;
+    vertical-align: middle;
+}
+
+.genres-chip-container {
+    margin-bottom: 0.5rem;
+}
+
+.poster-trailer-container {
+    display: flex;
+}
+
+img {
+    display: block;
+    margin-right: 1rem;
+}
+
+iframe {
+    border: 0;
+}

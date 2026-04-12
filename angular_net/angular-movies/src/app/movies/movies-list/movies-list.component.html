@@ -3,7 +3,7 @@
         <div class="movies-container">
             @for (movie of movies; track $index) {
                 <div class="movie-container">
-                    <a [routerLink]="['/movies/edit', movie.id]">
+                    <a [routerLink]="['/movie', movie.id]">
                         @if (movie.poster) {
                             <img [src]="movie.poster" width="169" height="250" alt="movie poster"/>
                         } @else {
@@ -12,7 +12,9 @@
                     </a>
 
                     <p>
-                        {{ movie.title }}
+                        <a [routerLink]="['/movie', movie.id]">
+                            {{ movie.title }}
+                        </a>
                     </p>
 
                     <div>

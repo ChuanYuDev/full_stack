@@ -1,0 +1,32 @@
+@if (movie) {
+    <div>
+        <h2>{{movie.title}} ({{movie.releaseDate?.getFullYear()}})</h2>        
+        
+        <div class="genres-chip-container">
+            <mat-chip-listbox>
+                @for (genre of movie.genres; track $index) {
+                    <mat-chip-option [routerLink]="['/movies/search']" [queryParams]="{genreId: genre.id}">
+                        {{genre.name}}
+                    </mat-chip-option>
+                }
+            </mat-chip-listbox> | {{movie.releaseDate?.toDateString()}} | Average: 0.0 | Your vote: 0.0
+            
+        </div>
+        
+        <div class="poster-trailer-container">
+            <img [src]="movie.poster" width="225" height="315" alt="movie poster">
+
+            @if (trailerUrl)
+            {
+                <iframe
+                    width="565" height="315"
+                    [src]="trailerUrl"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                >
+                </iframe>
+            }
+        </div>
+    </div>
+} @else {
+    <app-loading></app-loading>
+}
