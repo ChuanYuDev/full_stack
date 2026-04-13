@@ -14,7 +14,7 @@
         </div>
         
         <div class="poster-trailer-container">
-            <img [src]="movie.poster" width="225" height="315" alt="movie poster">
+            <app-image [src]="movie.poster" width="225" height="315" alt="movie poster"></app-image>
 
             @if (trailerUrl)
             {
@@ -26,6 +26,30 @@
                 </iframe>
             }
         </div>
+
+        @if (movie.actors && movie.actors.length > 0){
+            <div class="actors-container">
+                <h3>Actors</h3>
+                @for (actor of movie.actors; track $index) {
+                    <div class="actor-container">
+                        <app-image [src]="actor.picture" width="70" height="90" alt="actor picture"></app-image>
+
+                        <span class="actor-name">
+                            {{actor.name}}
+                        </span>
+                        
+                        <span class="separator">...</span>
+                        {{actor.character}}
+                    </div>
+                }
+            </div>
+        }
+
+        @if (movie.theaters && movie.theaters.length > 0) {
+            <h3>Being displayed on the following theaters</h3>
+            
+            <app-map [initialCoordinates]="coordinates" [readOnlyMode]="true"></app-map>
+        }
     </div>
 } @else {
     <app-loading></app-loading>

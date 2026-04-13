@@ -8,10 +8,11 @@ import {MatTable, MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {CdkDragDrop, DragDropModule, moveItemInArray} from "@angular/cdk/drag-drop";
 import {ActorsService} from "../actors.service";
+import {ImageComponent} from "../../shared/components/image/image.component";
 
 @Component({
     selector: 'app-actors-autocomplete',
-    imports: [MatAutocompleteModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatTableModule, FormsModule, MatIconModule, DragDropModule],
+    imports: [MatAutocompleteModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatTableModule, FormsModule, MatIconModule, DragDropModule, ImageComponent],
     templateUrl: './actors-autocomplete.component.html',
     styleUrl: './actors-autocomplete.component.css'
 })

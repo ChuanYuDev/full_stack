@@ -4,11 +4,7 @@
             @for (movie of movies; track $index) {
                 <div class="movie-container">
                     <a [routerLink]="['/movie', movie.id]">
-                        @if (movie.poster) {
-                            <img [src]="movie.poster" width="169" height="250" alt="movie poster"/>
-                        } @else {
-                            <img src="/default.jpg" width="169" height="250" alt=""/>
-                        }
+                        <app-image [src]="movie.poster" width="169" height="250" alt="movie poster"></app-image>
                     </a>
 
                     <p>

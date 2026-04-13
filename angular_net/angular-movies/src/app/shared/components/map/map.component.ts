@@ -11,12 +11,6 @@ import {Coordinate} from "./coordinate.model";
 })
 export class MapComponent implements OnInit{
 
-    @Input()
-    initialCoordinates: Coordinate[] = [];
-
-    @Output()
-    selectedCoordinate = new EventEmitter<Coordinate>();
-
     options = {
         layers: [
             tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -24,7 +18,7 @@ export class MapComponent implements OnInit{
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             })
         ],
-        zoom: 14,
+        zoom: 12,
         center: latLng(49.25535155016482, -123.10423437628756)
     };
 
@@ -40,19 +34,38 @@ export class MapComponent implements OnInit{
 
     layers: Marker<any>[] = [];
 
+    @Input()
+    initialCoordinates: Coordinate[] = [];
+    
+    @Input()
+    readOnlyMode: boolean = false;
+
+    @Output()
+    selectedCoordinate = new EventEmitter<Coordinate>();
+
     ngOnInit(): void {
         this.layers = this.initialCoordinates.map(coordinate => {
-            return marker([coordinate.latitude, coordinate.longitude], this.markerOptions);
+            const initialMarker = marker([coordinate.latitude, coordinate.longitude], this.markerOptions);
+            
+            if (coordinate.text) {
+                initialMarker.bindPopup(coordinate.text, {autoPan: false, autoClose: false});
+            }
+            
+            return initialMarker;
         });
         
-        if (this.initialCoordinates.length >= 1)
-        {
-            const coordinate = this.initialCoordinates[0];        
-            this.options.center = latLng(coordinate.latitude, coordinate.longitude);
-        }
+        // if (this.initialCoordinates.length >= 1)
+        // {
+        //     const coordinate = this.initialCoordinates[0];        
+        //     this.options.center = latLng(coordinate.latitude, coordinate.longitude);
+        // }
     }
 
     handleClick(event: LeafletMouseEvent) {
+        if (this.readOnlyMode) {
+            return;
+        }
+        
         const latitude = event.latlng.lat;
         const longitude = event.latlng.lng;
 

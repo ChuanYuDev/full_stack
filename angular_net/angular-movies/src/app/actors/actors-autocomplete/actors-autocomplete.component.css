@@ -1,9 +1,6 @@
-img {
+app-image {
     vertical-align: middle;
     margin-right: 8px;
-    width: 35px;
-    height: 45px;
-    display: inline flow-root;
 }
 
 td mat-form-field {

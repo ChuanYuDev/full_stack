@@ -5,10 +5,13 @@ import {MovieDetailsDto} from "../movies.models";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
 import {MatChipsModule} from "@angular/material/chips";
 import {RouterLink} from "@angular/router";
+import {MapComponent} from "../../shared/components/map/map.component";
+import {Coordinate} from "../../shared/components/map/coordinate.model";
+import {ImageComponent} from "../../shared/components/image/image.component";
 
 @Component({
     selector: 'app-movie-details',
-    imports: [LoadingComponent, MatChipsModule, RouterLink],
+    imports: [LoadingComponent, MatChipsModule, RouterLink, MapComponent, ImageComponent],
     templateUrl: './movie-details.component.html',
     styleUrl: './movie-details.component.css'
 })
@@ -19,6 +22,7 @@ export class MovieDetailsComponent implements OnInit{
     
     movie?: MovieDetailsDto;
     trailerUrl?: SafeResourceUrl | string;
+    coordinates: Coordinate[] = [];
     
     @Input({transform: numberAttribute})
     id: number = 0;
@@ -35,8 +39,12 @@ export class MovieDetailsComponent implements OnInit{
                this.trailerUrl = this.transformYoutubeUrlToEmbed(this.movie.trailer);
            } 
            
+           if (this.movie.theaters) {
+               this.coordinates = this.movie.theaters.map(theater => <Coordinate>{latitude: theater.latitude, longitude: theater.longitude, text: theater.name});
+           }
+           
            console.log(this.movie);
-           console.log(typeof this.movie.releaseDate);
+           
         });
     }
     

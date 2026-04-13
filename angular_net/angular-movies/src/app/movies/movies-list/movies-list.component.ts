@@ -6,10 +6,11 @@ import {MovieDto} from "../movies.models";
 import {RouterLink} from "@angular/router";
 import {SwalDirective} from "@sweetalert2/ngx-sweetalert2";
 import {MoviesService} from "../movies.service";
+import {ImageComponent} from "../../shared/components/image/image.component";
 
 @Component({
     selector: 'app-movies-list',
-    imports: [GenericListComponent, MatButtonModule, MatIconModule, RouterLink, SwalDirective],
+    imports: [GenericListComponent, MatButtonModule, MatIconModule, RouterLink, SwalDirective, ImageComponent],
     templateUrl: './movies-list.component.html',
     styleUrl: './movies-list.component.css'
 })

@@ -11,11 +11,29 @@ mat-chip-listbox {
     display: flex;
 }
 
-img {
-    display: block;
+.poster-trailer-container app-image {
     margin-right: 1rem;
 }
 
 iframe {
-    border: 0;
+    border: 1px solid lightgray;
+}
+
+.actor-container {
+    margin-bottom: 0.5rem;
+}
+
+.actor-container app-image {
+    vertical-align: middle;
+}
+
+.actor-name {
+    margin-left: 1rem;
+    display: inline flow-root;
+    width: 200px;
+}
+
+.separator {
+    display: inline flow-root;
+    width: 45px;
 }
