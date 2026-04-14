@@ -18,7 +18,7 @@ public class GenresController: Controller<Genre, GenreCreationDto, GenreDto>
     {
     }
     
-    [HttpGet("all-genres")]
+    [HttpGet("all")]
     [OutputCache(Tags = [CacheTag])]
     public async Task<List<GenreDto>> Get()
     {

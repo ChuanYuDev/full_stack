@@ -2,6 +2,7 @@ using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using MoviesAPI.Utilities;
 using UseCases.DataStoreInterfaces;
 
 namespace MoviesAPI.Controllers;
@@ -39,6 +40,14 @@ public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto,
         var upcomingReleases = await _moviesRepository.Get(where: m => m.ReleaseDate > today, top);
 
         return new LandingDto { InTheaters = inTheaters, UpcomingReleases = upcomingReleases };
+    }
+
+    [HttpGet("filter")]
+    public async Task<ActionResult<List<MovieDto>>> Filter([FromQuery] MoviesFilterDto moviesFilterDto)
+    {
+        var result = await _moviesRepository.Filter(moviesFilterDto);
+        HttpContext.InsertPaginationParametersInHeader(result.MoviesNum);
+        return result.Movies;
     }
 
     [HttpGet("{id:int}", Name = GetByIdName)]

@@ -30,9 +30,14 @@ public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto> where T
     
     protected async Task<List<TDto>> Get<TKey>(Expression<Func<TEntity, bool>>? where, Expression<Func<TEntity, TKey>> orderBy, int top)
     {
-        where ??= entity => true;
+        var queryable = EntityDbSet.AsQueryable();
 
-        IQueryable<TEntity> queryable = EntityDbSet.Where(where).OrderBy(orderBy);
+        if (where is not null)
+        {
+            queryable = queryable.Where(where);
+        }
+
+        queryable = queryable.OrderBy(orderBy);
 
         if (top != 0)
         {

@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Plugins.DataStore.SQL.Utilities;
 using UseCases.DataStoreInterfaces;
 using UseCases.FileStorageInterfaces;
 
@@ -28,6 +29,43 @@ public class MoviesSqlRepository: BaseSqlRepository<Movie, MovieCreationDto, Mov
     {
         return await Get(paginationDto, orderBy: m => m.ReleaseDate);
     }
+    
+    public async Task<(List<MovieDto> Movies, int MoviesNum)> Filter(MoviesFilterDto moviesFilterDto)
+    {
+        var moviesQueryable = EntityDbSet.AsQueryable();
+
+        if (!string.IsNullOrEmpty(moviesFilterDto.Title))
+        {
+            moviesQueryable = moviesQueryable.Where(m => m.Title.Contains(moviesFilterDto.Title));
+        }
+
+        if (moviesFilterDto.GenreId != 0)
+        {
+            moviesQueryable = moviesQueryable.Where(m => m.MoviesGenres.Select(mg => mg.GenreId).Contains(moviesFilterDto.GenreId));
+        }
+        
+        if (moviesFilterDto.InTheaters)
+        {
+            moviesQueryable = moviesQueryable.Where(m => m.MoviesTheaters.Count > 0);
+        }
+
+        if (moviesFilterDto.UpcomingReleases)
+        {
+            var today = DateTime.Today;
+            moviesQueryable = moviesQueryable.Where(m => m.ReleaseDate > today);
+        }
+        
+        var movies = await moviesQueryable
+            .OrderBy(m => m.ReleaseDate)
+            .Paginate(moviesFilterDto.PaginationDto)
+            .ProjectTo<MovieDto>(Mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        var moviesNum = await moviesQueryable.CountAsync();
+
+        return (movies, moviesNum);
+    }
+
 
     public override async Task<MovieDetailsDto?> Get(int id)
     {

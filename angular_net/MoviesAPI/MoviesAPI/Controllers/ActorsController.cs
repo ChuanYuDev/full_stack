@@ -21,7 +21,7 @@ public class ActorsController: Controller<Actor, ActorCreationDto, ActorDto>
         _actorsRepository = actorsRepository;
     }
 
-    [HttpGet("all-actors")]
+    [HttpGet("all")]
     [OutputCache(Tags = [CacheTag])]
     public async Task<List<ActorDto>> Get()
     {

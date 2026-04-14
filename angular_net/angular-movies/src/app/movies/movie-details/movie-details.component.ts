@@ -42,9 +42,6 @@ export class MovieDetailsComponent implements OnInit{
            if (this.movie.theaters) {
                this.coordinates = this.movie.theaters.map(theater => <Coordinate>{latitude: theater.latitude, longitude: theater.longitude, text: theater.name});
            }
-           
-           console.log(this.movie);
-           
         });
     }
     

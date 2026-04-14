@@ -5,7 +5,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-      <StartupObject>ConsoleApp1.String.Contains</StartupObject>
+      <StartupObject>ConsoleApp1.Test.Tuple</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

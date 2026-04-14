@@ -14,7 +14,7 @@ public class GenresSqlRepository: SqlRepository<Genre, GenreCreationDto, GenreDt
 
     public async Task<List<GenreDto>> Get(Expression<Func<Genre, bool>>? where = null, int top = 0)
     {
-        return await Get(where: where, orderBy:g => g.Name, top: top);
+        return await Get(where: where, orderBy: g => g.Name, top: top);
     }
 
     public async Task<List<GenreDto>> Get(PaginationDto paginationDto)

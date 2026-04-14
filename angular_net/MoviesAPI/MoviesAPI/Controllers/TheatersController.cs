@@ -18,7 +18,7 @@ public class TheatersController: Controller<Theater, TheaterCreationDto, Theater
     {
     }
 
-    [HttpGet("all-theaters")]
+    [HttpGet("all")]
     [OutputCache(Tags = [CacheTag])]
     public async Task<List<TheaterDto>> Get()
     {
