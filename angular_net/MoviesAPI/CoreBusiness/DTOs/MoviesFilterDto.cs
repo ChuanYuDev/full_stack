@@ -14,7 +14,7 @@ public class MoviesFilterDto
     }
 
     public string? Title { get; set; }
-    public int GenreId { get; set; }
-    public bool UpcomingReleases { get; set; }
-    public bool InTheaters { get; set; }
+    public int? GenreId { get; set; }
+    public bool? UpcomingReleases { get; set; }
+    public bool? InTheaters { get; set; }
 }

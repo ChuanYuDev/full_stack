@@ -39,17 +39,17 @@ public class MoviesSqlRepository: BaseSqlRepository<Movie, MovieCreationDto, Mov
             moviesQueryable = moviesQueryable.Where(m => m.Title.Contains(moviesFilterDto.Title));
         }
 
-        if (moviesFilterDto.GenreId != 0)
+        if (moviesFilterDto.GenreId is not null && moviesFilterDto.GenreId!= 0)
         {
-            moviesQueryable = moviesQueryable.Where(m => m.MoviesGenres.Select(mg => mg.GenreId).Contains(moviesFilterDto.GenreId));
+            moviesQueryable = moviesQueryable.Where(m => m.MoviesGenres.Select(mg => mg.GenreId).Contains(moviesFilterDto.GenreId.Value));
         }
-        
-        if (moviesFilterDto.InTheaters)
+
+        if (moviesFilterDto.InTheaters == true)
         {
             moviesQueryable = moviesQueryable.Where(m => m.MoviesTheaters.Count > 0);
         }
 
-        if (moviesFilterDto.UpcomingReleases)
+        if (moviesFilterDto.UpcomingReleases == true)
         {
             var today = DateTime.Today;
             moviesQueryable = moviesQueryable.Where(m => m.ReleaseDate > today);

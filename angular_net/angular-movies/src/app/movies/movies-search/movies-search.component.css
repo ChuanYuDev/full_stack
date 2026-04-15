@@ -1,3 +1,8 @@
 form {
     margin-bottom: 1rem;
 }
+
+app-movies-list {
+    display: block;
+    margin-bottom: 1rem;
+}

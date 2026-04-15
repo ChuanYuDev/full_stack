@@ -1,8 +1,16 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {LandingDto, MovieCreationDto, MovieDetailsDto, MoviePostGetDto, MoviePutGetDto} from "./movies.models";
+import {
+    LandingDto,
+    MovieCreationDto,
+    MovieDetailsDto, MovieDto,
+    MoviePostGetDto,
+    MoviePutGetDto,
+    MoviesSearchWithPaginationDto
+} from "./movies.models";
 import {environment} from "../../environments/environment";
+import {buildQueryParams} from "../shared/functions/buildQueryParams";
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +24,13 @@ export class MoviesService {
         return this.http.get<LandingDto>(`${this.baseUrl}/landing`)
     }
     
-    // filter()
+    filter(moviesSearchWithPaginationDto: MoviesSearchWithPaginationDto): Observable<HttpResponse<MovieDto[]>> {
+        const queryParams = buildQueryParams(moviesSearchWithPaginationDto);
+        return this.http.get<MovieDto[]>(`${this.baseUrl}/filter`, {
+            params: queryParams, 
+            observe: "response" 
+        });
+    }
     
     getById(id: number): Observable<MovieDetailsDto> {
         return this.http.get<MovieDetailsDto>(`${this.baseUrl}/${id}`);

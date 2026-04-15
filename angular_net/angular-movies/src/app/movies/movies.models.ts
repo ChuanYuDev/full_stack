@@ -1,6 +1,7 @@
 import {ActorAutoCompleteDto} from "../actors/actors.models";
 import {GenreDto} from "../genres/genres.models";
 import {TheaterDto} from "../theaters/theaters.models";
+import {PaginationDTO} from "../shared/models/pagination.model";
 
 export interface MovieDto {
     id: number;
@@ -44,3 +45,12 @@ export interface MoviePutGetDto {
     nonSelectedTheaters: TheaterDto[];
     actors: ActorAutoCompleteDto[];
 }
+
+export interface MoviesSearchDto {
+    title?: string;
+    genreId?: number;
+    upcomingReleases?: boolean;
+    inTheaters?: boolean;
+}
+
+export interface MoviesSearchWithPaginationDto extends MoviesSearchDto, PaginationDTO {}
