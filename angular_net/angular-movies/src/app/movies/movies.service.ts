@@ -16,6 +16,8 @@ export class MoviesService {
         return this.http.get<LandingDto>(`${this.baseUrl}/landing`)
     }
     
+    // filter()
+    
     getById(id: number): Observable<MovieDetailsDto> {
         return this.http.get<MovieDetailsDto>(`${this.baseUrl}/${id}`);
     }

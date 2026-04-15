@@ -7,7 +7,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatButtonModule} from "@angular/material/button";
 import {GenreDto} from "../../genres/genres.models";
 import {MoviesListComponent} from "../movies-list/movies-list.component";
-import {MoviesSearchDTO} from "./movies-search.model";
+import {MoviesSearchDto} from "./movies-search.model";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 
@@ -22,14 +22,19 @@ export class MoviesSearchComponent implements OnInit{
     activatedRoute = inject(ActivatedRoute);
     location = inject(Location);
 
-    defaultValue: MoviesSearchDTO = {
+    defaultValue: MoviesSearchDto = {
         title: "",
         genreId: 0,
         upcomingReleases: false,
         inTheaters: false
     };
 
-    form = this.formBuilder.group(this.defaultValue);
+    form = this.formBuilder.group({
+        title: "",
+        genreId: 0,
+        upcomingReleases: false,
+        inTheaters: false
+    });
 
     genres: GenreDto[] = [
         {id: 1, name: "Comedy"},
@@ -97,43 +102,45 @@ export class MoviesSearchComponent implements OnInit{
     movies = this.moviesOriginal;
 
     ngOnInit(): void {
-        this.readValuesFromURL();
-
         this.form.valueChanges.subscribe(value => {
-            this.writeParametersInURL(value as MoviesSearchDTO);
+            console.log("value:", value);
+            this.writeParametersInURL(value as MoviesSearchDto);
 
             this.movies = this.moviesOriginal;
-            this.filterMovies(value as MoviesSearchDTO);
+            this.filterMovies(value as MoviesSearchDto);
         });
+        
+        this.readValuesFromURL();
     }
 
     readValuesFromURL() {
-        this.activatedRoute.queryParams.subscribe((params: any) => {
+        this.activatedRoute.queryParams.subscribe(params => {
+            console.log("params:", params);
             const obj: any = {};
 
-            if (params.title) {
-                obj.title = params.title;
+            if (params["title"]) {
+                obj.title = params["title"];
             }
 
-            if (params.genreId) {
-                obj.genreId = Number(params.genreId);
+            if (params["genreId"]) {
+                obj.genreId = Number(params["genreId"]);
             }
 
-            if (params.upcomingReleases) {
-                obj.upcomingReleases = params.upcomingReleases;
+            if (params["upcomingReleases"]) {
+                obj.upcomingReleases = Boolean(params["upcomingReleases"]);
             }
 
-            if (params.inTheaters) {
-                obj.inTheaters = params.inTheaters;
+            if (params["inTheaters"]) {
+                obj.inTheaters = Boolean(params["inTheaters"]);
             }
+
+            console.log("obj:", obj);
 
             this.form.patchValue(obj);
-
-            this.filterMovies(this.form.value as MoviesSearchDTO);
         });
     }
 
-    writeParametersInURL(value: MoviesSearchDTO) {
+    writeParametersInURL(value: MoviesSearchDto) {
         const queryStrings = [];
 
         if (value.title) {
@@ -155,7 +162,7 @@ export class MoviesSearchComponent implements OnInit{
         this.location.replaceState("movies/search", queryStrings.join('&'));
     }
 
-    filterMovies(value: MoviesSearchDTO) {
+    filterMovies(value: MoviesSearchDto) {
         if (value.title) {
             this.movies = this.movies.filter(movie => movie.title.indexOf(value.title) !== -1);
         }

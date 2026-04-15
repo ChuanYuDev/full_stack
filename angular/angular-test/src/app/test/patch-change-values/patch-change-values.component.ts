@@ -32,6 +32,7 @@ export class PatchChangeValuesComponent implements OnInit{
         const value = this.form.controls.name.value;
         const emit = this.form.controls.emit.value || false;
         console.log("emit: ", emit);
-        this.formToBePatched.patchValue({name: value}, {emitEvent: emit});
+        // this.formToBePatched.patchValue({name: value}, {emitEvent: emit});
+        this.formToBePatched.patchValue({name: value});
     }
 }

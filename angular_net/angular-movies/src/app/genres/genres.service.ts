@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {GenreCreationDto, GenreDto} from "./genres.models";
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {PaginationDTO} from "../shared/models/pagination.model";
@@ -17,7 +17,7 @@ export class GenresService implements ICRUDService<GenreDto, GenreCreationDto>{
     private baseUrl = environment.apiUrl + "/genres";
     
     getAll(): Observable<GenreDto[]> {
-        return this.http.get<GenreDto[]>(this.baseUrl);
+        return this.http.get<GenreDto[]>(`${this.baseUrl}/all`);
     }
     
     getPaginated(pagination: PaginationDTO): Observable<HttpResponse<GenreDto[]>> {

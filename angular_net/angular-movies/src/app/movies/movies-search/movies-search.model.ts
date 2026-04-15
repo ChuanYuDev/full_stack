@@ -1,4 +1,4 @@
-export interface MoviesSearchDTO {
+export interface MoviesSearchDto {
     title: string;
     genreId: number;
     upcomingReleases: boolean;
