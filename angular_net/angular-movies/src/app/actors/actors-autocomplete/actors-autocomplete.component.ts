@@ -9,6 +9,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {CdkDragDrop, DragDropModule, moveItemInArray} from "@angular/cdk/drag-drop";
 import {ActorsService} from "../actors.service";
 import {ImageComponent} from "../../shared/components/image/image.component";
+import {debounceTime} from "rxjs";
 
 @Component({
     selector: 'app-actors-autocomplete',
@@ -33,15 +34,17 @@ export class ActorsAutocompleteComponent implements OnInit{
     table?: MatTable<ActorAutoCompleteDto>;
 
     ngOnInit() {
-        this.control.valueChanges.subscribe(value => {
-            console.log(value);
-            
-            if (typeof value === "string" && value) {
-                this.actorsService.getByName(value).subscribe(actors => {
-                    this.actors = actors;
-                });
-            }
-        });
+        this.control.valueChanges
+            .pipe(debounceTime(300))
+            .subscribe(value => {
+                console.log(value);
+                
+                if (typeof value === "string" && value) {
+                    this.actorsService.getByName(value).subscribe(actors => {
+                        this.actors = actors;
+                    });
+                }
+            });
     }
 
     handleSelection(event: MatAutocompleteSelectedEvent) {
