@@ -6,7 +6,7 @@ import {CreateCardComponent} from "./test/content-projection/create-card/create-
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, PatchChangeValuesComponent, PipeComponent, CreateCardComponent],
+    imports: [RouterOutlet],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })

@@ -13,21 +13,25 @@
                         </a>
                     </p>
 
-                    <div>
-                        <a mat-flat-button [routerLink]="['/movies/edit', movie.id]">
-                            Edit
-                        </a>
+                    <app-authorized role="admin">
+                        <ng-container authorized>
+                            <div>
+                                <a mat-flat-button [routerLink]="['/movies/edit', movie.id]">
+                                    Edit
+                                </a>
 
-                        <button
-                            mat-flat-button
-                            type="button"
-                            class="warn"
-                            [swal]="swalParams"
-                            (confirm)="delete(movie.id)"
-                        >
-                            Delete
-                        </button>
-                    </div>
+                                <button
+                                        mat-flat-button
+                                        type="button"
+                                        class="warn"
+                                        [swal]="swalParams"
+                                        (confirm)="delete(movie.id)"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </ng-container>
+                    </app-authorized>
                 </div>
             }
         </div>
