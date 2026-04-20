@@ -1,7 +1,9 @@
+using System.Text;
 using AutoMapper;
-using CoreBusiness.DTOs;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.IdentityModel.Tokens;
 using MoviesAPI.Utilities;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
@@ -55,7 +57,7 @@ else
     builder.Services.AddTransient<IMoviesRepository, MoviesSqlRepository>();
 }
 
-builder.Services.AddSingleton<GeometryFactory>(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
+builder.Services.AddSingleton(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
 
 // var autoMapperLicenseKey = builder.Configuration.GetValue<string>("AutoMapperLicenseKey");
 
@@ -74,6 +76,30 @@ builder.Services.AddSingleton(provider => new MapperConfiguration(config =>
 builder.Services.AddTransient<IFileStorage, AzureFileStorage>();
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services
+    .AddIdentityCore<IdentityUser>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<UserManager<IdentityUser>>();
+builder.Services.AddScoped<SignInManager<IdentityUser>>();
+
+var jwtKey = builder.Configuration.GetValue<string>("JwtKey") ?? throw new InvalidOperationException("JWT key not found");
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.MapInboundClaims = false;
+
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ClockSkew = TimeSpan.Zero,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
 
 var app = builder.Build();
 
