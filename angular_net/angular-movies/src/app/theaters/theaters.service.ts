@@ -12,12 +12,11 @@ import {buildQueryParams} from "../shared/functions/buildQueryParams";
 })
 export class TheatersService implements ICRUDService<TheaterDto, TheaterCreationDto> {
 
-    constructor() {
-    }
-    
     private http = inject(HttpClient);
     private baseUrl = environment.apiUrl + "/theaters";
 
+    constructor() {}
+    
     getPaginated(pagination: PaginationDTO): Observable<HttpResponse<TheaterDto[]>> {
         const queryParams = buildQueryParams(pagination);
         return this.http.get<TheaterDto[]>(this.baseUrl, {

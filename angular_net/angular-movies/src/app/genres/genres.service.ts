@@ -11,10 +11,11 @@ import {ICRUDService} from "../shared/interfaces/ICRUDService";
     providedIn: 'root'
 })
 export class GenresService implements ICRUDService<GenreDto, GenreCreationDto>{
-    constructor() { }
     
     private http = inject(HttpClient);
     private baseUrl = environment.apiUrl + "/genres";
+    
+    constructor() { }
     
     getAll(): Observable<GenreDto[]> {
         return this.http.get<GenreDto[]>(`${this.baseUrl}/all`);

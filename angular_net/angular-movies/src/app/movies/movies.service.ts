@@ -16,8 +16,10 @@ import {buildQueryParams} from "../shared/functions/buildQueryParams";
     providedIn: 'root'
 })
 export class MoviesService {
+    
     private http = inject(HttpClient);
     private baseUrl = environment.apiUrl + "/movies";
+    
     constructor() { }
     
     getLanding(): Observable<LandingDto> {

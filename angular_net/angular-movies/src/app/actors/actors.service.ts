@@ -11,11 +11,11 @@ import {ICRUDService} from "../shared/interfaces/ICRUDService";
     providedIn: 'root'
 })
 export class ActorsService implements ICRUDService<ActorDto, ActorCreationDto>{
-
-    constructor() { }
     
     private http = inject(HttpClient);
     private baseUrl = environment.apiUrl + "/actors";
+    
+    constructor() { }
     
     getPaginated(pagination: PaginationDTO): Observable<HttpResponse<ActorDto[]>> {
         const queryParams = buildQueryParams(pagination);

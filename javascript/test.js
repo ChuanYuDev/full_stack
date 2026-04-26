@@ -1,7 +1,3 @@
-now = new Date();
-
-console.log(now);
-
 let movies;
 console.log(movies);
 
