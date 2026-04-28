@@ -48,9 +48,9 @@ export class MoviesSearchComponent implements OnInit{
             this.form.valueChanges
                 .pipe(debounceTime(300))
                 .subscribe(value => {
-                this.writeParametersInURL(value as MoviesSearchDto);
-                this.filterMovies(value as MoviesSearchDto);
-            });
+                    this.writeParametersInURL(value as MoviesSearchDto);
+                    this.filterMovies(value as MoviesSearchDto);
+                });
 
             this.readValuesFromURL();
         });

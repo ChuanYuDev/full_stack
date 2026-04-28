@@ -35,6 +35,11 @@ export class SecurityService {
             );
     }
     
+    logout() {
+        window.localStorage.removeItem(this.keyToken);
+        window.localStorage.removeItem(this.keyExpiration);
+    }
+    
     isLoggedIn(): boolean {
         const token = this.getJwtToken();
         
@@ -86,10 +91,5 @@ export class SecurityService {
     
     private getJwtToken(): string | null {
         return window.localStorage.getItem(this.keyToken);
-    }
-    
-    private logout() {
-        window.localStorage.removeItem(this.keyToken);
-        window.localStorage.removeItem(this.keyExpiration);
     }
 }

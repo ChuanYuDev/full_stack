@@ -8,3 +8,11 @@
 app-authorized {
     display: flex;
 }
+
+.space {
+    flex: 1 1 auto;
+}
+
+#email {
+    color: black;
+}

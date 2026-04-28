@@ -1,1 +1,4 @@
-<p>login works!</p>
+<h2>Login</h2>
+
+<app-display-errors [errors]="errors"></app-display-errors>
+<app-authentication-form (postForm)="login($event)"></app-authentication-form>

@@ -29,4 +29,18 @@
             </div>
         </ng-container>
     </app-authorized>
+    
+    <div class="space"></div>
+    
+    <app-authorized>
+        <ng-container authorized>
+            <a mat-button disabled id="email">{{securityService.getJwtClaim("Email")}}</a>
+            <button mat-button (click)="securityService.logout()">Logout</button>
+        </ng-container>
+        
+        <ng-container notAuthorized>
+            <a mat-button routerLink="/login">Login</a>
+            <a mat-button routerLink="/register">Register</a>
+        </ng-container>
+    </app-authorized>
 </mat-toolbar>
