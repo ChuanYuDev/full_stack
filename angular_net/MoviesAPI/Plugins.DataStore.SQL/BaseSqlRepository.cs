@@ -8,7 +8,8 @@ using Plugins.DataStore.SQL.Utilities;
 
 namespace Plugins.DataStore.SQL;
 
-public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto> where TDetailsDto: TDto
+public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto>
+    where TDetailsDto: TDto
     where TEntity: class, IId
     where TDto: IId
 {
@@ -26,6 +27,11 @@ public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto> where T
     public async Task<int> Count()
     {
         return await EntityDbSet.CountAsync();
+    }
+
+    public async Task<bool> Exist(int id)
+    {
+        return await EntityDbSet.AnyAsync(entity => entity.Id == id);
     }
     
     protected async Task<List<TDto>> Get<TKey>(Expression<Func<TEntity, bool>>? where, Expression<Func<TEntity, TKey>> orderBy, int top)
@@ -76,7 +82,7 @@ public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto> where T
 
     public virtual async Task<bool> Update(int id, TCreationDto creationDto)
     {
-        var found = await EntityDbSet.AnyAsync(entity => entity.Id == id);
+        var found = await Exist(id);
 
         if (!found)
         {

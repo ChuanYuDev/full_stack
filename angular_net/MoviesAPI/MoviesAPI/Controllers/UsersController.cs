@@ -28,7 +28,7 @@ public class UsersController: ControllerBase
     }
     
     [HttpPost("register")]
-    public async Task<ActionResult<AuthenticationResponseDto>> Register(UserCredentialsDto userCredentialsDto)
+    public async Task<ActionResult<AuthenticationResponseDto>> Register([FromBody] UserCredentialsDto userCredentialsDto)
     {
         var user = new IdentityUser
         {
@@ -49,7 +49,7 @@ public class UsersController: ControllerBase
     }
     
     [HttpPost("login")]
-    public async Task<ActionResult<AuthenticationResponseDto>> Login(UserCredentialsDto userCredentialsDto)
+    public async Task<ActionResult<AuthenticationResponseDto>> Login([FromBody] UserCredentialsDto userCredentialsDto)
     {
         var user = await _userManager.FindByEmailAsync(userCredentialsDto.Email);
 
@@ -74,8 +74,8 @@ public class UsersController: ControllerBase
     {
         var claims = new List<Claim>
         {
-            new Claim("Email", user.Email ?? ""),
-            new Claim("Whatever I want", "Any value")
+            new Claim("email", user.Email ?? ""),
+            new Claim("whatever I want", "any value")
         };
 
         var claimsDb = await _userManager.GetClaimsAsync(user);

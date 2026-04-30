@@ -91,10 +91,19 @@ public class AutoMapperProfiles: Profile
             .ForMember(movieDetailsDto => movieDetailsDto.Actors, config =>
             {
                 config.MapFrom(movie => movie.MoviesActors);
+            })
+            .ForMember(movieDetailsDto => movieDetailsDto.AverageRate, config =>
+            {
+                config.MapFrom(movie => movie.MovieRatings.Average(mr => mr.Rate));
             });
 
         CreateMap<MovieGenre, GenreDto>().IncludeMembers(movieGenre => movieGenre.Genre);
         CreateMap<MovieTheater, TheaterDto>().IncludeMembers(movieTheater => movieTheater.Theater);
         CreateMap<MovieActor, MovieActorDto>().IncludeMembers(movieActor => movieActor.Actor);
+    }
+
+    private void ConfigureRatings()
+    {
+        CreateMap<MovieRatingCreationDto, MovieRating>();
     }
 }

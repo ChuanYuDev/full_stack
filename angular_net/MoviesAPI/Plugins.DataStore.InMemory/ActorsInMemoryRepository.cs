@@ -12,6 +12,11 @@ public class ActorsInMemoryRepository: IActorsRepository
         throw new NotImplementedException();
     }
 
+    public Task<bool> Exist(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<List<ActorDto>> Get(Expression<Func<Actor, bool>>? where = null, int top = 0)
     {
         throw new NotImplementedException();

@@ -7,4 +7,7 @@ public class MovieDetailsDto: MovieDto
     public List<TheaterDto> Theaters { get; set; } = [];
     
     public List<MovieActorDto> Actors { get; set; } = [];
+    
+    public double AverageRate { get; set; }
+    public int UserVote { get; set; }
 }

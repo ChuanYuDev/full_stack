@@ -6,6 +6,7 @@ namespace UseCases.DataStoreInterfaces;
 public interface IBaseRepository<TEntity, TCreationDto, TDto, TDetailsDto> where TDetailsDto: TDto
 {
     Task<int> Count();
+    Task<bool> Exist(int id);
     Task<List<TDto>> Get(Expression<Func<TEntity, bool>>? where = null, int top = 0);
     Task<List<TDto>> Get(PaginationDto paginationDto);
     Task<TDetailsDto?> Get(int id);

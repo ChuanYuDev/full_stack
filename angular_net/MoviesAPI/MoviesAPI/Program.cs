@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.IdentityModel.Tokens;
+using MoviesAPI.Services;
 using MoviesAPI.Utilities;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
@@ -12,6 +13,7 @@ using Plugins.DataStore.SQL;
 using Plugins.FileStorage;
 using UseCases.DataStoreInterfaces;
 using UseCases.FileStorageInterfaces;
+using UseCases.UsersServiceInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,7 +57,10 @@ else
     builder.Services.AddTransient<IActorsRepository, ActorsSqlRepository>();
     builder.Services.AddTransient<ITheatersRepository, TheatersSqlRepository>();
     builder.Services.AddTransient<IMoviesRepository, MoviesSqlRepository>();
+    builder.Services.AddTransient<IRatingsSqlRepository, RatingsSqlRepository>();
 }
+
+builder.Services.AddTransient<IUsersService, UsersService>();
 
 builder.Services.AddSingleton(NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326));
 

@@ -34,7 +34,7 @@
     
     <app-authorized>
         <ng-container authorized>
-            <a mat-button disabled id="email">{{securityService.getJwtClaim("Email")}}</a>
+            <a mat-button disabled id="email">{{securityService.getJwtClaim("email")}}</a>
             <button mat-button (click)="securityService.logout()">Logout</button>
         </ng-container>
         

@@ -1,5 +1,7 @@
 using CoreBusiness;
 using CoreBusiness.DTOs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using MoviesAPI.Utilities;
@@ -9,11 +11,13 @@ namespace MoviesAPI.Controllers;
 
 [Route("api/movies")]
 [ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto, MovieDetailsDto>
 {
     private readonly IGenresRepository _genresRepository;
     private readonly ITheatersRepository _theatersRepository;
     private readonly IMoviesRepository _moviesRepository;
+    private readonly IRatingsSqlRepository _ratingsSqlRepository;
     private const string CacheTag = "movies";
     private const string GetByIdName = "GetMovieById";
 
@@ -21,16 +25,19 @@ public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto,
         IGenresRepository genresRepository,
         ITheatersRepository theatersRepository,
         IMoviesRepository moviesRepository,
+        IRatingsSqlRepository ratingsSqlRepository,
         IOutputCacheStore outputCacheStore
     ): base(moviesRepository, outputCacheStore, CacheTag)
     {
         _genresRepository = genresRepository;
         _theatersRepository = theatersRepository;
         _moviesRepository = moviesRepository;
+        _ratingsSqlRepository = ratingsSqlRepository;
     }
 
     [HttpGet("landing")]
     [OutputCache(Tags = [CacheTag])]
+    [AllowAnonymous]
     public async Task<ActionResult<LandingDto>> Get()
     {
         var today = DateTime.Today;
@@ -43,6 +50,7 @@ public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto,
     }
 
     [HttpGet("filter")]
+    [AllowAnonymous]
     public async Task<ActionResult<List<MovieDto>>> Filter([FromQuery] MoviesFilterDto moviesFilterDto)
     {
         var result = await _moviesRepository.Filter(moviesFilterDto);
@@ -52,9 +60,29 @@ public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto,
 
     [HttpGet("{id:int}", Name = GetByIdName)]
     [OutputCache(Tags = [CacheTag])]
+    [AllowAnonymous]
     public async Task<ActionResult<MovieDetailsDto>> Get(int id)
     {
-        return await GetEntity(id);
+        var movieDetailsDto = await _moviesRepository.Get(id);
+
+        if (movieDetailsDto is null)
+        {
+            return NotFound();
+        }
+
+        var identity = HttpContext.User.Identity;
+
+        if (identity is null)
+        {
+            throw new InvalidOperationException("User identity is null");
+        }
+
+        if (identity.IsAuthenticated)
+        {
+            movieDetailsDto.UserVote = await _ratingsSqlRepository.GetRate(id);
+        }
+
+        return movieDetailsDto;
     }
 
     [HttpGet("post-get")]

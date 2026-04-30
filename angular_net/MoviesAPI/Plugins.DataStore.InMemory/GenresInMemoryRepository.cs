@@ -27,6 +27,11 @@ public class GenresInMemoryRepository: IGenresRepository
         return _genres.Count;
     }
 
+    public Task<bool> Exist(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<GenreDto>> Get(Expression<Func<Genre, bool>>? where = null, int top = 0)
     {
         return _mapper.Map<List<GenreDto>>(_genres);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Plugins.DataStore.SQL;
@@ -12,9 +13,11 @@ using Plugins.DataStore.SQL;
 namespace Plugins.DataStore.SQL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260430171911_MovieRatingsTable")]
+    partial class MovieRatingsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actors", (string)null);
+                    b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("CoreBusiness.Genre", b =>
@@ -63,7 +66,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres", (string)null);
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("CoreBusiness.Movie", b =>
@@ -91,7 +94,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("CoreBusiness.MovieActor", b =>
@@ -113,7 +116,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MoviesActors", (string)null);
+                    b.ToTable("MoviesActors");
                 });
 
             modelBuilder.Entity("CoreBusiness.MovieGenre", b =>
@@ -128,7 +131,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MoviesGenres", (string)null);
+                    b.ToTable("MoviesGenres");
                 });
 
             modelBuilder.Entity("CoreBusiness.MovieRating", b =>
@@ -155,7 +158,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("MovieRatings", (string)null);
+                    b.ToTable("MovieRatings");
                 });
 
             modelBuilder.Entity("CoreBusiness.MovieTheater", b =>
@@ -170,7 +173,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MoviesTheaters", (string)null);
+                    b.ToTable("MoviesTheaters");
                 });
 
             modelBuilder.Entity("CoreBusiness.Theater", b =>
@@ -192,7 +195,7 @@ namespace Plugins.DataStore.SQL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Theaters", (string)null);
+                    b.ToTable("Theaters");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
