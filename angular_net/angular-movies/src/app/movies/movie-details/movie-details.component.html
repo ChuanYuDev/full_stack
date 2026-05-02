@@ -9,7 +9,10 @@
                         {{genre.name}}
                     </mat-chip-option>
                 }
-            </mat-chip-listbox> | {{movie.releaseDate?.toDateString()}} | Average: 0.0 | Your vote: 0.0
+            </mat-chip-listbox>
+            | {{movie.releaseDate?.toDateString()}} 
+            | Average: {{ movie.averageRate.toFixed(1)}}
+            | Your vote: <app-rating [maxRating]="5" [selectedRating]="movie.userVote" (rated)="rate($event)"></app-rating>
             
         </div>
         

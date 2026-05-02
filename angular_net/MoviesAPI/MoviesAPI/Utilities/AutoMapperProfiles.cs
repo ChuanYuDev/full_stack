@@ -94,7 +94,7 @@ public class AutoMapperProfiles: Profile
             })
             .ForMember(movieDetailsDto => movieDetailsDto.AverageRate, config =>
             {
-                config.MapFrom(movie => movie.MovieRatings.Average(mr => mr.Rate));
+                config.MapFrom(movie => movie.MovieRatings.Count > 0? movie.MovieRatings.Average(mr => mr.Rate): 0);
             });
 
         CreateMap<MovieGenre, GenreDto>().IncludeMembers(movieGenre => movieGenre.Genre);

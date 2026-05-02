@@ -37,3 +37,7 @@ iframe {
     display: inline flow-root;
     width: 45px;
 }
+
+app-rating {
+    vertical-align: middle;
+}

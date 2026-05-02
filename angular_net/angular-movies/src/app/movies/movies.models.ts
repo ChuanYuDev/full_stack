@@ -15,6 +15,9 @@ export interface MovieDetailsDto extends MovieDto{
     genres?: GenreDto[];
     theaters?: TheaterDto[];
     actors?: ActorAutoCompleteDto[];
+    
+    averageRate: number;
+    userVote: number;
 }
 
 export interface MovieCreationDto {

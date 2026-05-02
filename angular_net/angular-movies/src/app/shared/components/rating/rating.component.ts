@@ -10,9 +10,11 @@ import {NgClass} from "@angular/common";
 })
 export class RatingComponent {
     @Input({required: true, transform: (value: number) => Array(value).fill(0)})
-    maxRating!: any[];
+    maxRating: any[] = [];
     
+    @Input()
     selectedRating: number = 0;
+    
     clickedRating: number = 0;
     
     @Output()
