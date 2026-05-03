@@ -80,6 +80,10 @@ export class SecurityService {
         // return "nonAdmin";
         return "admin";
     }
+
+    getJwtToken(): string | null {
+        return window.localStorage.getItem(this.keyToken);
+    }
     
     private storeToken(authenticationResponseDto: AuthenticationResponseDto) {
         window.localStorage.setItem(this.keyToken, authenticationResponseDto.token);
@@ -87,9 +91,5 @@ export class SecurityService {
         if (authenticationResponseDto.expiration) {
             window.localStorage.setItem(this.keyExpiration, authenticationResponseDto.expiration.toString());
         }
-    }
-    
-    private getJwtToken(): string | null {
-        return window.localStorage.getItem(this.keyToken);
     }
 }

@@ -16,6 +16,7 @@ public class AutoMapperProfiles: Profile
         ConfigureActors();
         ConfigureTheaters();
         ConfigureMovies();
+        ConfigureRatings();
     }
 
     private void ConfigureGenres()

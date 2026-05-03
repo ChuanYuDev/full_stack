@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatIconModule} from "@angular/material/icon";
 import {NgClass} from "@angular/common";
 
@@ -8,7 +8,7 @@ import {NgClass} from "@angular/common";
     templateUrl: './rating.component.html',
     styleUrl: './rating.component.css'
 })
-export class RatingComponent {
+export class RatingComponent implements OnInit {
     @Input({required: true, transform: (value: number) => Array(value).fill(0)})
     maxRating: any[] = [];
     
@@ -19,6 +19,10 @@ export class RatingComponent {
     
     @Output()
     rated = new EventEmitter<number>();
+
+    ngOnInit(): void {
+        this.clickedRating = this.selectedRating;
+    }
     
     handleMouseEnter(index: number){
         this.selectedRating = index + 1;
