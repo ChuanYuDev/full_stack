@@ -44,12 +44,6 @@ builder.Services.AddControllersWithViews();
 // Configure authorization
 builder.Services.AddAuthorization(options =>
 {
-    // Policy-based authorization
-    //      Use policy to limit access to our pages
-    //
-    // AddPolicy
-    //      Policy name: "Inventory"
-    //      Claim is a key value pair that carries the user information
     options.AddPolicy("Inventory", p => p.RequireClaim("Position", "Inventory"));
     options.AddPolicy("Cashier", p => p.RequireClaim("Position", "Cashier"));
 });

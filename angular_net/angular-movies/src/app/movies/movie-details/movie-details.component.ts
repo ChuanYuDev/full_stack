@@ -10,7 +10,7 @@ import {Coordinate} from "../../shared/components/map/coordinate.model";
 import {ImageComponent} from "../../shared/components/image/image.component";
 import {RatingService} from "../../rating/rating.service";
 import Swal from "sweetalert2";
-import {RatingComponent} from "../../shared/components/rating/rating.component";
+import {RatingComponent} from "../../rating/rating/rating.component";
 
 @Component({
     selector: 'app-movie-details',
@@ -66,8 +66,10 @@ export class MovieDetailsComponent implements OnInit{
     }
     
     rate(rate: number) {
-        this.ratingService.rate(this.id, rate).subscribe(() => {
-            Swal.fire("Successful", "Your rate has been received", "success");
+        this.ratingService.rate(this.id, rate).subscribe({
+            next: () => {
+                Swal.fire("Successful", "Your rate has been received", "success");
+            }
         });
     }
 }

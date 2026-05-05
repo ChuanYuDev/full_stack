@@ -1,6 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {MatIconModule} from "@angular/material/icon";
 import {NgClass} from "@angular/common";
+import {SecurityService} from "../../security/security.service";
+import Swal from "sweetalert2";
 
 @Component({
     selector: 'app-rating',
@@ -9,6 +11,8 @@ import {NgClass} from "@angular/common";
     styleUrl: './rating.component.css'
 })
 export class RatingComponent implements OnInit {
+    securityService = inject(SecurityService);
+    
     @Input({required: true, transform: (value: number) => Array(value).fill(0)})
     maxRating: any[] = [];
     
@@ -37,6 +41,12 @@ export class RatingComponent implements OnInit {
     }
     
     handleClick(index: number) {
+
+        if (!this.securityService.isLoggedIn()) {
+            Swal.fire("Oops", "You must register or login first", "warning");
+            return;
+        }
+
         this.clickedRating = index + 1;
         this.selectedRating = this.clickedRating;
         this.rated.emit(this.selectedRating);

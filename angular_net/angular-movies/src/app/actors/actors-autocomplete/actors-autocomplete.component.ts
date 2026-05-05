@@ -37,8 +37,6 @@ export class ActorsAutocompleteComponent implements OnInit{
         this.control.valueChanges
             .pipe(debounceTime(300))
             .subscribe(value => {
-                console.log(value);
-                
                 if (typeof value === "string" && value) {
                     this.actorsService.getByName(value).subscribe(actors => {
                         this.actors = actors;

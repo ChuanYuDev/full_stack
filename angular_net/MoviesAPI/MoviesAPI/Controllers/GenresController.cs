@@ -1,5 +1,7 @@
 using CoreBusiness;
 using CoreBusiness.DTOs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using UseCases.DataStoreInterfaces;
@@ -8,6 +10,7 @@ namespace MoviesAPI.Controllers;
 
 [Route("api/genres")]
 [ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isadmin")]
 public class GenresController: Controller<Genre, GenreCreationDto, GenreDto>
 {
     private const string CacheTag = "genres";
@@ -19,6 +22,7 @@ public class GenresController: Controller<Genre, GenreCreationDto, GenreDto>
     }
     
     [HttpGet("all")]
+    [AllowAnonymous]
     [OutputCache(Tags = [CacheTag])]
     public async Task<List<GenreDto>> Get()
     {

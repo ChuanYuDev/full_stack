@@ -11,7 +11,7 @@ namespace MoviesAPI.Controllers;
 
 [Route("api/movies")]
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isadmin")]
 public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto, MovieDetailsDto>
 {
     private readonly IGenresRepository _genresRepository;

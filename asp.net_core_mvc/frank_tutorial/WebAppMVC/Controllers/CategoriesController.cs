@@ -5,13 +5,6 @@ using CoreBusiness;
 
 namespace WebAppMVC.Controllers
 {
-    // Authorize
-    //      Authorization process
-    //      Means only the user who has logged in can access this controller
-    //
-    // Policy = "Inventory"
-    //      The logged-in users must have "position" claim and the value must be "Inventory"
-    //      When it's satified, the users will be able to access the Category page
     [Authorize(Policy = "Inventory")]
     public class CategoriesController : Controller
     {

@@ -2,6 +2,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using CoreBusiness.DTOs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +12,7 @@ namespace MoviesAPI.Controllers;
 
 [ApiController]
 [Route("api/users")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isadmin")]
 public class UsersController: ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
@@ -28,6 +31,7 @@ public class UsersController: ControllerBase
     }
     
     [HttpPost("register")]
+    [AllowAnonymous]
     public async Task<ActionResult<AuthenticationResponseDto>> Register([FromBody] UserCredentialsDto userCredentialsDto)
     {
         var user = new IdentityUser
@@ -49,6 +53,7 @@ public class UsersController: ControllerBase
     }
     
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<ActionResult<AuthenticationResponseDto>> Login([FromBody] UserCredentialsDto userCredentialsDto)
     {
         var user = await _userManager.FindByEmailAsync(userCredentialsDto.Email);
@@ -68,6 +73,38 @@ public class UsersController: ControllerBase
         {
             return BadRequest(BuildIncorrectLoginErrorMessage());
         }
+    }
+
+    [HttpPost("make-admin")]
+    [AllowAnonymous]
+    public async Task<IActionResult> MakeAdmin(EditClaimDto editClaimDto)
+    {
+        var user = await _userManager.FindByEmailAsync(editClaimDto.Email);
+
+        if (user is null)
+        {
+            return NotFound();
+        }
+
+        await _userManager.AddClaimAsync(user, new Claim("isadmin", "true"));
+
+        return NoContent();
+    }
+
+    [HttpPost("remove-admin")]
+    [AllowAnonymous]
+    public async Task<IActionResult> RemoveAdmin(EditClaimDto editClaimDto)
+    {
+        var user = await _userManager.FindByEmailAsync(editClaimDto.Email);
+
+        if (user is null)
+        {
+            return NotFound();
+        }
+
+        await _userManager.RemoveClaimAsync(user, new Claim("isadmin", "true"));
+
+        return NoContent();
     }
 
     private async Task<AuthenticationResponseDto> BuildToken(IdentityUser user)

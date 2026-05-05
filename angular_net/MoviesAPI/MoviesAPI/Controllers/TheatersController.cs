@@ -1,5 +1,7 @@
 using CoreBusiness;
 using CoreBusiness.DTOs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using UseCases.DataStoreInterfaces;
@@ -8,6 +10,7 @@ namespace MoviesAPI.Controllers;
 
 [Route("api/theaters")]
 [ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isadmin")]
 public class TheatersController: Controller<Theater, TheaterCreationDto, TheaterDto>
 {
     private const string CacheTag = "theaters";

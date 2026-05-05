@@ -19,7 +19,7 @@
     >
         <ng-container matColumnDef="image">
             <td mat-cell *matCellDef="let element">
-                <img [src]="element.picture" />
+                <app-image [src]="element.picture" width="70" height="90" alt="actor picture"></app-image>
             </td>
         </ng-container>
 

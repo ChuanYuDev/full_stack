@@ -106,6 +106,14 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
     };
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("isadmin", policyBuilder =>
+    {
+        policyBuilder.RequireClaim("isadmin");
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
