@@ -19,23 +19,29 @@ public class ActorsSqlRepository: BaseSqlRepository, IActorsRepository
         _fileStorage = fileStorage;
     }
 
-    public async Task<List<ActorDto>> Get(Expression<Func<Actor, bool>>? where = null, int top = 0)
+    public async Task<int> Count()
     {
-        return await Get(where: where, orderBy:a => a.Name, top: top);
+        return await Count<Actor>();
+    }
+
+    public async Task<List<ActorDto>> Get()
+    {
+        return await Get<Actor, ActorDto>(orderBy: a => a.Name);
     }
 
     public async Task<List<ActorDto>> Get(PaginationDto paginationDto)
     {
-        return  await Get(paginationDto, orderBy: a => a.Name);
+        return  await Get<Actor, ActorDto>(orderBy: a => a.Name, paginationDto: paginationDto);
     }
 
     public async Task<List<MovieActorDto>> Get(string name)
     {
-        return await EntityDbSet
-            .Where(actor => actor.Name.Contains(name))
-            .OrderBy(actor => actor.Name)
-            .ProjectTo<MovieActorDto>(Mapper.ConfigurationProvider)
-            .ToListAsync();
+        return await Get<Actor, MovieActorDto>(orderBy: a => a.Name, where: a => a.Name.Contains(name));
+    }
+
+    public async Task<ActorDto?> Get(int id)
+    {
+        return await Get<Actor, ActorDto>(id);
     }
 
     public async Task<ActorDto> Add(ActorCreationDto actorCreationDto)

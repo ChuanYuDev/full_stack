@@ -31,11 +31,11 @@ public class BaseSqlRepository
         return await Context.Set<TEntity>().AnyAsync(entity => entity.Id == id);
     }
     
-    protected async Task<List<TDto>> Get<TEntity, TKey, TDto>(
-        Expression<Func<TEntity, bool>>? where,
-        Expression<Func<TEntity, TKey>> orderBy,
-        PaginationDto? paginationDto,
-        int top
+    protected async Task<List<TDto>> Get<TEntity, TDto>(
+        Expression<Func<TEntity, object>> orderBy,
+        Expression<Func<TEntity, bool>>? where = null,
+        PaginationDto? paginationDto = null,
+        int top = 0
     )
         where TEntity: class
     {
