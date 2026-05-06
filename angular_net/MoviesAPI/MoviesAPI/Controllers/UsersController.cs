@@ -6,28 +6,46 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.IdentityModel.Tokens;
+using MoviesAPI.Utilities;
+using UseCases.DataStoreInterfaces;
 
 namespace MoviesAPI.Controllers;
 
 [ApiController]
 [Route("api/users")]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isadmin")]
-public class UsersController: ControllerBase
+public class UsersController: CustomBaseController
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly IConfiguration _configuration;
+    private readonly IUsersRepository _usersRepository;
+    private const string CacheTag = "users";
 
     public UsersController(
         UserManager<IdentityUser> userManager,
         SignInManager<IdentityUser> signInManager,
-        IConfiguration configuration
-    )
+        IConfiguration configuration,
+        IUsersRepository usersRepository,
+        IOutputCacheStore outputCacheStore
+    ): base(outputCacheStore)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
+        _usersRepository = usersRepository;
+    }
+
+    [HttpGet("users-list")]
+    [OutputCache(Tags = [CacheTag])]
+    [AllowAnonymous]
+    public async Task<List<UserDto>> Get([FromQuery] PaginationDto paginationDto)
+    {
+        var count = await _usersRepository.Count();
+        HttpContext.InsertPaginationParametersInHeader(count);
+        return await _usersRepository.Get(paginationDto);
     }
     
     [HttpPost("register")]
@@ -44,6 +62,7 @@ public class UsersController: ControllerBase
 
         if (result.Succeeded)
         {
+            await OutputCacheStore.EvictByTagAsync(CacheTag, default);
             return await BuildToken(user);
         }
         else

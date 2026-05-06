@@ -9,11 +9,11 @@ namespace MoviesAPI.Controllers;
 
 public class CustomBaseController: ControllerBase
 {
-    private readonly IOutputCacheStore _outputCacheStore;
+    protected IOutputCacheStore OutputCacheStore { get; }
 
     public CustomBaseController(IOutputCacheStore outputCacheStore)
     {
-        _outputCacheStore = outputCacheStore;
+        OutputCacheStore = outputCacheStore;
     }
 
     protected ActionResult<TDto> Get<TDto>(TDto? dto)
@@ -29,7 +29,7 @@ public class CustomBaseController: ControllerBase
     protected async Task<CreatedAtRouteResult> Post<TDto>(TDto dto, string cacheTag, string routeName)
         where TDto: IId
     {
-        await _outputCacheStore.EvictByTagAsync(cacheTag, default);
+        await OutputCacheStore.EvictByTagAsync(cacheTag, default);
         return CreatedAtRoute(routeName, new { id = dto.Id }, dto);
     }
 
@@ -40,7 +40,7 @@ public class CustomBaseController: ControllerBase
             return NotFound();
         }
 
-        await _outputCacheStore.EvictByTagAsync(cacheTag, default);
+        await OutputCacheStore.EvictByTagAsync(cacheTag, default);
 
         return NoContent();
     }

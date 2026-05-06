@@ -17,7 +17,7 @@ public class MoviesController: CustomBaseController
     private readonly IGenresRepository _genresRepository;
     private readonly ITheatersRepository _theatersRepository;
     private readonly IMoviesRepository _moviesRepository;
-    private readonly IRatingsSqlRepository _ratingsSqlRepository;
+    private readonly IRatingsRepository _ratingsRepository;
     private const string CacheTag = "movies";
     private const string GetByIdName = "GetMovieById";
 
@@ -25,14 +25,14 @@ public class MoviesController: CustomBaseController
         IGenresRepository genresRepository,
         ITheatersRepository theatersRepository,
         IMoviesRepository moviesRepository,
-        IRatingsSqlRepository ratingsSqlRepository,
+        IRatingsRepository ratingsRepository,
         IOutputCacheStore outputCacheStore
     ): base(outputCacheStore)
     {
         _genresRepository = genresRepository;
         _theatersRepository = theatersRepository;
         _moviesRepository = moviesRepository;
-        _ratingsSqlRepository = ratingsSqlRepository;
+        _ratingsRepository = ratingsRepository;
     }
 
     [HttpGet("landing")]
@@ -79,7 +79,7 @@ public class MoviesController: CustomBaseController
 
         if (identity.IsAuthenticated)
         {
-            movieDetailsDto.UserVote = await _ratingsSqlRepository.GetRate(id);
+            movieDetailsDto.UserVote = await _ratingsRepository.GetRate(id);
         }
 
         return movieDetailsDto;

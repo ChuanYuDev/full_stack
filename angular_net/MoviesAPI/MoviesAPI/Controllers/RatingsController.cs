@@ -10,18 +10,18 @@ namespace MoviesAPI.Controllers;
 [Route("api/ratings")]
 public class RatingsController: ControllerBase
 {
-    private readonly IRatingsSqlRepository _ratingsSqlRepository;
+    private readonly IRatingsRepository _ratingsRepository;
 
-    public RatingsController(IRatingsSqlRepository ratingsSqlRepository)
+    public RatingsController(IRatingsRepository ratingsRepository)
     {
-        _ratingsSqlRepository = ratingsSqlRepository;
+        _ratingsRepository = ratingsRepository;
     }
 
     [HttpPut]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<IActionResult> Put([FromBody] MovieRatingCreationDto movieRatingCreationDto)
     {
-        var found = await _ratingsSqlRepository.AddOrUpdate(movieRatingCreationDto);
+        var found = await _ratingsRepository.AddOrUpdate(movieRatingCreationDto);
 
         if (!found)
         {

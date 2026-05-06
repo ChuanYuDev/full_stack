@@ -1,6 +1,7 @@
 using AutoMapper;
 using CoreBusiness;
 using CoreBusiness.DTOs;
+using Microsoft.AspNetCore.Identity;
 using NetTopologySuite.Geometries;
 
 namespace MoviesAPI.Utilities;
@@ -17,6 +18,7 @@ public class AutoMapperProfiles: Profile
         ConfigureTheaters();
         ConfigureMovies();
         ConfigureRatings();
+        ConfigureUsers();
     }
 
     private void ConfigureGenres()
@@ -106,5 +108,10 @@ public class AutoMapperProfiles: Profile
     private void ConfigureRatings()
     {
         CreateMap<MovieRatingCreationDto, MovieRating>();
+    }
+
+    private void ConfigureUsers()
+    {
+        CreateMap<IdentityUser, UserDto>();
     }
 }

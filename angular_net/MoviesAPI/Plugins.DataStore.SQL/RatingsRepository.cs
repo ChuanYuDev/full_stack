@@ -3,21 +3,20 @@ using CoreBusiness;
 using CoreBusiness.DTOs;
 using Microsoft.EntityFrameworkCore;
 using UseCases.DataStoreInterfaces;
-using UseCases.UsersServiceInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class RatingsSqlRepository : IRatingsSqlRepository
+public class RatingsRepository : IRatingsRepository
 {
     private readonly ApplicationDbContext _context;
-    private readonly IUsersService _usersService;
+    private readonly IUsersRepository _usersRepository;
     private readonly IMoviesRepository _moviesRepository;
     private readonly IMapper _mapper;
 
-    public RatingsSqlRepository(ApplicationDbContext context, IUsersService usersService, IMoviesRepository moviesRepository, IMapper mapper)
+    public RatingsRepository(ApplicationDbContext context, IUsersRepository usersRepository, IMoviesRepository moviesRepository, IMapper mapper)
     {
         _context = context;
-        _usersService = usersService;
+        _usersRepository = usersRepository;
         _moviesRepository = moviesRepository;
         _mapper = mapper;
     }
@@ -58,7 +57,7 @@ public class RatingsSqlRepository : IRatingsSqlRepository
 
     private async Task<(string userId, MovieRating? movieRating)> GetUserIdAndMovieRating(int movieId)
     {
-        var userId = await _usersService.GetUserId();
+        var userId = await _usersRepository.GetUserId();
 
         var movieRating = await _context.MovieRatings.FirstOrDefaultAsync(mr => mr.MovieId == movieId && mr.UserId == userId);
 
