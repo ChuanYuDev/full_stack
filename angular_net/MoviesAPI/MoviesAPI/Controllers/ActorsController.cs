@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using MoviesAPI.Utilities;
 using UseCases.DataStoreInterfaces;
 
 namespace MoviesAPI.Controllers;
@@ -11,37 +12,34 @@ namespace MoviesAPI.Controllers;
 [Route("api/actors")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isadmin")]
-public class ActorsController: Controller<Actor, ActorCreationDto, ActorDto>
+public class ActorsController: CustomBaseController
 {
     private readonly IActorsRepository _actorsRepository;
+    private readonly IOutputCacheStore _outputCacheStore;
     private const string CacheTag = "actors";
     private const string GetByIdName = "GetActorById";
 
     public ActorsController(IActorsRepository actorsRepository, IOutputCacheStore outputCacheStore)
-        : base(actorsRepository, outputCacheStore, CacheTag)
+        :base(outputCacheStore)
     {
         _actorsRepository = actorsRepository;
+        _outputCacheStore = outputCacheStore;
     }
 
     [HttpGet("all")]
     [OutputCache(Tags = [CacheTag])]
     public async Task<List<ActorDto>> Get()
     {
-        return await GetEntities();
+        return await _actorsRepository.Get();
     }
 
     [HttpGet]
     [OutputCache(Tags = [CacheTag])]
     public async Task<List<ActorDto>> Get([FromQuery] PaginationDto paginationDto)
     {
-        return await GetEntities(paginationDto);
-    }
-
-    [HttpGet("{id:int}", Name = GetByIdName)]
-    [OutputCache(Tags = [CacheTag])]
-    public async Task<ActionResult<ActorDto>> Get(int id)
-    {
-        return await GetEntity(id);
+        var count = await _actorsRepository.Count();
+        HttpContext.InsertPaginationParametersInHeader(count);
+        return await _actorsRepository.Get(paginationDto);
     }
 
     [HttpGet("{name}")]
@@ -50,21 +48,35 @@ public class ActorsController: Controller<Actor, ActorCreationDto, ActorDto>
         return await _actorsRepository.Get(name);
     }
     
+    [HttpGet("{id:int}", Name = GetByIdName)]
+    [OutputCache(Tags = [CacheTag])]
+    public async Task<ActionResult<ActorDto>> Get(int id)
+    {
+        var actorDto = await _actorsRepository.Get(id);
+
+        return Get(actorDto);
+    }
+
     [HttpPost]
     public async Task<CreatedAtRouteResult> Post([FromForm] ActorCreationDto actorCreationDto)
     {
-        return await PostEntity(actorCreationDto, GetByIdName);
+        var actorDto = await _actorsRepository.Add(actorCreationDto);
+        return await Post(actorDto, CacheTag, GetByIdName);
     }
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Put(int id, [FromForm] ActorCreationDto actorCreationDto)
     {
-        return await PutEntity(id, actorCreationDto);
+        var found = await _actorsRepository.Update(id, actorCreationDto);
+
+        return await PutDelete(found, CacheTag);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        return await DeleteEntity(id);
+        var found = await _actorsRepository.Delete(id);
+
+        return await PutDelete(found, CacheTag);
     }
 }

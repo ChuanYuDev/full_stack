@@ -8,35 +8,43 @@ using Plugins.DataStore.SQL.Utilities;
 
 namespace Plugins.DataStore.SQL;
 
-public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto>
-    where TDetailsDto: TDto
-    where TEntity: class, IId
-    where TDto: IId
+// public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto>
+//     where TDetailsDto: TDto
+//     where TEntity: class, IId
+//     where TDto: IId
+//     where TEntity: class
+public class BaseSqlRepository
 {
     protected ApplicationDbContext Context { get; }
-    protected DbSet<TEntity> EntityDbSet { get; }
     protected IMapper Mapper { get; }
 
     public BaseSqlRepository(ApplicationDbContext context, IMapper mapper)
     {
         Context = context;
-        EntityDbSet = Context.Set<TEntity>();
         Mapper = mapper;
     }
 
-    public async Task<int> Count()
+    public async Task<int> Count<TEntity>() 
+        where TEntity: class
     {
-        return await EntityDbSet.CountAsync();
+        return await Context.Set<TEntity>().CountAsync();
     }
 
-    public async Task<bool> Exist(int id)
+    public async Task<bool> Exist<TEntity>(int id)
+        where TEntity: class, IId
     {
-        return await EntityDbSet.AnyAsync(entity => entity.Id == id);
+        return await Context.Set<TEntity>().AnyAsync(entity => entity.Id == id);
     }
     
-    protected async Task<List<TDto>> Get<TKey>(Expression<Func<TEntity, bool>>? where, Expression<Func<TEntity, TKey>> orderBy, int top)
+    protected async Task<List<TDto>> Get<TEntity, TKey, TDto>(
+        Expression<Func<TEntity, bool>>? where,
+        Expression<Func<TEntity, TKey>> orderBy,
+        PaginationDto? paginationDto,
+        int top
+    )
+        where TEntity: class
     {
-        var queryable = EntityDbSet.AsQueryable();
+        var queryable = Context.Set<TEntity>().AsQueryable();
 
         if (where is not null)
         {
@@ -44,6 +52,12 @@ public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto>
         }
 
         queryable = queryable.OrderBy(orderBy);
+
+        if (paginationDto is not null)
+        {
+            
+            queryable = queryable.Paginate(paginationDto);
+        }
 
         if (top != 0)
         {
@@ -55,23 +69,16 @@ public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto>
             .ToListAsync();
     }
 
-    protected async Task<List<TDto>> Get<TKey>(PaginationDto paginationDto, Expression<Func<TEntity, TKey>> orderBy)
+    public virtual async Task<TDto?> Get<TEntity, TDto>(int id)
+        where TEntity: class 
+        where TDto: IId
     {
-        return await EntityDbSet 
-            .OrderBy(orderBy)
-            .Paginate(paginationDto)
+        return await Context.Set<TEntity>()
             .ProjectTo<TDto>(Mapper.ConfigurationProvider)
-            .ToListAsync();
-    }
-
-    public virtual async Task<TDetailsDto?> Get(int id)
-    {
-        return await EntityDbSet
-            .ProjectTo<TDetailsDto>(Mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(dto => dto.Id == id);
     }
 
-    public virtual async Task<TDto> Add(TCreationDto creationDto)
+    public virtual async Task<TDto> Add<TEntity, TCreationDto, TDto>(TCreationDto creationDto)
     {
         var entity = Mapper.Map<TEntity>(creationDto);
         Context.Add(entity);
@@ -80,9 +87,10 @@ public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto>
         return Mapper.Map<TDto>(entity);
     }
 
-    public virtual async Task<bool> Update(int id, TCreationDto creationDto)
+    public virtual async Task<bool> Update<TEntity, TCreationDto>(int id, TCreationDto creationDto)
+        where TEntity: class, IId
     {
-        var found = await Exist(id);
+        var found = await Exist<TEntity>(id);
 
         if (!found)
         {
@@ -98,9 +106,10 @@ public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto>
         return true;
     }
 
-    public virtual async Task<bool> Delete(int id)
+    public virtual async Task<bool> Delete<TEntity>(int id)
+        where TEntity: class, IId
     {
-        var deleteRecords = await EntityDbSet.Where(entity => entity.Id == id).ExecuteDeleteAsync();
+        var deleteRecords = await Context.Set<TEntity>().Where(entity => entity.Id == id).ExecuteDeleteAsync();
 
         return deleteRecords != 0;
     }

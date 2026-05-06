@@ -27,6 +27,13 @@ public class BaseController<TEntity, TCreationDto, TDto, TDetailsDto>: Controlle
         return await _entitiesRepository.Get();
     }
 
+    protected List<TDto> Get<TDto>(int count, List<TDto> dtos)
+    {
+        HttpContext.InsertPaginationParametersInHeader(count);
+        
+    }
+    
+
     protected async Task<List<TDto>> GetEntities(PaginationDto paginationDto)
     {
         var count = await _entitiesRepository.Count();
