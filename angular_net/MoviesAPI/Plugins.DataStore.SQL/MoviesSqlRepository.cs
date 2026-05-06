@@ -10,7 +10,7 @@ using UseCases.FileStorageInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class MoviesSqlRepository: BaseSqlRepository<Movie, MovieCreationDto, MovieDto, MovieDetailsDto>, IMoviesRepository
+public class MoviesSqlRepository: BaseSqlRepository, IMoviesRepository
 {
     private readonly IFileStorage _fileStorage;
     private const string Container = "movies";
@@ -20,19 +20,19 @@ public class MoviesSqlRepository: BaseSqlRepository<Movie, MovieCreationDto, Mov
         _fileStorage = fileStorage;
     }
 
-    public async Task<List<MovieDto>> Get(Expression<Func<Movie, bool>>? where = null, int top = 0)
+    public async Task<bool> Exist(int id)
     {
-        return await Get(where: where, orderBy: m => m.ReleaseDate, top);
+        return await Exist<Movie>(id);
     }
 
-    public async Task<List<MovieDto>> Get(PaginationDto paginationDto)
+    public async Task<List<MovieDto>> Get(Expression<Func<Movie, bool>> where, int top)
     {
-        return await Get(paginationDto, orderBy: m => m.ReleaseDate);
+        return await Get<Movie, MovieDto>(orderBy: m => m.ReleaseDate, where: where, top: top);
     }
-    
+
     public async Task<(List<MovieDto> Movies, int MoviesNum)> Filter(MoviesFilterDto moviesFilterDto)
     {
-        var moviesQueryable = EntityDbSet.AsQueryable();
+        var moviesQueryable = Context.Movies.AsQueryable();
 
         if (!string.IsNullOrEmpty(moviesFilterDto.Title))
         {
@@ -67,15 +67,15 @@ public class MoviesSqlRepository: BaseSqlRepository<Movie, MovieCreationDto, Mov
     }
 
 
-    public override async Task<MovieDetailsDto?> Get(int id)
+    public async Task<MovieDetailsDto?> Get(int id)
     {
-        return await EntityDbSet 
+        return await Context.Movies 
             .AsSplitQuery()
             .ProjectTo<MovieDetailsDto>(Mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    public override async Task<MovieDto> Add(MovieCreationDto movieCreationDto)
+    public async Task<MovieDto> Add(MovieCreationDto movieCreationDto)
     {
         var movie = Mapper.Map<Movie>(movieCreationDto);
 
@@ -93,9 +93,9 @@ public class MoviesSqlRepository: BaseSqlRepository<Movie, MovieCreationDto, Mov
         return Mapper.Map<MovieDto>(movie);
     }
 
-    public override async Task<bool> Update(int id, MovieCreationDto movieCreationDto)
+    public async Task<bool> Update(int id, MovieCreationDto movieCreationDto)
     {
-        var movie = await EntityDbSet
+        var movie = await Context.Movies
             .Include(m => m.MoviesGenres)
             .Include(m => m.MoviesTheaters)
             .Include(m => m.MoviesActors)
@@ -119,7 +119,7 @@ public class MoviesSqlRepository: BaseSqlRepository<Movie, MovieCreationDto, Mov
         return true;
     }
 
-    public override async Task<bool> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
         var movie = await Context.Movies.FirstOrDefaultAsync(m => m.Id == id);
 

@@ -32,7 +32,7 @@ public class BaseSqlRepository
     }
     
     protected async Task<List<TDto>> Get<TEntity, TDto>(
-        Expression<Func<TEntity, object>> orderBy,
+        Expression<Func<TEntity, object?>> orderBy,
         Expression<Func<TEntity, bool>>? where = null,
         PaginationDto? paginationDto = null,
         int top = 0

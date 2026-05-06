@@ -22,12 +22,17 @@ public class GenresInMemoryRepository: IGenresRepository
         };
     }
     
-    public async Task<int> Count()
+    public Task<int> Count()
     {
-        return _genres.Count;
+        return Task.FromResult(_genres.Count);
     }
 
     public Task<List<GenreDto>> Get()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<GenreDto>> Get(Expression<Func<Genre, bool>> where)
     {
         throw new NotImplementedException();
     }
@@ -37,17 +42,17 @@ public class GenresInMemoryRepository: IGenresRepository
         throw new NotImplementedException();
     }
 
-    public async Task<List<GenreDto>> Get(PaginationDto paginationDto)
+    public Task<List<GenreDto>> Get(PaginationDto paginationDto)
     {
-        return _mapper.Map<List<GenreDto>>(_genres.OrderBy(g=> g.Name).Paginate(paginationDto));
+        return Task.FromResult(_mapper.Map<List<GenreDto>>(_genres.OrderBy(g=> g.Name).Paginate(paginationDto)));
     }
 
-    public async Task<GenreDto?> Get(int id)
+    public Task<GenreDto?> Get(int id)
     {
-        return _mapper.Map<GenreDto>(_genres.FirstOrDefault(g => g.Id == id));
+        return Task.FromResult(_mapper.Map<GenreDto?>(_genres.FirstOrDefault(g => g.Id == id)));
     }
 
-    public async Task<GenreDto> Add(GenreCreationDto genreCreationDto)
+    public Task<GenreDto> Add(GenreCreationDto genreCreationDto)
     {
         var genre = _mapper.Map<Genre>(genreCreationDto);
         
@@ -55,26 +60,26 @@ public class GenresInMemoryRepository: IGenresRepository
         genre.Id = id;
         _genres.Add(genre);
         
-        return _mapper.Map<GenreDto>(genre);
+        return Task.FromResult(_mapper.Map<GenreDto>(genre));
     }
 
-    public async Task<bool> Update(int id, GenreCreationDto genreCreationDto)
+    public Task<bool> Update(int id, GenreCreationDto genreCreationDto)
     {
         var genre = _genres.FirstOrDefault(g => g.Id == id);
 
         if (genre is null)
         {
-            return false;
+            return Task.FromResult(false);
         }
         
         _mapper.Map(genreCreationDto, genre);
-        return true;
+        return Task.FromResult(true);
     }
 
-    public async Task<bool> Delete(int id)
+    public Task<bool> Delete(int id)
     {
         var deleteRecords = _genres.RemoveAll(g => g.Id == id);
 
-        return deleteRecords != 0;
+        return Task.FromResult(deleteRecords != 0);
     }
 }
