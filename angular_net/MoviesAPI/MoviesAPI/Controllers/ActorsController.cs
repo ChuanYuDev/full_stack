@@ -15,7 +15,6 @@ namespace MoviesAPI.Controllers;
 public class ActorsController: CustomBaseController
 {
     private readonly IActorsRepository _actorsRepository;
-    private readonly IOutputCacheStore _outputCacheStore;
     private const string CacheTag = "actors";
     private const string GetByIdName = "GetActorById";
 
@@ -23,7 +22,6 @@ public class ActorsController: CustomBaseController
         :base(outputCacheStore)
     {
         _actorsRepository = actorsRepository;
-        _outputCacheStore = outputCacheStore;
     }
 
     [HttpGet("all")]

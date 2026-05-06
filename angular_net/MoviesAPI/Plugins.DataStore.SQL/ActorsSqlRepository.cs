@@ -9,7 +9,7 @@ using UseCases.FileStorageInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class ActorsSqlRepository: SqlRepository<Actor, ActorCreationDto, ActorDto>, IActorsRepository 
+public class ActorsSqlRepository: BaseSqlRepository 
 {
     private readonly IFileStorage _fileStorage;
     private const string Container = "actors";
@@ -38,7 +38,7 @@ public class ActorsSqlRepository: SqlRepository<Actor, ActorCreationDto, ActorDt
             .ToListAsync();
     }
 
-    public override async Task<ActorDto> Add(ActorCreationDto actorCreationDto)
+    public async Task<ActorDto> Add(ActorCreationDto actorCreationDto)
     {
         var actor = Mapper.Map<Actor>(actorCreationDto);
         
@@ -55,9 +55,9 @@ public class ActorsSqlRepository: SqlRepository<Actor, ActorCreationDto, ActorDt
         return Mapper.Map<ActorDto>(actor);
     }
 
-    public override async Task<bool> Update(int id, ActorCreationDto actorCreationDto)
+    public async Task<bool> Update(int id, ActorCreationDto actorCreationDto)
     {
-        var actor = await EntityDbSet.FirstOrDefaultAsync(a => a.Id == id);
+        var actor = await Context.Actors.FirstOrDefaultAsync(a => a.Id == id);
 
         if (actor is null)
         {
@@ -75,9 +75,9 @@ public class ActorsSqlRepository: SqlRepository<Actor, ActorCreationDto, ActorDt
         return true;
     }
 
-    public override async Task<bool> Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        var actor = await EntityDbSet.FirstOrDefaultAsync(a => a.Id == id);
+        var actor = await Context.Actors.FirstOrDefaultAsync(a => a.Id == id);
 
         if (actor is null)
         {

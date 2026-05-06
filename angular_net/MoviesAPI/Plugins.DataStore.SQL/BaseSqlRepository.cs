@@ -8,11 +8,6 @@ using Plugins.DataStore.SQL.Utilities;
 
 namespace Plugins.DataStore.SQL;
 
-// public class BaseSqlRepository<TEntity, TCreationDto, TDto, TDetailsDto>
-//     where TDetailsDto: TDto
-//     where TEntity: class, IId
-//     where TDto: IId
-//     where TEntity: class
 public class BaseSqlRepository
 {
     protected ApplicationDbContext Context { get; }
@@ -24,13 +19,13 @@ public class BaseSqlRepository
         Mapper = mapper;
     }
 
-    public async Task<int> Count<TEntity>() 
+    protected async Task<int> Count<TEntity>() 
         where TEntity: class
     {
         return await Context.Set<TEntity>().CountAsync();
     }
 
-    public async Task<bool> Exist<TEntity>(int id)
+    protected async Task<bool> Exist<TEntity>(int id)
         where TEntity: class, IId
     {
         return await Context.Set<TEntity>().AnyAsync(entity => entity.Id == id);
@@ -69,7 +64,7 @@ public class BaseSqlRepository
             .ToListAsync();
     }
 
-    public virtual async Task<TDto?> Get<TEntity, TDto>(int id)
+    protected async Task<TDto?> Get<TEntity, TDto>(int id)
         where TEntity: class 
         where TDto: IId
     {
@@ -78,7 +73,8 @@ public class BaseSqlRepository
             .FirstOrDefaultAsync(dto => dto.Id == id);
     }
 
-    public virtual async Task<TDto> Add<TEntity, TCreationDto, TDto>(TCreationDto creationDto)
+    protected async Task<TDto> Add<TEntity, TCreationDto, TDto>(TCreationDto creationDto)
+        where TEntity: class
     {
         var entity = Mapper.Map<TEntity>(creationDto);
         Context.Add(entity);
@@ -87,7 +83,7 @@ public class BaseSqlRepository
         return Mapper.Map<TDto>(entity);
     }
 
-    public virtual async Task<bool> Update<TEntity, TCreationDto>(int id, TCreationDto creationDto)
+    protected async Task<bool> Update<TEntity, TCreationDto>(int id, TCreationDto creationDto)
         where TEntity: class, IId
     {
         var found = await Exist<TEntity>(id);
@@ -106,7 +102,7 @@ public class BaseSqlRepository
         return true;
     }
 
-    public virtual async Task<bool> Delete<TEntity>(int id)
+    protected async Task<bool> Delete<TEntity>(int id)
         where TEntity: class, IId
     {
         var deleteRecords = await Context.Set<TEntity>().Where(entity => entity.Id == id).ExecuteDeleteAsync();

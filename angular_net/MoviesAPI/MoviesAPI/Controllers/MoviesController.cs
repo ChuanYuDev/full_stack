@@ -12,7 +12,7 @@ namespace MoviesAPI.Controllers;
 [Route("api/movies")]
 [ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isadmin")]
-public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto, MovieDetailsDto>
+public class MoviesController: CustomBaseController
 {
     private readonly IGenresRepository _genresRepository;
     private readonly ITheatersRepository _theatersRepository;
@@ -27,7 +27,7 @@ public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto,
         IMoviesRepository moviesRepository,
         IRatingsSqlRepository ratingsSqlRepository,
         IOutputCacheStore outputCacheStore
-    ): base(moviesRepository, outputCacheStore, CacheTag)
+    ): base(outputCacheStore)
     {
         _genresRepository = genresRepository;
         _theatersRepository = theatersRepository;
@@ -126,18 +126,24 @@ public class MoviesController: BaseController<Movie, MovieCreationDto, MovieDto,
     [HttpPost]
     public async Task<CreatedAtRouteResult> Post([FromForm] MovieCreationDto movieCreationDto)
     {
-        return await PostEntity(movieCreationDto, GetByIdName);
+        var movieDto = await _moviesRepository.Add(movieCreationDto);
+
+        return await Post(movieDto, CacheTag, GetByIdName);
     }
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Put(int id, [FromForm] MovieCreationDto movieCreationDto)
     {
-        return await PutEntity(id, movieCreationDto);
+        var found = await _moviesRepository.Update(id, movieCreationDto);
+
+        return await PutDelete(found, CacheTag);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        return await DeleteEntity(id);
+        var found = await _moviesRepository.Delete(id);
+
+        return await PutDelete(found, CacheTag);
     }
 }
