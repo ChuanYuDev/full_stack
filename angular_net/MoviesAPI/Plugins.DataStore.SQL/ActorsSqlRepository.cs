@@ -9,7 +9,7 @@ using UseCases.FileStorageInterfaces;
 
 namespace Plugins.DataStore.SQL;
 
-public class ActorsSqlRepository: BaseSqlRepository 
+public class ActorsSqlRepository: BaseSqlRepository, IActorsRepository 
 {
     private readonly IFileStorage _fileStorage;
     private const string Container = "actors";
