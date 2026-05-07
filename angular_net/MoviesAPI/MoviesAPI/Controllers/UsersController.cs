@@ -18,23 +18,12 @@ namespace MoviesAPI.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "isadmin")]
 public class UsersController: CustomBaseController
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly IConfiguration _configuration;
     private readonly IUsersRepository _usersRepository;
     private const string CacheTag = "users";
 
-    public UsersController(
-        UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
-        IConfiguration configuration,
-        IUsersRepository usersRepository,
-        IOutputCacheStore outputCacheStore
+    public UsersController(IUsersRepository usersRepository, IOutputCacheStore outputCacheStore
     ): base(outputCacheStore)
     {
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _configuration = configuration;
         _usersRepository = usersRepository;
     }
 
@@ -50,62 +39,47 @@ public class UsersController: CustomBaseController
     
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<ActionResult<AuthenticationResponseDto>> Register([FromBody] UserCredentialsDto userCredentialsDto)
+    public async Task<ActionResult<AuthenticationResponseDto?>> Register([FromBody] UserCredentialsDto userCredentialsDto)
     {
-        var user = new IdentityUser
-        {
-            UserName = userCredentialsDto.Email,
-            Email = userCredentialsDto.Email
-        };
+        var result = await _usersRepository.Register(userCredentialsDto);
+        var identityResult = result.identityResult;
 
-        var result = await _userManager.CreateAsync(user, userCredentialsDto.Password);
-
-        if (result.Succeeded)
+        if (identityResult.Succeeded)
         {
             await OutputCacheStore.EvictByTagAsync(CacheTag, default);
-            return await BuildToken(user);
+            return result.authenticationResponseDto;
         }
         else
         {
-            return BadRequest(result.Errors);
+            return BadRequest(identityResult.Errors);
         }
     }
     
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<ActionResult<AuthenticationResponseDto>> Login([FromBody] UserCredentialsDto userCredentialsDto)
+    public async Task<ActionResult<AuthenticationResponseDto?>> Login([FromBody] UserCredentialsDto userCredentialsDto)
     {
-        var user = await _userManager.FindByEmailAsync(userCredentialsDto.Email);
+        var result = await _usersRepository.Login(userCredentialsDto);
+        var loginResult = result.loginResult;
 
-        if (user is null)
+        if (!loginResult)
         {
-            return BadRequest(BuildIncorrectLoginErrorMessage());
+            return BadRequest(_usersRepository.BuildIncorrectLoginErrorMessage());
         }
-        
-        var result = await _signInManager.CheckPasswordSignInAsync(user, userCredentialsDto.Password, lockoutOnFailure: false);
 
-        if (result.Succeeded)
-        {
-            return await BuildToken(user);
-        }
-        else
-        {
-            return BadRequest(BuildIncorrectLoginErrorMessage());
-        }
+        return result.authenticationResponseDto;
     }
 
     [HttpPost("make-admin")]
     [AllowAnonymous]
     public async Task<IActionResult> MakeAdmin(EditClaimDto editClaimDto)
     {
-        var user = await _userManager.FindByEmailAsync(editClaimDto.Email);
+        var found = await _usersRepository.MakeAdmin(editClaimDto);
 
-        if (user is null)
+        if (!found)
         {
             return NotFound();
         }
-
-        await _userManager.AddClaimAsync(user, new Claim("isadmin", "true"));
 
         return NoContent();
     }
@@ -114,55 +88,14 @@ public class UsersController: CustomBaseController
     [AllowAnonymous]
     public async Task<IActionResult> RemoveAdmin(EditClaimDto editClaimDto)
     {
-        var user = await _userManager.FindByEmailAsync(editClaimDto.Email);
+        var found = await _usersRepository.RemoveAdmin(editClaimDto);
 
-        if (user is null)
+        if (!found)
         {
             return NotFound();
         }
 
-        await _userManager.RemoveClaimAsync(user, new Claim("isadmin", "true"));
-
         return NoContent();
     }
 
-    private async Task<AuthenticationResponseDto> BuildToken(IdentityUser user)
-    {
-        var claims = new List<Claim>
-        {
-            new Claim("email", user.Email ?? ""),
-            new Claim("whatever I want", "any value")
-        };
-
-        var claimsDb = await _userManager.GetClaimsAsync(user);
-        
-        claims.AddRange(claimsDb);
-
-        var expiration = DateTime.UtcNow.AddYears(1);
-        
-        var jwtKey = _configuration.GetValue<string>("JwtKey") ?? throw new InvalidOperationException("JWT key not found");
-
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
-
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        
-        var securityToken = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiration, signingCredentials: credentials);
-
-        var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
-
-        return new AuthenticationResponseDto
-        {
-            Token = token,
-            Expiration = expiration
-        };
-    }
-
-    private IEnumerable<IdentityError> BuildIncorrectLoginErrorMessage()
-    {
-        var identityError = new IdentityError { Description = "Incorrect login" };
-
-        var errors = new List<IdentityError> { identityError };
-
-        return errors;
-    }
 }
