@@ -1,13 +1,8 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using CoreBusiness.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
-using Microsoft.IdentityModel.Tokens;
 using MoviesAPI.Utilities;
 using UseCases.DataStoreInterfaces;
 
@@ -27,16 +22,6 @@ public class UsersController: CustomBaseController
         _usersRepository = usersRepository;
     }
 
-    [HttpGet("users-list")]
-    [OutputCache(Tags = [CacheTag])]
-    [AllowAnonymous]
-    public async Task<List<UserDto>> Get([FromQuery] PaginationDto paginationDto)
-    {
-        var count = await _usersRepository.Count();
-        HttpContext.InsertPaginationParametersInHeader(count);
-        return await _usersRepository.Get(paginationDto);
-    }
-    
     [HttpPost("register")]
     [AllowAnonymous]
     public async Task<ActionResult<AuthenticationResponseDto?>> Register([FromBody] UserCredentialsDto userCredentialsDto)
@@ -49,10 +34,8 @@ public class UsersController: CustomBaseController
             await OutputCacheStore.EvictByTagAsync(CacheTag, default);
             return result.authenticationResponseDto;
         }
-        else
-        {
-            return BadRequest(identityResult.Errors);
-        }
+        
+        return BadRequest(identityResult.Errors);
     }
     
     [HttpPost("login")]
@@ -70,8 +53,16 @@ public class UsersController: CustomBaseController
         return result.authenticationResponseDto;
     }
 
+    [HttpGet("users-list")]
+    [OutputCache(Tags = [CacheTag])]
+    public async Task<List<UserDto>> Get([FromQuery] PaginationDto paginationDto)
+    {
+        var count = await _usersRepository.Count();
+        HttpContext.InsertPaginationParametersInHeader(count);
+        return await _usersRepository.Get(paginationDto);
+    }
+    
     [HttpPost("make-admin")]
-    [AllowAnonymous]
     public async Task<IActionResult> MakeAdmin(EditClaimDto editClaimDto)
     {
         var found = await _usersRepository.MakeAdmin(editClaimDto);
@@ -85,7 +76,6 @@ public class UsersController: CustomBaseController
     }
 
     [HttpPost("remove-admin")]
-    [AllowAnonymous]
     public async Task<IActionResult> RemoveAdmin(EditClaimDto editClaimDto)
     {
         var found = await _usersRepository.RemoveAdmin(editClaimDto);

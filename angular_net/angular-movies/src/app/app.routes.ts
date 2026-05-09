@@ -16,6 +16,7 @@ import {MovieDetailsComponent} from "./movies/movie-details/movie-details.compon
 import {LoginComponent} from "./security/login/login.component";
 import {isAdminGuard} from "./shared/guards/is-admin.guard";
 import {RegisterComponent} from "./security/register/register.component";
+import {IndexUsersComponent} from "./security/index-users/index-users.component";
 
 export const routes: Routes = [
     {path: "", component: LandingPageComponent},
@@ -39,6 +40,7 @@ export const routes: Routes = [
 
     {path: "login", component: LoginComponent},
     {path: "register", component: RegisterComponent},
+    {path: "users", component: IndexUsersComponent, canActivate: [isAdminGuard]},
 
     {path: "**", redirectTo: ""},
 ];

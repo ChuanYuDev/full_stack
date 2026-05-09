@@ -7,3 +7,7 @@ export interface AuthenticationResponseDto {
     token: string;
     expiration?: Date;
 }
+
+export interface UserDto {
+    email: string;
+}
