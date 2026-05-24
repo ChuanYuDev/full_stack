@@ -12,7 +12,7 @@ import {AuthorizedComponent} from "../authorized/authorized.component";
 
 @Component({
     selector: 'app-index-users',
-    imports: [GenericListComponent, MatTableModule, MatButtonModule, MatPaginatorModule, AuthorizedComponent],
+    imports: [GenericListComponent, MatTableModule, MatButtonModule, MatPaginatorModule],
     templateUrl: './index-users.component.html',
     styleUrl: './index-users.component.css'
 })

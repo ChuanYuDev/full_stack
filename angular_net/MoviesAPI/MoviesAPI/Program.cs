@@ -26,7 +26,7 @@ builder.Services.AddOutputCache(options =>
     options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(60);
 });
 
-var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")?.Split(",") ?? [];
+var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")?.Split(",") ?? throw new InvalidOperationException("Allowed origins not found.");;
 
 builder.Services.AddCors(options =>
 {
