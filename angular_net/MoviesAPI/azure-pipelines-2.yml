@@ -1,0 +1,65 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Create Tool Manifest'
+  inputs:
+    command: 'custom'
+    custom: 'new'
+    arguments: 'tool-manifest'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Install EF Core Tool'
+  inputs:
+    command: 'custom'
+    custom: 'tool'
+    arguments: 'install dotnet-ef'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Generate SQL Script'
+  inputs:
+    command: 'custom'
+    custom: 'ef'
+    arguments: 'migrations script --project $(Project) --startup-project $(StartupProject) --context $(Context) --output $(Build.ArtifactStagingDirectory)\script.sql --idempotent'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)\script.sql'
+    publishLocation: 'pipeline'
+
+- task: SqlAzureDacpacDeployment@1
+  inputs:
+    AuthenticationType: 'server'
+    ServerName: '$(DbServer)'
+    DatabaseName: '$(DbName)'
+    SqlUsername: '$(UserId)'
+    SqlPassword: '$(Password)'
+    deployType: 'SqlTask'
+    SqlFile: '$(Build.ArtifactStagingDirectory)\script.sql'
+    IpDetectionMethod: 'AutoDetect'
