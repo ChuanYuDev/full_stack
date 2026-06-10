@@ -1,0 +1,36 @@
+[debug] [2026-06-09T18:51:14.825Z] ----------------------------------------------------------------------
+[debug] [2026-06-09T18:51:14.831Z] Command:       /Users/chuanyu/.nvm/versions/node/v20.17.0/bin/node /Users/chuanyu/.nvm/versions/node/v20.17.0/bin/firebase deploy
+[debug] [2026-06-09T18:51:14.831Z] CLI Version:   15.19.1
+[debug] [2026-06-09T18:51:14.831Z] Platform:      darwin
+[debug] [2026-06-09T18:51:14.832Z] Node Version:  v20.17.0
+[debug] [2026-06-09T18:51:14.832Z] Time:          Tue Jun 09 2026 11:51:14 GMT-0700 (Pacific Daylight Time)
+[debug] [2026-06-09T18:51:14.832Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-09T18:51:15.682Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-09T18:51:15.683Z] > authorizing via signed-in user (nealmatrixgg@gmail.com)
+[debug] [2026-06-09T18:51:15.683Z] [iam] checking project angularmovies20260609113-c0808 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-09T18:51:15.683Z] Checked if tokens are valid: true, expires at: 1781033804764
+[debug] [2026-06-09T18:51:15.683Z] Checked if tokens are valid: true, expires at: 1781033804764
+[debug] [2026-06-09T18:51:15.684Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/angularmovies20260609113-c0808:testIamPermissions [none]
+[debug] [2026-06-09T18:51:15.684Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/angularmovies20260609113-c0808:testIamPermissions  x-goog-user-project=angularmovies20260609113-c0808
+[debug] [2026-06-09T18:51:15.684Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/angularmovies20260609113-c0808:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-09T18:51:15.926Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/angularmovies20260609113-c0808:testIamPermissions 200
+[debug] [2026-06-09T18:51:15.926Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/angularmovies20260609113-c0808:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-09T18:51:15.927Z] Checked if tokens are valid: true, expires at: 1781033804764
+[debug] [2026-06-09T18:51:15.927Z] Checked if tokens are valid: true, expires at: 1781033804764
+[debug] [2026-06-09T18:51:15.928Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/angularmovies20260609113-c0808 [none]
+[debug] [2026-06-09T18:51:16.163Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/angularmovies20260609113-c0808 200
+[debug] [2026-06-09T18:51:16.163Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/angularmovies20260609113-c0808 {"projectId":"angularmovies20260609113-c0808","projectNumber":"307122055952","displayName":"angularmovies20260609113200","name":"projects/angularmovies20260609113-c0808","resources":{"hostingSite":"angularmovies20260609113-c0808"},"state":"ACTIVE","etag":"1_0814b6fe-9534-4f87-80f3-ab73751e5cba"}
+[info] 
+[info] === Deploying to 'angularmovies20260609113-c0808'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-06-09T18:51:16.167Z] Checked if tokens are valid: true, expires at: 1781033804764
+[debug] [2026-06-09T18:51:16.167Z] Checked if tokens are valid: true, expires at: 1781033804764
+[debug] [2026-06-09T18:51:16.168Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/angularmovies20260609113-c0808/sites/angularmovies20260609113-c0808 [none]
+[debug] [2026-06-09T18:51:16.980Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/angularmovies20260609113-c0808/sites/angularmovies20260609113-c0808 200
+[debug] [2026-06-09T18:51:16.980Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/angularmovies20260609113-c0808/sites/angularmovies20260609113-c0808 {"name":"projects/angularmovies20260609113-c0808/sites/angularmovies20260609113-c0808","defaultUrl":"https://angularmovies20260609113-c0808.web.app","type":"DEFAULT_SITE"}
+[debug] [2026-06-09T18:51:16.982Z] Checked if tokens are valid: true, expires at: 1781033804764
+[debug] [2026-06-09T18:51:16.982Z] Checked if tokens are valid: true, expires at: 1781033804764
+[debug] [2026-06-09T18:51:16.982Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/angularmovies20260609113-c0808/versions [none]
+[debug] [2026-06-09T18:51:16.982Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/angularmovies20260609113-c0808/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
